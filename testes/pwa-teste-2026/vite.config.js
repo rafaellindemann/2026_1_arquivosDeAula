@@ -14,14 +14,14 @@ export default defineConfig({
         theme_color: '#ff2f70',
         icons: [
           {
-            src: 'icon-skull-192.svg',
+            src: 'skull-192.png',
             sizes: '192x192',
-            type: 'image/svg',
+            type: 'image/png',
           },
           {
-            src: 'icon-skull-512.svg',
+            src: 'skull-512.png',
             sizes: '512x512',
-            type: 'image/svg',
+            type: 'image/png',
           },
         ],
       },
