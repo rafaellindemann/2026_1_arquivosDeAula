@@ -1,0 +1,54 @@
+
+.container-imesada{
+    background-color: darkturquoise;
+    min-height: calc(100vh - 70px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+.form-imesada{
+    background-color: bisque;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #000000cb; 
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.imagem-porco{
+    width: 32px;
+}
+
+.render-movimentacoes{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+
+
+}
+
+.crédito{
+    border-left: 5px solid; 
+    border-color: rgba(0, 128, 0, 0.7);
+    border-radius: 2px;
+    
+    /* box-shadow: 10px 0 5px inset green; */
+    /* box-shadow: -10px 0 5px green; */
+}
+.débito{
+    border-left: 5px solid;
+    border-color: rgba(255, 0, 0, 0.7);
+    border-radius: 2px;
+}
