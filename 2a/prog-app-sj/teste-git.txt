@@ -1,0 +1,5 @@
+git add .
+
+git commit -m "meu primeiro react"
+
+git push
