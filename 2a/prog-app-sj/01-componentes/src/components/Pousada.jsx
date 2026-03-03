@@ -2,6 +2,12 @@ import {useState} from 'react'
 
 function Pousada() {
     const[conta, setConta] = useState('')
+    const[usuario, setUsuario] = useState('Humberto')
+
+    function mudarUsuario(){
+        let nome = prompt("Nome:")
+        setUsuario(nome)
+    }
 
     function calcular(){
         let diarias = Number(prompt("Quantos dias?"))
@@ -25,6 +31,8 @@ function Pousada() {
             <h2>Pousada</h2>
             <button onClick={calcular}>Calcular preço</button>
             <p>{conta}</p>
+            <button onClick={mudarUsuario}>Mudar usuário</button>
+            <p>Usuário: {usuario}</p>
         </div>
     )
 }
