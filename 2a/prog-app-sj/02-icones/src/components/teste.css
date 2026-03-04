@@ -1,0 +1,12 @@
+
+.nomedaclasse{
+    background-color: blue;
+}
+
+div{
+    background-color: green;
+}
+
+section div{
+    background-color: yellow;
+}
