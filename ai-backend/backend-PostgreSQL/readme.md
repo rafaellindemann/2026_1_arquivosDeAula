@@ -1,4 +1,13 @@
 
+```
+Tem 50 seeds legais em seeds.sql. Lá tem uma ideia também de considerar a fama dos dinos :D
+```
+
+
+
+
+
+
 
 ```
 CREATE TABLE IF NOT EXISTS DINO (
@@ -53,3 +62,35 @@ Para fixar uma mensagem, passe o cursor sobre ela
 
 
 
+
+
+INSERT INTO DINO (NOME, ALTURA, COMPRIMENTO, PESO, VELOCIDADE, AGILIDADE, LONGEVIDADE, NUMERO_MAGICO, IMAGEM) VALUES
+('Tyrannosaurus rex', 3.66, 12.30, 6000.00, 32.00, 4, 2, NULL, 'imgs/dino.svg'),
+
+
+
+Nome	Varchar	unidade	
+Altura	float	m	
+Comprimento	float	m	
+Peso	float	kg	
+Velocidade	float	km/h	
+Agilidade	0..10		
+Logevidade (da espécie)	int	milhões de anos	
+Número Mágico	int	Aleatório, de 1 a 10				
+Imagem	varchar		
+
+
+CREATE TABLE IF NOT EXISTS DINO (
+	CODIGO SERIAL PRIMARY KEY,
+	NOME VARCHAR(150) NOT NULL UNIQUE,
+	ALTURA DECIMAL(10, 2) NOT NULL,
+	COMPRIMENTO DECIMAL(10, 2) NOT NULL,
+	PESO DECIMAL(10, 2) NOT NULL,
+	VELOCIDADE DECIMAL(10, 2) NOT NULL,
+	AGILIDADE SMALLINT NOT NULL,
+	LONGEVIDADE INT NOT NULL,
+	NUMERO_MAGICO SMALLINT,
+	IMAGEM VARCHAR(512)
+);
+			
+			
