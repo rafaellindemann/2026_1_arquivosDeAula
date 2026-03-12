@@ -3,6 +3,8 @@ import './App.css'
 import Evento from './components/Evento';
 import Avisador from './components/Avisador';
 import Teste from './components/Teste';
+import LayoutForm from './components/LayoutForm';
+import Temperaturas from './components/Temperaturas';
 
 function App() {
   const[inputNome, setInputNome] = useState('')
@@ -20,6 +22,10 @@ function App() {
 
       {/* <p>Nome digitado: {inputNome}</p> */}
 
+      <hr/>
+        <Temperaturas />
+        <hr/>
+        <LayoutForm />
       <hr/>
         <Evento />
       <hr/>
