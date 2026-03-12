@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Evento from './components/Evento';
+import Avisador from './components/Avisador';
 
 function App() {
   const[inputNome, setInputNome] = useState('')
@@ -20,6 +21,8 @@ function App() {
 
       <hr/>
         <Evento />
+      <hr/>
+        <Avisador />
       <hr/>
     </>
   )
