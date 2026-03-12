@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import Evento from './components/Evento';
 import Avisador from './components/Avisador';
+import Teste from './components/Teste';
 
 function App() {
   const[inputNome, setInputNome] = useState('')
@@ -23,6 +24,8 @@ function App() {
         <Evento />
       <hr/>
         <Avisador />
+      <hr/>
+        <Teste />
       <hr/>
     </>
   )
