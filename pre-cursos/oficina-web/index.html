@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Placar</title>
+
+<style>
+:root{
+  --cor-fundo: #222;
+  --cor-card: #333;
+  --cor-texto: #fff;
+  --cor-botao: #4caf50;
+  --cor-botao-menos: #e53935;
+}
+
+body{
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: Arial;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.placar{
+  display:flex;
+  gap:40px;
+}
+
+.jogador{
+  background: var(--cor-card);
+  padding:20px;
+  text-align:center;
+  border-radius:8px;
+}
+
+.pontos{
+  font-size:40px;
+  margin:10px 0;
+}
+
+button{
+  width:50px;
+  height:40px;
+  font-size:20px;
+  border:none;
+  color:white;
+  cursor:pointer;
+}
+
+.mais{
+  background: var(--cor-botao);
+}
+
+.menos{
+  background: var(--cor-botao-menos);
+}
+</style>
+</head>
+
+<body>
+
+<div class="placar">
+
+  <div class="jogador">
+    <button class="mais" onclick="mais('A')">+</button>
+    <div id="pontosA" class="pontos">0</div>
+    <button class="menos" onclick="menos('A')">-</button>
+  </div>
+
+  <div class="jogador">
+    <button class="mais" onclick="mais('B')">+</button>
+    <div id="pontosB" class="pontos">0</div>
+    <button class="menos" onclick="menos('B')">-</button>
+  </div>
+
+</div>
+
+<script>
+
+let pontosA = 0
+let pontosB = 0
+
+function atualizar(){
+  document.getElementById("pontosA").textContent = pontosA
+  document.getElementById("pontosB").textContent = pontosB
+}
+
+function mais(jogador){
+  if(jogador == "A") pontosA++
+  if(jogador == "B") pontosB++
+  atualizar()
+}
+
+function menos(jogador){
+  if(jogador == "A") pontosA--
+  if(jogador == "B") pontosB--
+  atualizar()
+}
+
+</script>
+
+</body>
+</html>
