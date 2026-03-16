@@ -24,7 +24,7 @@ function Teste() {
             <button onClick={() => somar(10)}>Somar 10</button>
             <button onClick={() => somar(44)}>Somar 44</button>
 
-            <input type="text"
+            <input type="number"
                 value={inputTeste}
                 onChange={(e) => setInputTeste(e.target.value)}
             /> 
