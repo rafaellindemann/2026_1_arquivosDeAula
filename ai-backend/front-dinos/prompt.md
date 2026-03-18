@@ -33,3 +33,7 @@ alterações
 - antes de começar cada partida, deve substituir o atributo numero_magico de todas as caratas por um número aleatório de 1..10;
 - colocar uma borda com shadow brilhante ao redor do nome do player da vez, pra ficar mais claro quem deve jogar.
 - para a imagem da carta, tente pegar a imagem no padrão NomeDoDino.png (usando o próprio atributo nome) em 'https://github.com/rafaellindemann/trunfo-dino/tree/main/imgs', caso retorne erro, use a imagem local genérica 'imgs/dino.svg'
+
+
+- Ficou show!
+Só a  imagem genérica que precisa ser redimensionada, porque está maior que seu container e está aparecendo um pedaço dela apenas
