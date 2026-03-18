@@ -7,6 +7,8 @@ import LayoutForm from './components/LayoutForm';
 import Temperaturas from './components/Temperaturas';
 import Noel from './components/Noel';
 import PapaiNoel from './components/PapaiNoel';
+import Pum from './components/Pum';
+import PumLinhas from './components/PumLinhas';
 
 function App() {
   const[inputNome, setInputNome] = useState('')
@@ -25,6 +27,10 @@ function App() {
       {/* <p>Nome digitado: {inputNome}</p> */}
 
       <hr/>
+        <PumLinhas />
+        <hr/>
+        <Pum />
+        <hr/>
         <PapaiNoel />
         <hr/>
         <Noel />
