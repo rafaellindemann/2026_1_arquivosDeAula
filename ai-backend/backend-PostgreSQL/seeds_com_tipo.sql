@@ -1,3 +1,40 @@
+
+
+
+
+
+```
+CREATE DATABASE trunfo_dino;
+```
+
+```
+
+CREATE TABLE dino (
+    id SERIAL PRIMARY KEY,
+
+    nome VARCHAR(100) NOT NULL,
+
+    altura NUMERIC(6,2),
+    comprimento NUMERIC(6,2),
+    peso NUMERIC(10,2),
+
+    velocidade NUMERIC(5,2),
+    agilidade SMALLINT,
+    longevidade SMALLINT,
+
+    numero_magico SMALLINT,
+
+    imagem TEXT,
+
+    fama SMALLINT,
+
+    tipo VARCHAR(20) NOT NULL
+);
+```
+
+
+
+
 -- IMPORTANTE: rode antes se ainda não existir
 ALTER TABLE DINO ADD COLUMN TIPO VARCHAR(20);
 
