@@ -96,7 +96,7 @@ INSERT INTO DINO (NOME, ALTURA, COMPRIMENTO, PESO, VELOCIDADE, AGILIDADE, LONGEV
 ('Gigantorraptor', 3.50, 8.00, 1400.00, 35.00, 7, 5, 7, 'imgs/dino.svg', 3, 'terrestre'),
 ('Hipsilofodonte', 0.60, 1.80, 20.00, 50.00, 10, 6, 9, 'imgs/dino.svg', 2, 'terrestre'),
 ('Lambeossauro', 4.00, 9.00, 3000.00, 30.00, 4, 2, 2, 'imgs/dino.svg', 3, 'terrestre'),
-('Mapussauro', 4.00, 12.50, 4000.00, 30.00, 4, 4, 5, 'imgs/dino.svg', 3);, 'terrestre'),
+('Mapussauro', 4.00, 12.50, 4000.00, 30.00, 4, 4, 5, 'imgs/dino.svg', 3, 'terrestre');
 
 
 -- Resumo da Escala de Fama aplicada:
@@ -161,7 +161,7 @@ INSERT INTO DINO (NOME, ALTURA, COMPRIMENTO, PESO, VELOCIDADE, AGILIDADE, LONGEV
 ('Zuniceratops', 1.00, 3.50, 150.00, 30.00, 6, 3, 9, 'imgs/dino.svg', 3, 'terrestre'),
 ('Jobaria', 12.00, 18.00, 16000.00, 12.00, 2, 5, 4, 'imgs/dino.svg', 4, 'terrestre'),
 ('Huayangossauro', 1.80, 4.50, 1000.00, 15.00, 3, 6, 10, 'imgs/dino.svg', 3, 'terrestre'),
-('Yinlong', 0.50, 1.20, 15.00, 25.00, 8, 4, 5, 'imgs/dino.svg', 2);, 'terrestre'),
+('Yinlong', 0.50, 1.20, 15.00, 25.00, 8, 4, 5, 'imgs/dino.svg', 2, 'terrestre');
 
 
 -- gemini deck c
@@ -215,7 +215,7 @@ INSERT INTO DINO (NOME, ALTURA, COMPRIMENTO, PESO, VELOCIDADE, AGILIDADE, LONGEV
 ('Brachylophossauro', 3.00, 9.00, 2000.00, 30.00, 4, 3, 9, 'imgs/dino.svg', 3, 'terrestre'),
 ('Chialingossauro', 1.50, 4.00, 500.00, 18.00, 4, 6, 4, 'imgs/dino.svg', 2, 'terrestre'),
 ('Deltadromeus', 2.50, 8.00, 1000.00, 48.00, 8, 5, 6, 'imgs/dino.svg', 4, 'terrestre'),
-('Gorgonops', 1.00, 3.00, 300.00, 45.00, 8, 10, 7, 'imgs/dino.svg', 5);, 'terrestre'),
+('Gorgonops', 1.00, 3.00, 300.00, 45.00, 8, 10, 7, 'imgs/dino.svg', 5, 'terrestre');
 
 -- gemini deck de pterossauros
 INSERT INTO DINO (NOME, ALTURA, COMPRIMENTO, PESO, VELOCIDADE, AGILIDADE, LONGEVIDADE, NUMERO_MAGICO, IMAGEM, FAMA, TIPO) VALUES
@@ -268,7 +268,7 @@ INSERT INTO DINO (NOME, ALTURA, COMPRIMENTO, PESO, VELOCIDADE, AGILIDADE, LONGEV
 ('Moganopterus', 1.20, 7.00, 45.00, 65.00, 5, 5, 7, 'imgs/dino.svg', 3, 'voador'),
 ('Kepodactylus', 1.00, 2.50, 12.00, 50.00, 8, 6, 8, 'imgs/dino.svg', 2, 'voador'),
 ('Geresgraphia', 0.40, 1.00, 1.50, 40.00, 9, 3, 4, 'imgs/dino.svg', 2, 'voador'),
-('Iberodactylus', 1.40, 4.00, 25.00, 58.00, 6, 5, 6, 'imgs/dino.svg', 2);, 'voador'),
+('Iberodactylus', 1.40, 4.00, 25.00, 58.00, 6, 5, 6, 'imgs/dino.svg', 2, 'voador');
 
 
 -- gemini deck de répteis marinhos
@@ -322,4 +322,4 @@ INSERT INTO DINO (NOME, ALTURA, COMPRIMENTO, PESO, VELOCIDADE, AGILIDADE, LONGEV
 ('Pistossauro', 0.50, 3.00, 150.00, 25.00, 7, 8, 9, 'imgs/dino.svg', 2, 'aquatico'),
 ('Henodus', 0.30, 1.00, 40.00, 10.00, 4, 5, 6, 'imgs/dino.svg', 3, 'aquatico'),
 ('Sinosaurosphargis', 0.20, 1.10, 30.00, 15.00, 5, 4, 10, 'imgs/dino.svg', 2, 'aquatico'),
-('Eretmossauro', 0.80, 4.00, 400.00, 20.00, 6, 5, 4, 'imgs/dino.svg', 2);, 'aquatico'),
+('Eretmossauro', 0.80, 4.00, 400.00, 20.00, 6, 5, 4, 'imgs/dino.svg', 2, 'aquatico');
