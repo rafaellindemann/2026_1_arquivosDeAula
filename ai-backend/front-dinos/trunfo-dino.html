@@ -314,7 +314,38 @@
     color: var(--text-light);
   }
 
-  .player-name.active-player { color: var(--sandy-brown); }
+  .player-name.active-player {
+    color: var(--sandy-brown);
+    border: 2px solid var(--sandy-brown);
+    border-radius: 4px;
+    padding: 4px 14px;
+    box-shadow: 0 0 18px rgba(250,159,66,0.55), 0 0 40px rgba(250,159,66,0.2);
+    animation: pulseGlow 1.8s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%,100% { box-shadow: 0 0 14px rgba(250,159,66,0.5), 0 0 36px rgba(250,159,66,0.15); }
+    50%      { box-shadow: 0 0 26px rgba(250,159,66,0.8), 0 0 60px rgba(250,159,66,0.3); }
+  }
+
+  .attr-key-hint {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--pine-teal);
+    background: rgba(41,73,54,0.4);
+    border: 1px solid var(--pine-teal);
+    border-radius: 2px;
+    padding: 1px 4px;
+    margin-right: 5px;
+    letter-spacing: 0;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .attr-row.selectable:hover .attr-key-hint {
+    color: var(--sandy-brown);
+    border-color: var(--sandy-brown);
+  }
 
   .card-count-badge {
     font-family: 'Barlow Condensed', sans-serif;
@@ -397,6 +428,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  .card-img-wrap img[src$=".svg"] {
+    object-fit: contain;
+    padding: 16px;
   }
 
   .card-img-placeholder {
@@ -897,7 +933,6 @@
     { key: 'agilidade',     label: 'Agilidade',     icon: '🌀', unit: '',   max: 10   },
     { key: 'longevidade',   label: 'Longevidade',   icon: '⏳', unit: 'M anos', max: 100 },
     { key: 'numero_magico', label: 'Nº Mágico',     icon: '✨', unit: '',   max: 100  },
-    { key: 'fama',          label: 'Fama',          icon: '⭐', unit: '',   max: 10   },
   ];
 
   let state = {
@@ -951,6 +986,9 @@
 
     // shuffle para garantir aleatoriedade mesmo no modo top
     shuffle(dinos);
+
+    // substituir numero_magico de todas as cartas por valor aleatório 1..10
+    dinos.forEach(d => { d.numero_magico = Math.floor(Math.random() * 10) + 1; });
 
     state.p1 = { name: p1name, deck: dinos.slice(0, n) };
     state.p2 = { name: p2name, deck: dinos.slice(n, total) };
@@ -1015,12 +1053,14 @@
 
     if (!dino) return;
 
-    // image
+    // image — tenta NomeDoDino.png no GitHub, fallback para imgs/dino.svg
     const imgWrap = frontEl.querySelector('.card-img-wrap');
-    if (dino.imagem) {
-      imgWrap.innerHTML = `<img src="${dino.imagem}" alt="${dino.nome}" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>🦕</div>'">`;
+    if (dino.nome) {
+      const nomePng = encodeURIComponent(dino.nome) + '.png';
+      const githubUrl = `https://raw.githubusercontent.com/rafaellindemann/trunfo-dino/main/imgs/${nomePng}`;
+      imgWrap.innerHTML = `<img src="${githubUrl}" alt="${dino.nome}" onerror="this.src='imgs/dino.svg'">`;
     } else {
-      imgWrap.innerHTML = `<div class="card-img-placeholder">🦕</div>`;
+      imgWrap.innerHTML = `<img src="imgs/dino.svg" alt="dino">`;
     }
 
     frontEl.querySelector('.card-name').textContent = dino.nome || '—';
@@ -1057,9 +1097,10 @@
       }
 
       const pct = Math.min(100, Math.round((parseFloat(val) / attr.max) * 100));
+      const idx = attrsEl.children.length + 1; // 1-based index for keyboard
 
       row.innerHTML = `
-        <span class="attr-label"><span class="attr-icon">${attr.icon}</span>${attr.label}</span>
+        <span class="attr-label"><span class="attr-key-hint">[${idx}]</span><span class="attr-icon">${attr.icon}</span>${attr.label}</span>
         <span class="attr-value">${formatVal(val, attr.unit)}</span>
         <div class="attr-bar-wrap"><div class="attr-bar" style="width:${pct}%"></div></div>
       `;
@@ -1159,6 +1200,19 @@
     const s = n % 1 === 0 ? n.toString() : n.toFixed(2);
     return unit ? `${s} ${unit}` : s;
   }
+
+  // keyboard shortcut: press [1]..[7] to choose attr
+  document.addEventListener('keydown', (e) => {
+    if (state.phase !== 'choose') return;
+    const n = parseInt(e.key);
+    if (isNaN(n) || n < 1) return;
+    const visibleAttrs = ATTRS.filter(a => {
+      const activeCard = state.currentPlayer === 1 ? state.p1.deck[0] : state.p2.deck[0];
+      return activeCard && activeCard[a.key] !== null && activeCard[a.key] !== undefined;
+    });
+    const attr = visibleAttrs[n - 1];
+    if (attr) chooseAttr(attr.key);
+  });
 
   function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
