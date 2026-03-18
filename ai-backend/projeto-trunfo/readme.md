@@ -1,0 +1,1 @@
+O projeto foi movido para [o repositório](https://github.com/rafaellindemann/trunfo-dino/tree/main)
