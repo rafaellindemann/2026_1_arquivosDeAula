@@ -9,6 +9,7 @@ import Noel from './components/Noel';
 import PapaiNoel from './components/PapaiNoel';
 import Pum from './components/Pum';
 import PumLinhas from './components/PumLinhas';
+import Bondinho from './components/Bondinho';
 
 function App() {
   const[inputNome, setInputNome] = useState('')
@@ -27,6 +28,8 @@ function App() {
       {/* <p>Nome digitado: {inputNome}</p> */}
 
       <hr/>
+        <Bondinho />
+        <hr/>
         <PumLinhas />
         <hr/>
         <Pum />
