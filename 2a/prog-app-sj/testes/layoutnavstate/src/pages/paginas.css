@@ -1,0 +1,15 @@
+.cont-home{
+    background-color: #00f;
+    /* height: 100%; */
+    flex: 1;
+}
+.cont-produtos{
+    background-color: #5f0;
+    /* height: 100%; */
+    flex: 1;
+}
+.cont-contato{
+    background-color: #f00;
+    /* height: 100%; */
+    flex: 1;
+}

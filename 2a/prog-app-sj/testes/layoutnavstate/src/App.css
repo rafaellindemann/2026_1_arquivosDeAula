@@ -1,0 +1,22 @@
+/* 
+.cont-main{
+  background-color: #0f0;
+  min-height: calc(100vh - 100px);
+} */
+
+
+.container-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.cont-header{
+  background-color: #f00;
+  height: 100px;
+}
+
+.cont-main {
+  flex: 1;
+  display: flex;
+}
