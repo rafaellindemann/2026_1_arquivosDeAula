@@ -28,7 +28,7 @@ function App() {
       {/* <p>Nome digitado: {inputNome}</p> */}
 
       <hr/>
-        <Bondinho />
+        {/* <Bondinho />
         <hr/>
         <PumLinhas />
         <hr/>
@@ -44,7 +44,7 @@ function App() {
       <hr/>
         <Evento />
       <hr/>
-        <Avisador />
+        <Avisador /> */}
       <hr/>
         <Teste />
       <hr/>
