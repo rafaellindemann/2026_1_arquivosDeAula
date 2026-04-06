@@ -1,0 +1,60 @@
+[
+  {
+    "id": 1,
+    "codigo": 2.1,
+    "titulo": "Teste de usabilidade",
+    "categoria": "Tipos de testes",
+    "subCategoria": null,
+    "descricao": "O Teste de Usabilidade é frequentemente associado a interfaces bonitas e botões bem posicionados, mas, no contexto de engenharia de software, ele vai muito além da 'casca'. Em essência, ele mede o quão fácil, eficiente e satisfatória é a interação do usuário com o sistema. Quando trazemos isso para o backend, \"o\" 'usuário' muda: ele deixa de ser o consumidor final e passa a ser o desenvolvedor que consome sua API ou o próprio sistema que depende da sua lógica.",
+    "descricaoCurta": "Teste de usabilidade no backend é sobre reduzir a carga cognitiva de quem vai usar seu código ou sua API.",
+    "palavrasChave": [
+      "Aprendizado: Quão rápido um usuário entende como realizar uma tarefa?",
+      "Eficiência: Uma vez aprendido, quão rápido ele executa a tarefa?",
+      "Memorização: Se o usuário ficar um tempo sem usar, ele lembra como funciona?",
+      "Prevenção de Erros: O sistema ajuda o usuário a não errar?",
+      "Satisfação: O uso é agradável ou frustrante?"
+    ],
+    "exemplos": [
+      "1. Teste de Tempo até o Primeiro 'Hello World'",
+      "2. Teste de Intuição de Endpoints (API Design)",
+      "3. Auditoria de Mensagens de Erro (O 'Teste do 400')",
+      "4. Teste de Consistência de Contratos",
+      "5. Teste de 'Sandboxing' na Documentação"
+    ],
+    "relacionados": [
+      "5.3",
+      "6.2",
+      "11.2",
+      "3.1",
+      "4.3",
+      "10.2",
+      "10.4"
+    ]
+  },
+  {
+    "id": 2,
+    "codigo": 2.2,
+    "titulo": "Teste de confiabilidade",
+    "categoria": "Tipos de testes",
+    "subCategoria": null,
+    "descricao": "Enquanto o teste de desempenho foca em \"quão rápido\", o teste de confiabilidade foca em \"por quanto tempo\" essa velocidade e a correção dos dados se mantêm sem falhas. É a transição de um teste de tiro curto para uma maratona, garantindo que o software não se degrade ou \"canse\" após horas ou dias de execução contínua. No contexto de backend, isso significa validar se o servidor consegue lidar com o processamento de grandes volumes de dados sem apresentar vazamentos de memória (memory leaks) ou esgotamento de pools de conexão com o banco de dados. Um sistema pode ser rápido nos primeiros dez minutos, mas se ele não for confiável, o acúmulo de processos mal encerrados acabará por derrubar o serviço. Aqui, testamos a resiliência da infraestrutura e a robustez da lógica server-side contra o desgaste operacional. Em termos práticos, essa verificação assegura que o software atenda a métricas de disponibilidade, como o MTBF (Mean Time Between Failures), garantindo que ele seja previsível. Para o usuário final, a confiabilidade é o que separa um sistema que \"vive caindo\" de um serviço profissional. Para o desenvolvedor, é a segurança de que o código não gerará exceções inesperadas em produção devido ao acúmulo de estados inconsistentes ou falhas na recuperação de recursos críticos.",
+    "descricaoCurta": "É a verificação da capacidade de um software manter seu nível de desempenho sob condições estabelecidas por um período determinado.",
+    "palavrasChave": [
+      "Maturidade: Frequência de falhas no sistema.",
+      "Tolerância a Falhas: O sistema continua operando se algo quebrar (ex: um microserviço cair)?",
+      "Recuperabilidade: Após uma falha, quão rápido e quão bem o sistema volta ao estado normal?"
+    ],
+    "exemplos": [
+      "Teste de Estabilidade (Soak Testing)",
+      "Teste de Failover (Recuperação)",
+      "Teste de Idempotência",
+      "Backpressure e Retry"
+    ],
+    "relacionados": [
+      "2.2",
+      "2.3",
+      "7.1",
+      "9.1"
+    ]
+  }
+]
