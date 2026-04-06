@@ -1,7 +1,7 @@
 
 ## Estrutura do objeto
 
-260406: testados 2 get, post, put e delete
+260406: testados 2 get, post, put e delete, as rotas básicas
 
 ```
     {
