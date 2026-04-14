@@ -56,5 +56,365 @@
       "7.1",
       "9.1"
     ]
+  },
+  {
+    "id": 3,
+    "codigo": 2.3,
+    "titulo": "Teste de Desempenho",
+    "categoria": "Tipos de testes",
+    "subCategoria": null,
+    "descricao": "O Teste de Desempenho (Performance Testing) avalia a responsividade, velocidade, escalabilidade e estabilidade de um sistema sob uma determinada carga de trabalho. No backend, não estamos olhando para a fluidez da animação, mas para o tempo de resposta das requisições, o consumo de memória RAM, o uso de CPU e a capacidade do banco de dados de lidar com múltiplas conexões simultâneas.",
+    "descricaoCurta": "Teste de desempenho foca em garantir que o sistema seja rápido e estável sob carga, evitando gargalos de infraestrutura.",
+    "palavrasChave": [
+      "Latência: Qual o tempo de resposta entre a requisição e o primeiro byte recebido?",
+      "Throughput: Quantas transações por segundo o sistema suporta?",
+      "Escalabilidade: O sistema aguenta um aumento súbito de acessos?",
+      "Estabilidade: O sistema mantém o comportamento em longos períodos de uso?",
+      "Consumo de Recursos: Quanta memória e CPU são necessários para processar a carga?"
+    ],
+    "exemplos": [
+      "1. Teste de Carga (Load Test) com 500 usuários simultâneos",
+      "2. Teste de Estresse (Stress Test) para encontrar o ponto de ruptura do servidor",
+      "3. Teste de Pico (Spike Test) simulando um evento de Black Friday",
+      "4. Teste de Resistência (Soak Test) para verificar vazamentos de memória (memory leaks)",
+      "5. Teste de Escalabilidade Horizontal (Adição de novos nós ao cluster)"
+    ],
+    "relacionados": [
+      "5.2",
+      "8.1",
+      "10.3",
+      "2.2",
+      "4.3"
+    ]
+  },
+  {
+    "id": 4,
+    "codigo": 2.4,
+    "titulo": "Teste de Manutenibilidade",
+    "categoria": "Tipos de testes",
+    "subCategoria": null,
+    "descricao": "Testar a manutenibilidade significa avaliar o quão fácil (ou difícil) será modificar o software no futuro, seja para corrigir bugs, adicionar novas funcionalidades ou adaptar-se a novos ambientes. Em sistemas server-side, isso está diretamente ligado à qualidade do código, modularização, acoplamento e à facilidade com que um novo desenvolvedor consegue entender e alterar a lógica sem quebrar partes não relacionadas.",
+    "descricaoCurta": "Mede o esforço necessário para modificar o sistema e a eficácia da sua arquitetura a longo prazo.",
+    "palavrasChave": [
+      "Modularidade: O sistema é composto por componentes independentes?",
+      "Reusabilidade: O código pode ser aproveitado em outras partes?",
+      "Analisabilidade: É fácil identificar a causa de uma falha?",
+      "Modificabilidade: Alterar um módulo causa efeitos colaterais em outros?",
+      "Testabilidade: O código permite a criação de testes automatizados de forma simples?"
+    ],
+    "exemplos": [
+      "1. Análise de Complexidade Ciclomática de funções",
+      "2. Revisão de Código (Code Review) focada em SOLID e Clean Code",
+      "3. Auditoria de Dívida Técnica (Technical Debt)",
+      "4. Teste de Impacto (avaliar o que quebra ao mudar uma biblioteca)",
+      "5. Verificação da cobertura de testes e facilidade de mockar dependências"
+    ],
+    "relacionados": [
+      "6.1",
+      "6.3",
+      "3.2",
+      "5.4",
+      "4.1"
+    ]
+  },
+  {
+    "id": 5,
+    "codigo": 2.5,
+    "titulo": "Teste de Funcionalidade",
+    "categoria": "Tipos de testes",
+    "subCategoria": null,
+    "descricao": "O Teste de Funcionalidade verifica se o software faz o que se espera que ele faça, baseando-se nos requisitos funcionais. É o tipo de teste mais comum, onde validamos as regras de negócio, o processamento de dados e a integração entre módulos. No backend, trata-se de garantir que, ao enviar uma entrada X para uma rota da API, ela processe a lógica corretamente e devolva a saída Y esperada, além de persistir os dados corretamente no banco.",
+    "descricaoCurta": "Valida se as funções do sistema atendem aos requisitos especificados pelo negócio.",
+    "palavrasChave": [
+      "Conformidade: O sistema segue as regras de negócio definidas?",
+      "Interoperabilidade: O sistema se comunica corretamente com outros serviços?",
+      "Segurança Funcional: O acesso a funções específicas está protegido?",
+      "Acurácia: Os cálculos e resultados estão precisos?",
+      "Adequação: As funções presentes são realmente úteis para o objetivo do software?"
+    ],
+    "exemplos": [
+      "1. Teste de Fluxo de Caixa (Cálculo de juros e descontos)",
+      "2. Validação de Regras de Acesso (RBAC - Role Based Access Control)",
+      "3. Teste de Integração com Gateways de Pagamento",
+      "4. Verificação de CRUD (Create, Read, Update, Delete)",
+      "5. Teste de caminhos felizes e fluxos de exceção (erros de negócio)"
+    ],
+    "relacionados": [
+      "1.1",
+      "3.1",
+      "4.4",
+      "10.2",
+      "11.2"
+    ]
+  },
+  {
+    "id": 6,
+    "codigo": 3.1,
+    "titulo": "Teste Funcional (Caixa Preta)",
+    "categoria": "Técnicas de testes",
+    "subCategoria": null,
+    "descricao": "A técnica de Caixa Preta foca exclusivamente nas entradas e saídas do software, sem considerar o código-fonte interno ou a estrutura de dados. O testador visualiza o sistema como uma 'caixa fechada'. No contexto de APIs, isso significa testar se um endpoint retorna o status code e o corpo da resposta corretos para um dado input, garantindo que os requisitos de negócio sejam atendidos independentemente de como foram implementados.",
+    "descricaoCurta": "Técnica que foca nos requisitos funcionais, testando entradas e saídas sem conhecer o código interno.",
+    "palavrasChave": [
+      "Baseado em Requisitos: O guia para o teste é a documentação/especificação.",
+      "Independência: Pode ser executado por alguém que não conhece a linguagem de programação do sistema.",
+      "Partição de Equivalência: Agrupamento de entradas que devem produzir o mesmo resultado.",
+      "Análise de Valor Limite: Teste focado nas fronteiras (ex: valores mínimos e máximos).",
+      "Foco no Usuário: Simula a experiência de quem consome o serviço/interface."
+    ],
+    "exemplos": [
+      "1. Enviar um JSON inválido para uma API e esperar um erro 400.",
+      "2. Testar se um campo de data aceita anos bissextos conforme a regra de negócio.",
+      "3. Validar se o login é permitido apenas com credenciais corretas.",
+      "4. Testar a integração de um serviço de frete esperando o valor correto para um CEP específico.",
+      "5. Verificação de mensagens de erro amigáveis para o usuário final."
+    ],
+    "relacionados": [
+      "2.5",
+      "4.3",
+      "4.4",
+      "10.2",
+      "10.4"
+    ]
+  },
+  {
+    "id": 7,
+    "codigo": 3.2,
+    "titulo": "Teste Estrutural (Caixa Branca)",
+    "categoria": "Técnicas de testes",
+    "subCategoria": null,
+    "descricao": "Diferente da caixa preta, a técnica de Caixa Branca (ou Caixa de Vidro) examina a estrutura interna do código, algoritmos e fluxos lógicos. O testador utiliza o conhecimento da implementação para desenhar casos de teste que garantam que todos os caminhos, condições e loops do código sejam executados ao menos uma vez. É fundamental no backend para garantir a robustez de funções complexas e evitar códigos mortos ou caminhos de erro não tratados.",
+    "descricaoCurta": "Técnica que examina a lógica interna, fluxos e caminhos do código-fonte para garantir cobertura total.",
+    "palavrasChave": [
+      "Cobertura de Código: Mede quanto do código é exercitado pelos testes.",
+      "Complexidade Ciclomática: Quantidade de caminhos independentes no código.",
+      "Teste de Caminho: Garantir que cada ramificação (if/else) foi testada.",
+      "Transparência: Exige acesso total ao código-fonte e conhecimento técnico.",
+      "Otimização: Ajuda a identificar trechos de código ineficientes ou desnecessários."
+    ],
+    "exemplos": [
+      "1. Criar um teste unitário que force a execução do bloco 'catch' de uma exceção.",
+      "2. Garantir que todas as condições de um 'switch/case' foram percorridas.",
+      "3. Testar loops com zero, uma e múltiplas iterações.",
+      "4. Analisar se variáveis internas estão sendo limpas corretamente após o uso.",
+      "5. Verificar se uma condição complexa (A && B || C) foi testada para todas as combinações lógicas."
+    ],
+    "relacionados": [
+      "2.4",
+      "4.1",
+      "5.4",
+      "6.3",
+      "9.5"
+    ]
+  },
+  {
+    "id": 8,
+    "codigo": 4.1,
+    "titulo": "Teste de Unidade ou Teste Unitário",
+    "categoria": "Níveis de testes",
+    "subCategoria": null,
+    "descricao": "É o primeiro nível de teste, focado na menor parte testável de um software de forma isolada (como uma única função, método ou classe). O objetivo é isolar cada parte do programa e mostrar que as partes individuais estão corretas. No backend, utilizamos 'Mocks' ou 'Stubs' para substituir dependências externas (como bancos de dados ou APIs de terceiros) e garantir que o teste foque apenas na lógica daquela unidade específica.",
+    "descricaoCurta": "Testa a menor unidade de código de forma isolada, garantindo que a lógica interna funcione como esperado.",
+    "palavrasChave": [
+      "Isolamento: A unidade é testada sem interferência de outros componentes.",
+      "Mocks/Stubs: Simulação de dependências externas.",
+      "Rapidez: Devem ser executados em milissegundos.",
+      "Granularidade: Foco no detalhe técnico do código.",
+      "Feedback Rápido: Permite identificar erros imediatamente após a escrita do código."
+    ],
+    "exemplos": [
+      "1. Testar se uma função de soma retorna 4 ao receber 2 e 2.",
+      "2. Validar se um método de cálculo de desconto aplica 10% corretamente.",
+      "3. Verificar se um validador de CPF rejeita um número com formato inválido.",
+      "4. Testar se uma classe de domínio mapeia os campos corretamente.",
+      "5. Garantir que uma exceção específica é lançada quando um argumento é nulo."
+    ],
+    "relacionados": [
+      "3.2",
+      "5.1",
+      "5.4",
+      "2.4",
+      "9.5"
+    ]
+  },
+  {
+    "id": 9,
+    "codigo": 4.2,
+    "titulo": "Teste de Integração",
+    "categoria": "Níveis de testes",
+    "subCategoria": null,
+    "descricao": "Este nível verifica a comunicação e o fluxo de dados entre diferentes módulos, componentes ou serviços que já foram testados individualmente. O foco aqui não é a lógica interna de cada módulo, mas como eles 'conversam' entre si. No ambiente server-side, isso geralmente envolve testar a integração do código com o banco de dados real, sistemas de mensageria (como RabbitMQ) ou outras APIs internas.",
+    "descricaoCurta": "Verifica se os módulos do sistema funcionam bem juntos e se a troca de dados entre eles é correta.",
+    "palavrasChave": [
+      "Interfaces: O ponto de contato entre dois sistemas ou módulos.",
+      "Fluxo de Dados: Garantir que a informação não se perde entre as camadas.",
+      "Contratos: Validar se a estrutura de dados enviada é a esperada por quem recebe.",
+      "Persistência: Testes que envolvem escrita e leitura real em banco de dados.",
+      "Cadeia de Chamadas: Sequência de execuções entre diferentes serviços."
+    ],
+    "exemplos": [
+      "1. Testar se um registro salvo pelo Service A pode ser lido corretamente pelo Service B no banco.",
+      "2. Validar a comunicação entre um microserviço de pedidos e um de estoque.",
+      "3. Verificar se uma chamada de API persiste os dados corretamente no banco de dados.",
+      "4. Testar a integração com um sistema de arquivos externo (S3, por exemplo).",
+      "5. Garantir que o middleware de autenticação passa as informações do usuário para a rota protegida."
+    ],
+    "relacionados": [
+      "5.2",
+      "10.1",
+      "2.5",
+      "8.3",
+      "4.1"
+    ]
+  },
+  {
+    "id": 10,
+    "codigo": 4.3,
+    "titulo": "Teste de Sistema",
+    "categoria": "Níveis de testes",
+    "subCategoria": null,
+    "descricao": "Neste nível, o sistema é testado como um todo, em um ambiente que simula o de produção o máximo possível. O objetivo é validar o comportamento do software ponta a ponta (End-to-End), garantindo que todos os requisitos funcionais e não funcionais (como segurança e desempenho) foram atendidos. É aqui que verificamos se o 'produto final' está pronto para ser entregue, testando fluxos completos do início ao fim.",
+    "descricaoCurta": "Validação do sistema completo e integrado contra os requisitos globais e ambiente de produção.",
+    "palavrasChave": [
+      "End-to-End (E2E): Teste do fluxo completo, do input inicial ao resultado final.",
+      "Ambiente de Staging: Ambiente que replica a produção.",
+      "Não-Funcionais: Desempenho, segurança e usabilidade são validados aqui.",
+      "Caixa-Preta: Geralmente realizado sem olhar para o código interno.",
+      "Regressão: Garantir que novas funcionalidades não quebraram o sistema todo."
+    ],
+    "exemplos": [
+      "1. Simular o fluxo completo de compra: do carrinho ao recebimento do e-mail de confirmação.",
+      "2. Testar a segurança do sistema contra tentativas de injeção de SQL em todas as camadas.",
+      "3. Realizar um teste de carga em todo o ecossistema de microserviços.",
+      "4. Validar se o sistema gera os relatórios PDF corretamente após o processamento de grandes lotes.",
+      "5. Testar a recuperação do sistema após uma queda simulada do servidor de banco de dados."
+    ],
+    "relacionados": [
+      "3.1",
+      "2.3",
+      "10.3",
+      "4.2",
+      "7.1"
+    ]
+  },
+  {
+    "id": 11,
+    "codigo": 4.4,
+    "titulo": "Teste de Aceitação",
+    "categoria": "Níveis de testes",
+    "subCategoria": null,
+    "descricao": "É o último nível de teste antes do lançamento oficial. O objetivo é obter a aprovação formal do cliente ou do usuário final. O foco muda de 'o sistema está tecnicamente correto?' para 'o sistema resolve o problema do negócio?'. No desenvolvimento ágil, costuma estar ligado aos Critérios de Aceitação das Histórias de Usuário. Pode ser dividido em Alpha (interno) e Beta (com usuários reais selecionados).",
+    "descricaoCurta": "Valida se o software atende às necessidades do negócio e se está pronto para ser entregue ao cliente.",
+    "palavrasChave": [
+      "Critérios de Aceitação: Condições que o software deve satisfazer para ser aceito.",
+      "Valor de Negócio: O foco é na utilidade da ferramenta.",
+      "Homologação: Processo formal de validação pelo cliente.",
+      "Teste Alpha/Beta: Testes realizados por usuários ou stakeholders.",
+      "User Stories: Base para a criação dos cenários de aceitação."
+    ],
+    "exemplos": [
+      "1. O cliente utiliza o sistema de gestão para verificar se o cálculo de impostos está conforme a lei local.",
+      "2. Realização de Testes Beta com um grupo de 100 usuários para coletar feedback final.",
+      "3. Workshop de revisão de entrega onde o Product Owner valida as funcionalidades.",
+      "4. Verificação se a interface atende aos padrões de marca e acessibilidade exigidos.",
+      "5. Validação se o tempo de resposta do sistema é aceitável para o fluxo de trabalho do usuário."
+    ],
+    "relacionados": [
+      "1.1",
+      "11.2",
+      "10.2",
+      "2.1",
+      "4.3"
+    ]
+  },
+  {
+    "id": 12,
+    "codigo": 6.1,
+    "titulo": "Review (Revisão)",
+    "categoria": "Práticas de testes",
+    "subCategoria": "Teste Estático",
+    "descricao": "A Revisão é um processo formal ou informal de examinar um produto de trabalho (código, documentos de design, planos de teste) para encontrar erros ou sugerir melhorias. No desenvolvimento de software moderno, a forma mais comum de Review é o 'Pull Request Review', onde um desenvolvedor analisa o código de outro antes de integrá-lo ao sistema principal, buscando garantir a qualidade e a disseminação do conhecimento técnico na equipe.",
+    "descricaoCurta": "Exame de um produto de trabalho para identificar defeitos e melhorar a qualidade sem executar o código.",
+    "palavrasChave": [
+      "Pull Request: Processo de submissão e revisão de código em ferramentas como Git.",
+      "Qualidade de Código: Foco em legibilidade e padrões de projeto.",
+      "Compartilhamento de Conhecimento: Garantir que mais de uma pessoa entenda a solução.",
+      "Feedback: Ciclo de melhoria contínua entre pares.",
+      "Prevenção: Encontrar erros antes da fase de execução."
+    ],
+    "exemplos": [
+      "1. Revisão de um documento de requisitos por um arquiteto de software.",
+      "2. Peer Review (revisão por pares) de uma nova funcionalidade no GitHub.",
+      "3. Revisão de um plano de testes pelo Gerente de QA.",
+      "4. Verificação de conformidade de uma API com o guia de estilo da empresa.",
+      "5. Análise de segurança em um trecho de código que lida com senhas."
+    ],
+    "relacionados": [
+      "2.4",
+      "6.2",
+      "6.3",
+      "10.2",
+      "5.4"
+    ]
+  },
+  {
+    "id": 13,
+    "codigo": 6.2,
+    "titulo": "Passeio (Walkthrough)",
+    "categoria": "Práticas de testes",
+    "subCategoria": "Teste Estático",
+    "descricao": "O Passeio ou Walkthrough é uma técnica de revisão onde o autor do produto de trabalho (como o desenvolvedor que escreveu o código ou o analista que criou o requisito) conduz os participantes através do documento ou código, explicando a lógica e o fluxo. O objetivo principal é o aprendizado, o entendimento comum e a identificação de possíveis falhas lógicas através da explicação passo a passo do que foi construído.",
+    "descricaoCurta": "Sessão onde o autor guia outros membros da equipe através do seu trabalho para explicar a lógica e obter feedback.",
+    "palavrasChave": [
+      "Orientado pelo Autor: O criador do documento lidera a reunião.",
+      "Entendimento Comum: Garantir que todos os stakeholders interpretam o requisito da mesma forma.",
+      "Baixa Formalidade: Geralmente menos rígido que uma inspeção.",
+      "Brainstorming: Discussão de soluções alternativas durante a apresentação.",
+      "Descoberta de Erros: Identificação de falhas de lógica durante a explicação."
+    ],
+    "exemplos": [
+      "1. Desenvolvedor explicando o fluxo de um algoritmo complexo para a equipe de QA.",
+      "2. Analista de negócios lendo os casos de uso para o cliente validar o entendimento.",
+      "3. Apresentação da arquitetura de um novo microserviço para o time de infraestrutura.",
+      "4. Demonstração técnica de como um novo framework será utilizado no projeto.",
+      "5. Reunião de alinhamento sobre a estrutura do banco de dados proposta."
+    ],
+    "relacionados": [
+      "6.1",
+      "7.2",
+      "9.4",
+      "10.3",
+      "2.1"
+    ]
+  },
+  {
+    "id": 14,
+    "codigo": 6.3,
+    "titulo": "Inspeção (Inspection)",
+    "categoria": "Práticas de testes",
+    "subCategoria": "Teste Estático",
+    "descricao": "A Inspeção é a forma mais formal de revisão estática. Ela segue um processo rigoroso com papéis definidos (moderador, relator, revisor) e o uso de checklists baseados em dados históricos de defeitos. O objetivo é puramente encontrar defeitos e medir a qualidade. Não se discute soluções durante a inspeção; apenas identificam-se os problemas para que o autor os corrija posteriormente. É extremamente eficaz para encontrar falhas de segurança e conformidade.",
+    "descricaoCurta": "Processo de revisão altamente formal e estruturado focado na identificação rigorosa de defeitos usando checklists.",
+    "palavrasChave": [
+      "Formalidade: Processo com regras, papéis e etapas bem definidas.",
+      "Moderador: Pessoa neutra que garante que o processo de inspeção seja seguido.",
+      "Checklist: Lista de verificação de erros comuns para guiar os inspetores.",
+      "Métricas: Coleta de dados sobre a densidade de defeitos encontrada.",
+      "Relatório de Inspeção: Documento formal com todos os achados da sessão."
+    ],
+    "exemplos": [
+      "1. Inspeção de código crítico de segurança de um sistema bancário.",
+      "2. Auditoria formal de conformidade com normas ISO ou LGPD.",
+      "3. Reunião estruturada para validar o contrato de uma API pública.",
+      "4. Verificação de código de firmware contra um checklist de erros de memória.",
+      "5. Inspeção de documentos de requisitos de um sistema de controle de tráfego aéreo."
+    ],
+    "relacionados": [
+      "6.1",
+      "3.2",
+      "2.4",
+      "10.2",
+      "11.1"
+    ]
   }
 ]
