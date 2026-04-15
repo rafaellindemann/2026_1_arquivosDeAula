@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conceitos de Testes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0a0f;
+      --surface:   #111118;
+      --surface2:  #1a1a24;
+      --border:    #2a2a3a;
+      --accent:    #5b8fff;
+      --accent2:   #a78bfa;
+      --green:     #34d399;
+      --red:       #f87171;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --tag-bg:    #1e2035;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── Layout ── */
+    #app { display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,15,.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .85rem;
+      color: var(--accent);
+      letter-spacing: .04em;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .nav-brand span { color: var(--muted); }
+
+    .nav-links { display: flex; gap: .25rem; }
+
+    .nav-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem;
+      letter-spacing: .05em;
+      padding: .4rem .9rem;
+      border-radius: 6px;
+      border: none; background: transparent; cursor: pointer;
+      color: var(--muted);
+      transition: color .2s, background .2s;
+      text-transform: uppercase;
+    }
+    .nav-link:hover { color: var(--text); background: var(--surface2); }
+    .nav-link.active { color: var(--accent); background: rgba(91,143,255,.1); }
+
+    /* ── Main ── */
+    main { flex: 1; padding: 2.5rem 2rem; max-width: 1100px; margin: 0 auto; width: 100%; }
+
+    /* ── Pages ── */
+    .page { display: none; animation: fadeIn .3s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    /* ── HOME ── */
+    .home-hero {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3rem;
+      background: var(--surface);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .home-hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(91,143,255,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .home-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .home-hero h1 em { font-style: normal; color: var(--accent); }
+    .home-hero p { color: var(--muted); max-width: 600px; font-size: 1rem; }
+
+    .badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem;
+      padding: .25rem .6rem;
+      border-radius: 4px;
+      background: rgba(91,143,255,.15);
+      color: var(--accent);
+      border: 1px solid rgba(91,143,255,.25);
+      margin-bottom: 1.2rem;
+    }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+
+    .info-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .info-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .info-card .icon { font-size: 1.5rem; margin-bottom: .75rem; }
+    .info-card h3 { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; }
+    .info-card p { font-size: .85rem; color: var(--muted); }
+
+    .endpoints-block {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+    }
+    .endpoints-block h2 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+
+    .endpoint-row {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .6rem 0;
+      border-bottom: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .8rem;
+    }
+    .endpoint-row:last-child { border-bottom: none; }
+    .method {
+      font-weight: 700; min-width: 52px;
+      padding: .2rem .5rem; border-radius: 4px; text-align: center; font-size: .72rem;
+    }
+    .method.get  { background: rgba(52,211,153,.15); color: var(--green); }
+    .method.post { background: rgba(91,143,255,.15); color: var(--accent); }
+    .method.put  { background: rgba(251,191,36,.15); color: #fbbf24; }
+    .method.patch{ background: rgba(167,139,250,.15); color: var(--accent2); }
+    .method.del  { background: rgba(248,113,113,.15); color: var(--red); }
+    .endpoint-path { color: var(--text); }
+    .endpoint-desc { color: var(--muted); margin-left: auto; font-size: .75rem; }
+
+    /* ── Section Title ── */
+    .section-title {
+      font-size: 1.4rem; font-weight: 800;
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .section-title::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* ── GERAL ── */
+    .stats-bar {
+      display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;
+    }
+    .stat {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: .75rem 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .stat-value { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: .72rem; color: var(--muted); }
+
+    .filter-tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+    .filter-tab {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem; text-transform: uppercase; letter-spacing: .04em;
+      padding: .35rem .8rem; border-radius: 6px;
+      border: 1px solid var(--border); background: transparent; cursor: pointer;
+      color: var(--muted); transition: all .2s;
+    }
+    .filter-tab:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-tab.active { border-color: var(--accent); background: rgba(91,143,255,.1); color: var(--accent); }
+
+    .concepts-list { display: flex; flex-direction: column; gap: .75rem; }
+
+    /* ── Concept Card ── */
+    .concept-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem 1.5rem;
+      cursor: pointer; transition: border-color .2s, transform .15s;
+    }
+    .concept-card:hover { border-color: var(--accent); transform: translateX(4px); }
+
+    .concept-card-header {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+      margin-bottom: .5rem;
+    }
+    .concept-code {
+      font-family: 'JetBrains Mono', monospace; font-size: .72rem;
+      color: var(--accent); background: rgba(91,143,255,.1);
+      border: 1px solid rgba(91,143,255,.2);
+      padding: .15rem .45rem; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+    }
+    .concept-title { font-size: 1rem; font-weight: 700; }
+    .concept-short { font-size: .85rem; color: var(--muted); margin-top: .3rem; }
+    .concept-category {
+      font-family: 'JetBrains Mono', monospace; font-size: .7rem;
+      color: var(--accent2); margin-top: .5rem;
+    }
+
+    /* ── Concept Detail (modal) ── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.7); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .modal-overlay.hidden { display: none; }
+
+    .modal {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 16px; width: 100%; max-width: 680px;
+      max-height: 90vh; overflow-y: auto;
+      animation: slideUp .25s ease;
+    }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+    .modal-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 1.75rem 1.75rem 0;
+      position: sticky; top: 0;
+      background: var(--surface2); border-bottom: 1px solid var(--border);
+      padding-bottom: 1.25rem; z-index: 1;
+    }
+    .modal-close {
+      background: var(--border); border: none; cursor: pointer;
+      color: var(--text); width: 30px; height: 30px; border-radius: 6px;
+      font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+      transition: background .2s; flex-shrink: 0;
+    }
+    .modal-close:hover { background: var(--accent); }
+
+    .modal-body { padding: 1.5rem 1.75rem 1.75rem; }
+
+    .modal-section { margin-bottom: 1.5rem; }
+    .modal-section h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem; text-transform: uppercase; letter-spacing: .1em;
+      color: var(--muted); margin-bottom: .75rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .modal-section h3::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .modal-desc { font-size: .9rem; color: var(--text); line-height: 1.75; }
+
+    .keywords-list { display: flex; flex-direction: column; gap: .4rem; }
+    .keyword-item {
+      background: var(--tag-bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: .4rem .75rem;
+      font-size: .82rem; color: var(--text);
+    }
+    .keyword-item strong { color: var(--accent2); }
+
+    .examples-list { display: flex; flex-direction: column; gap: .35rem; }
+    .example-item {
+      font-size: .85rem; color: var(--muted); padding: .3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .example-item:last-child { border-bottom: none; }
+
+    .related-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .related-chip {
+      font-family: 'JetBrains Mono', monospace; font-size: .78rem;
+      padding: .3rem .65rem; border-radius: 6px;
+      background: rgba(91,143,255,.1); border: 1px solid rgba(91,143,255,.25);
+      color: var(--accent); cursor: pointer; transition: all .2s;
+    }
+    .related-chip:hover { background: var(--accent); color: #fff; }
+
+    /* ── SEARCH ── */
+    .search-box {
+      display: flex; gap: .75rem; margin-bottom: 2rem;
+    }
+    .search-input {
+      flex: 1; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: .75rem 1rem;
+      color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: .9rem;
+      outline: none; transition: border-color .2s;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--muted); }
+
+    .search-btn {
+      background: var(--accent); color: #fff; border: none; cursor: pointer;
+      border-radius: 10px; padding: .75rem 1.5rem;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem;
+      transition: opacity .2s;
+    }
+    .search-btn:hover { opacity: .85; }
+
+    .search-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem; color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .empty-state {
+      text-align: center; padding: 4rem 2rem;
+      font-family: 'JetBrains Mono', monospace; color: var(--muted);
+    }
+    .empty-state .big { font-size: 2rem; margin-bottom: .5rem; }
+
+    /* ── RANDOM ── */
+    .random-wrap { text-align: center; }
+
+    .random-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; border: none; cursor: pointer;
+      border-radius: 12px; padding: 1rem 2.5rem;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+      margin-bottom: 2.5rem;
+      transition: transform .15s, opacity .2s;
+    }
+    .random-btn:hover { transform: scale(1.03); opacity: .9; }
+    .random-btn:active { transform: scale(.98); }
+
+    .random-card {
+      background: var(--surface); border: 1px solid var(--accent);
+      border-radius: 16px; padding: 2rem;
+      text-align: left; max-width: 680px; margin: 0 auto;
+      animation: fadeIn .3s ease;
+    }
+    .random-card .rc-code {
+      font-family: 'JetBrains Mono', monospace; font-size: .8rem;
+      color: var(--accent); margin-bottom: .5rem;
+    }
+    .random-card .rc-title {
+      font-size: 1.6rem; font-weight: 800; margin-bottom: .5rem;
+    }
+    .random-card .rc-cat {
+      font-family: 'JetBrains Mono', monospace; font-size: .75rem;
+      color: var(--accent2); margin-bottom: 1.25rem;
+    }
+    .random-card .rc-short {
+      background: var(--surface2); border-left: 3px solid var(--accent);
+      padding: .75rem 1rem; border-radius: 0 6px 6px 0;
+      font-size: .9rem; color: var(--text); margin-bottom: 1.25rem;
+    }
+    .random-card .rc-desc {
+      font-size: .87rem; color: var(--muted); line-height: 1.75;
+    }
+
+    /* ── Status ── */
+    .status-dot {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); margin-right: .4rem;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; } 50% { opacity: .3; }
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1rem 2rem;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem; color: var(--muted);
+    }
+
+    /* ── Loading ── */
+    .loading {
+      display: flex; align-items: center; gap: .5rem;
+      font-family: 'JetBrains Mono', monospace; font-size: .85rem; color: var(--muted);
+      padding: 2rem 0;
+    }
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%; animation: spin .6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .nav-brand span { display: none; }
+      .nav-link { padding: .35rem .6rem; font-size: .7rem; }
+      main { padding: 1.5rem 1rem; }
+      .home-hero { padding: 1.75rem; }
+      .modal-header, .modal-body { padding: 1.25rem; }
+      .endpoint-desc { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">
+      <span>▸</span> api-conceitos <span>/ v1</span>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link active" data-page="home">Home</button>
+      <button class="nav-link" data-page="geral">Geral</button>
+      <button class="nav-link" data-page="pesquisa">Pesquisa</button>
+      <button class="nav-link" data-page="random">Random</button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- HOME -->
+    <section class="page active" id="page-home">
+      <div class="home-hero">
+        <div class="badge">REST API · JSON · Node.js + Express</div>
+        <h1>Base de <em>Conceitos</em><br>de Testes de Software</h1>
+        <p>Uma API RESTful para explorar, pesquisar e revisar conceitos fundamentais sobre testes de software — de tipos e níveis até práticas e técnicas.</p>
+      </div>
+
+      <div class="section-title">O que essa API faz</div>
+      <div class="cards-grid">
+        <div class="info-card">
+          <div class="icon">📚</div>
+          <h3>Conceitos estruturados</h3>
+          <p>Cada item possui código, categoria, descrição, palavras-chave, exemplos e conceitos relacionados.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🔗</div>
+          <h3>Conceitos relacionados</h3>
+          <p>Cada conceito aponta para outros por código. Clique em um número para navegar direto ao conceito.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">⚡</div>
+          <h3>CRUD completo</h3>
+          <p>Suporte a GET, POST, PUT, PATCH e DELETE. Persistência em arquivo JSON local.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🎯</div>
+          <h3>Sem banco de dados</h3>
+          <p>Dados armazenados em <code style="color:var(--accent);font-family:JetBrains Mono,monospace">data.json</code> — simples, portátil e fácil de editar.</p>
+        </div>
+      </div>
+
+      <div class="section-title">Endpoints disponíveis</div>
+      <div class="endpoints-block">
+        <div class="endpoint-row">
+          <span class="method get">GET</span>
+          <span class="endpoint-path">/items</span>
+          <span class="endpoint-desc">Lista todos os conceitos</span>
+        </div>
+        <div class="endpoint-row">
+          <span class="method get">GET</span>
+          <span class="endpoint-path">/items/:id</span>
+          <span class="endpoint-desc">Busca um conceito pelo ID</span>
+        </div>
+        <div class="endpoint-row">
+          <span class="method post">POST</span>
+          <span class="endpoint-path">/items</span>
+          <span class="endpoint-desc">Cria um novo conceito</span>
+        </div>
+        <div class="endpoint-row">
+          <span class="method put">PUT</span>
+          <span class="endpoint-path">/items/:id</span>
+          <span class="endpoint-desc">Substitui completamente um conceito</span>
+        </div>
+        <div class="endpoint-row">
+          <span class="method patch">PATCH</span>
+          <span class="endpoint-path">/items/:id</span>
+          <span class="endpoint-desc">Atualiza parcialmente um conceito</span>
+        </div>
+        <div class="endpoint-row">
+          <span class="method del">DELETE</span>
+          <span class="endpoint-path">/items/:id</span>
+          <span class="endpoint-desc">Remove um conceito</span>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:2rem">Status do servidor</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+        <div>
+          <div style="font-family:JetBrains Mono,monospace;font-size:.78rem;color:var(--muted);margin-bottom:.2rem">BASE URL</div>
+          <code style="font-family:JetBrains Mono,monospace;color:var(--accent)" id="base-url-display">http://localhost:3000</code>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:.4rem;font-family:JetBrains Mono,monospace;font-size:.8rem" id="server-status">
+          <span class="status-dot"></span> verificando...
+        </div>
+        <button onclick="checkServer()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:.35rem .8rem;cursor:pointer;font-family:JetBrains Mono,monospace;font-size:.75rem">testar</button>
+      </div>
+    </section>
+
+    <!-- GERAL -->
+    <section class="page" id="page-geral">
+      <div class="section-title">Todos os Conceitos</div>
+      <div class="stats-bar" id="stats-bar">
+        <div class="loading"><div class="spinner"></div> carregando dados...</div>
+      </div>
+      <div class="filter-tabs" id="filter-tabs"></div>
+      <div class="concepts-list" id="concepts-list"></div>
+    </section>
+
+    <!-- PESQUISA -->
+    <section class="page" id="page-pesquisa">
+      <div class="section-title">Pesquisar Conceitos</div>
+      <div class="search-box">
+        <input class="search-input" id="search-input" type="text" placeholder="ex: mock, TDD, performance, SOLID..." />
+        <button class="search-btn" onclick="doSearch()">Buscar</button>
+      </div>
+      <div class="search-meta" id="search-meta"></div>
+      <div class="concepts-list" id="search-results"></div>
+    </section>
+
+    <!-- RANDOM -->
+    <section class="page" id="page-random">
+      <div class="random-wrap">
+        <div class="section-title" style="justify-content:center;margin-bottom:2rem">Conceito Aleatório</div>
+        <button class="random-btn" onclick="loadRandom()">🎲 Sortear conceito</button>
+        <div id="random-result"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span class="status-dot" style="animation:none;opacity:.6"></span>
+    api-conceitos &nbsp;·&nbsp; src/server.js + data.json &nbsp;·&nbsp; Express 4
+  </footer>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay hidden" id="modal-overlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div>
+        <div class="concept-code" id="modal-code"></div>
+        <div class="concept-title" id="modal-title" style="font-size:1.2rem;margin-top:.4rem"></div>
+        <div class="concept-category" id="modal-cat"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+  const BASE = 'http://localhost:3000';
+  let allConcepts = [];
+  let activeFilter = 'todos';
+
+  // ── Nav ────────────────────────────────────────────────────────────────────
+  document.querySelectorAll('.nav-link').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('page-' + btn.dataset.page).classList.add('active');
+      if (btn.dataset.page === 'geral' && allConcepts.length === 0) loadGeral();
+    });
+  });
+
+  // ── Server check ───────────────────────────────────────────────────────────
+  async function checkServer() {
+    const el = document.getElementById('server-status');
+    el.innerHTML = '<span class="status-dot"></span> verificando...';
+    try {
+      const r = await fetch(`${BASE}/items`);
+      if (r.ok) {
+        el.innerHTML = '<span class="status-dot"></span> online';
+        el.style.color = 'var(--green)';
+      } else throw new Error();
+    } catch {
+      el.innerHTML = '● offline';
+      el.style.color = 'var(--red)';
+    }
+  }
+  checkServer();
+
+  // ── Load all ───────────────────────────────────────────────────────────────
+  async function loadGeral() {
+    document.getElementById('stats-bar').innerHTML = '<div class="loading"><div class="spinner"></div> carregando...</div>';
+    try {
+      const r = await fetch(`${BASE}/items`);
+      allConcepts = await r.json();
+      renderStats();
+      renderFilters();
+      renderList(allConcepts);
+    } catch {
+      document.getElementById('stats-bar').innerHTML = '<span style="color:var(--red);font-family:JetBrains Mono,monospace;font-size:.85rem">⚠ Não foi possível conectar ao servidor.</span>';
+    }
+  }
+
+  function renderStats() {
+    const cats = [...new Set(allConcepts.map(c => c.categoria))];
+    document.getElementById('stats-bar').innerHTML = `
+      <div class="stat"><div class="stat-value">${allConcepts.length}</div><div class="stat-label">conceitos</div></div>
+      <div class="stat"><div class="stat-value">${cats.length}</div><div class="stat-label">categorias</div></div>
+      <div class="stat"><div class="stat-value">${[...new Set(allConcepts.map(c=>c.subCategoria).filter(Boolean))].length}</div><div class="stat-label">subcategorias</div></div>
+    `;
+  }
+
+  function renderFilters() {
+    const cats = ['todos', ...new Set(allConcepts.map(c => c.categoria))];
+    document.getElementById('filter-tabs').innerHTML = cats.map(cat =>
+      `<button class="filter-tab ${cat === activeFilter ? 'active' : ''}" onclick="setFilter('${cat}')">${cat}</button>`
+    ).join('');
+  }
+
+  function setFilter(cat) {
+    activeFilter = cat;
+    renderFilters();
+    const filtered = cat === 'todos' ? allConcepts : allConcepts.filter(c => c.categoria === cat);
+    renderList(filtered);
+  }
+
+  function renderList(list) {
+    if (!list.length) {
+      document.getElementById('concepts-list').innerHTML = '<div class="empty-state"><div class="big">🔍</div>Nenhum conceito encontrado.</div>';
+      return;
+    }
+    document.getElementById('concepts-list').innerHTML = list.map(c => conceptCardHTML(c)).join('');
+  }
+
+  function conceptCardHTML(c) {
+    return `
+      <div class="concept-card" onclick="openModal(${c.id})">
+        <div class="concept-card-header">
+          <div class="concept-title">${c.titulo}</div>
+          <div class="concept-code">${c.codigo}</div>
+        </div>
+        <div class="concept-short">${c.descricaoCurta}</div>
+        <div class="concept-category">${c.categoria}${c.subCategoria ? ' › ' + c.subCategoria : ''}</div>
+      </div>
+    `;
+  }
+
+  // ── Search ─────────────────────────────────────────────────────────────────
+  document.getElementById('search-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doSearch();
+  });
+
+  async function doSearch() {
+    const q = document.getElementById('search-input').value.trim().toLowerCase();
+    if (!q) return;
+    if (allConcepts.length === 0) {
+      const r = await fetch(`${BASE}/items`);
+      allConcepts = await r.json();
+    }
+    const results = allConcepts.filter(c =>
+      c.titulo.toLowerCase().includes(q) ||
+      c.descricao.toLowerCase().includes(q) ||
+      c.descricaoCurta.toLowerCase().includes(q) ||
+      c.categoria.toLowerCase().includes(q) ||
+      (c.subCategoria || '').toLowerCase().includes(q) ||
+      (c.palavrasChave || []).some(kw => kw.toLowerCase().includes(q)) ||
+      (c.exemplos || []).some(ex => ex.toLowerCase().includes(q))
+    );
+    document.getElementById('search-meta').textContent = `${results.length} resultado(s) para "${q}"`;
+    if (!results.length) {
+      document.getElementById('search-results').innerHTML = '<div class="empty-state"><div class="big">🔍</div>Nenhum resultado encontrado.</div>';
+      return;
+    }
+    document.getElementById('search-results').innerHTML = results.map(c => conceptCardHTML(c)).join('');
+  }
+
+  // ── Random ─────────────────────────────────────────────────────────────────
+  async function loadRandom() {
+    if (allConcepts.length === 0) {
+      try {
+        const r = await fetch(`${BASE}/items`);
+        allConcepts = await r.json();
+      } catch {
+        document.getElementById('random-result').innerHTML = '<span style="color:var(--red);font-family:JetBrains Mono,monospace;font-size:.85rem">⚠ Servidor offline.</span>';
+        return;
+      }
+    }
+    const c = allConcepts[Math.floor(Math.random() * allConcepts.length)];
+    document.getElementById('random-result').innerHTML = `
+      <div class="random-card">
+        <div class="rc-code">${c.codigo}</div>
+        <div class="rc-title">${c.titulo}</div>
+        <div class="rc-cat">${c.categoria}${c.subCategoria ? ' › ' + c.subCategoria : ''}</div>
+        <div class="rc-short">${c.descricaoCurta}</div>
+        <div class="rc-desc">${c.descricao.substring(0, 400)}${c.descricao.length > 400 ? '...' : ''}</div>
+        ${c.relacionados?.length ? `
+          <div style="margin-top:1.25rem">
+            <div style="font-family:JetBrains Mono,monospace;font-size:.72rem;color:var(--muted);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.08em">Relacionados</div>
+            <div class="related-chips">${c.relacionados.map(r => `<span class="related-chip" onclick="goToCode('${r}')">${r}</span>`).join('')}</div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  // ── Modal ──────────────────────────────────────────────────────────────────
+  async function openModal(id) {
+    let c = allConcepts.find(x => x.id === id);
+    if (!c) {
+      try {
+        const r = await fetch(`${BASE}/items/${id}`);
+        c = await r.json();
+      } catch { return; }
+    }
+
+    document.getElementById('modal-code').textContent = c.codigo;
+    document.getElementById('modal-title').textContent = c.titulo;
+    document.getElementById('modal-cat').textContent = c.categoria + (c.subCategoria ? ' › ' + c.subCategoria : '');
+
+    const kwHTML = (c.palavrasChave || []).map(kw => {
+      const parts = kw.split(':');
+      return `<div class="keyword-item"><strong>${parts[0]}</strong>${parts.length > 1 ? ':' + parts.slice(1).join(':') : ''}</div>`;
+    }).join('');
+
+    const exHTML = (c.exemplos || []).map(ex => `<div class="example-item">${ex}</div>`).join('');
+    const relHTML = (c.relacionados || []).map(r => `<span class="related-chip" onclick="goToCode('${r}')">${r}</span>`).join('');
+
+    document.getElementById('modal-body').innerHTML = `
+      <div class="modal-section">
+        <h3>Descrição curta</h3>
+        <div style="background:var(--surface);border-left:3px solid var(--accent);padding:.75rem 1rem;border-radius:0 6px 6px 0;font-size:.9rem;">${c.descricaoCurta}</div>
+      </div>
+      <div class="modal-section">
+        <h3>Descrição completa</h3>
+        <div class="modal-desc">${c.descricao}</div>
+      </div>
+      ${kwHTML ? `<div class="modal-section"><h3>Palavras-chave</h3><div class="keywords-list">${kwHTML}</div></div>` : ''}
+      ${exHTML ? `<div class="modal-section"><h3>Exemplos</h3><div class="examples-list">${exHTML}</div></div>` : ''}
+      ${relHTML ? `<div class="modal-section"><h3>Relacionados</h3><div class="related-chips">${relHTML}</div></div>` : ''}
+    `;
+
+    document.getElementById('modal-overlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOnOverlay(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ── Navigate by code ───────────────────────────────────────────────────────
+  async function goToCode(code) {
+    closeModal();
+    if (allConcepts.length === 0) {
+      const r = await fetch(`${BASE}/items`);
+      allConcepts = await r.json();
+    }
+    const c = allConcepts.find(x => String(x.codigo) === String(code));
+    if (c) {
+      // Switch to Geral and open modal
+      document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelector('[data-page="geral"]').classList.add('active');
+      document.getElementById('page-geral').classList.add('active');
+      if (document.getElementById('concepts-list').children.length === 0) {
+        renderStats(); renderFilters(); renderList(allConcepts);
+      }
+      setTimeout(() => openModal(c.id), 150);
+    }
+  }
+</script>
+</body>
+</html>
