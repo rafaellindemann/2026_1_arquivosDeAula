@@ -1,6 +1,9 @@
 .cont-card{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.356);
 }
 .imagem-produto{
     font-size: 40px;
