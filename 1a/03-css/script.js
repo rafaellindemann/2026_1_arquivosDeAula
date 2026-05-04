@@ -1,3 +1,19 @@
+let resposta = document.getElementById('resultado')
+
+function verificarIdade(){
+    // infos
+    let idade
+    // entradas
+    idade = Number(prompt("Digite sua idade:"))
+    // processamentos
+    // saídas
+    if(idade >= 18){
+        resposta.innerHTML = "Você é maior de idade"
+    }else{
+        resposta.innerHTML = "Você é menor de idade"
+    }
+}
+
 function verificarProvisoes(){
     // infos
     let marujos, comida
@@ -31,8 +47,8 @@ function calcularPrecoBrique(){
     // PROCESSAMENTO
     precoVenda = precoCompra * 3
     // SAIDAS
-    console.log("Preço para venda: R$" + precoVenda.toFixed(2));
-    alert("Preço para venda: R$" + precoVenda.toFixed(2));
+    // console.log("Preço para venda: R$" + precoVenda.toFixed(2));
+    // alert("Preço para venda: R$" + precoVenda.toFixed(2));
 
     document.getElementById("resultado").innerHTML = "Preço para venda: R$" + precoVenda.toFixed(2)
 }
