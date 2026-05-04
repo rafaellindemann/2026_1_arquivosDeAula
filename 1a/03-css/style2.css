@@ -1,0 +1,74 @@
+/* Reset básico para remover margens estranhas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f2f5; /* Um cinza bem claro, mais confortável que o verde vibrante */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+h1 {
+    color: #0000ff;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-weight: 300;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+hr {
+    width: 50%;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin-bottom: 30px;
+}
+
+/* Container para os botões */
+button {
+    background-color: #0000ff;
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease; /* Efeito suave de transição */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Efeito ao passar o mouse */
+button:hover {
+    background-color: #0000cc;
+    transform: translateY(-2px); /* Eleva o botão levemente */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+output {
+    display: block;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-left: 5px solid #0000ff;
+    border-radius: 4px;
+    min-width: 300px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
