@@ -1,5 +1,15 @@
 let resposta = document.getElementById('resultado')
 
+function calcularParImpar(){
+    let n = Number(prompt("Digita número, meu consagrado:"))
+    if(n%2 == 0){
+        alert("Par")
+    }else{
+        alert("Ímpar")
+    }
+}
+
+
 function mostrarDiaDaSemana(){
     // infos
     let numero, dia
