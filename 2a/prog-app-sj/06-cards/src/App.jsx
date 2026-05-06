@@ -8,6 +8,79 @@ function App() {
     {id: 2, nome: 'Tamagotchi', preco: 22, imagem: '🦕'},
     {id: 3, nome: 'Genius', preco: 100, imagem: '🛸'},
   ])
+
+  const [cavalos, setCavalos] = useState([
+    {
+      id: 1,
+      nome: "Trovão",
+      raca: "Mangalarga Marchador",
+      idade: 5,
+      pelagem: "Tordilho"
+    },
+    {
+      id: 2,
+      nome: "Pérola",
+      raca: "Quarto de Milha",
+      idade: 4,
+      pelagem: "Alazã"
+    },
+    {
+      id: 3,
+      nome: "Espírito",
+      raca: "Mustang",
+      idade: 7,
+      pelagem: "Baio"
+    },
+    {
+      id: 4,
+      nome: "Apolo",
+      raca: "Puro Sangue Inglês",
+      idade: 6,
+      pelagem: "Castanho"
+    },
+    {
+      id: 5,
+      nome: "Luna",
+      raca: "Appaloosa",
+      idade: 3,
+      pelagem: "Sardenta"
+    },
+    {
+      id: 6,
+      nome: "Barão",
+      raca: "Crioulo",
+      idade: 10,
+      pelagem: "Zaino"
+    },
+    {
+      id: 7,
+      nome: "Zéfiro",
+      raca: "Lusitano",
+      idade: 8,
+      pelagem: "Branco"
+    },
+    {
+      id: 8,
+      nome: "Fagulha",
+      raca: "Árabe",
+      idade: 5,
+      pelagem: "Preto"
+    },
+    {
+      id: 9,
+      nome: "Diamante",
+      raca: "Andaluz",
+      idade: 9,
+      pelagem: "Cinza"
+    },
+    {
+      id: 10,
+      nome: "Cigana",
+      raca: "Campolina",
+      idade: 4,
+      pelagem: "Pampa"
+    }
+  ])
   
   const[inputImagem, setInputImagem] = useState('')
   const[inputNome, setInputNome] = useState('')
@@ -30,6 +103,12 @@ function App() {
 
   return (
     <div>
+      <section>
+        <h2>Cavalos</h2>
+        <p>Façam aqui o map de cavalos bem bonitinhos 67</p>
+      </section>
+
+      <hr/>
       <h1>Cards de coisas</h1>
       <div className="cont-form">
       <h2>Cadastro de coisas</h2>
