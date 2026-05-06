@@ -9,15 +9,44 @@ function App() {
     {id: 3, nome: 'Genius', preco: 100, imagem: '🛸'},
   ])
   
+  const[inputImagem, setInputImagem] = useState('')
+  const[inputNome, setInputNome] = useState('')
+  const[inputPreco, setInputPreco] = useState('')
+
   function cadastrar(){
     let produtoNovo = {id: Date.now(), nome: 'Pogobol', preco: 10, imagem: '🪐'}
-    setProdutos([...produtos, produtoNovo])
+    setProdutos([produtoNovo, ...produtos])
   }
 
   return (
     <div>
       <h1>Cards de coisas</h1>
-      <button onClick={cadastrar}>+</button>
+      <div className="cont-form">
+      <h2>Cadastro de coisas</h2>
+        <div className="input-container">
+          <label htmlFor="">Imagem</label>
+          <input type="text"
+            value={inputImagem}
+            onChange={(e) => setInputImagem(e.target.value)}
+            />
+        </div>
+        <div className="input-container">
+          <label htmlFor="">Nome</label>
+          <input type="text"
+            value={inputNome}
+            onChange={(e) => setInputNome(e.target.value)}
+            />
+        </div>
+        <div className="input-container">
+          <label htmlFor="">Preço</label>
+          <input type="text"
+            value={inputPreco}
+            onChange={(e) => setInputPreco(e.target.value)}
+          />
+        </div>
+
+        <button onClick={cadastrar}>Cadastrar</button>
+      </div>
       <div className="listaCards">
         {
           produtos.map((produto) => (
