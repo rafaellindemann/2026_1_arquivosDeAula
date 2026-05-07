@@ -466,6 +466,24 @@ const[kpops, setKpops] = useState([
 
   return (
     <>
+      <section>
+        {/* map de cavalos */}
+      </section>
+
+      <section>
+        {/* map de carros */}
+      </section>
+
+      <section>
+        {/* map  de ... */}
+      </section>
+
+      <section>
+        <h2>demo de imagens usando os pokemons </h2>
+        {pokemonhos.map((poke) => (
+          <img src={poke.imagem} alt="" />
+        ))}
+      </section>
 
     </>
   )
