@@ -1,4 +1,24 @@
 let resposta = document.getElementById('resultado')
+// let resposta01 = document.getElementById('resultado01')
+
+function verificarMeta(){
+    // infos
+    let totalBruto, premiacoes, presentes, comissoes, lucro
+    // entradas
+    totalBruto = Number(prompt("Total bruto: "))
+    premiacoes = Number(prompt("Premiações: "))
+    presentes = Number(prompt("Presentinhos: "))
+    comissoes = Number(prompt("Comissões: "))
+    // processamento
+    lucro = totalBruto - premiacoes - presentes - comissoes
+    // saídas
+    resposta.innerHTML = "Lucro de hoje: R$" + lucro.toFixed(2).replace('.',',')
+    // let ponto = '.'
+    // let virgula = ','
+    // resposta.innerHTML = "Lucro de hoje: R$" + 
+    // lucro.toFixed(2).replace(prompt("Digita o ponto aí pra mim"),prompt("E a vírgula?"))
+}
+
 
 function revelarRecreio(){
     document.getElementById('resultado').innerHTML =
