@@ -106,6 +106,7 @@ function App() {
       <section>
         <h2>Cavalos</h2>
         <p>Façam aqui o map de cavalos bem bonitinhos 67</p>
+        <div>map de cavalos vai aqui...</div>
       </section>
 
       <hr/>
