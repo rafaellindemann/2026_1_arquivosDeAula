@@ -1,3 +1,13 @@
+/* .testeCor{
+  width: 80px;
+  height: 80px;
+  fill: #5d4037; 
+  transition: fill 0.3s;
+  color: aqua;
+  stroke: aqua;
+  background-color: chartreuse;
+} */
+ 
 .counter {
   font-size: 16px;
   padding: 5px 10px;
