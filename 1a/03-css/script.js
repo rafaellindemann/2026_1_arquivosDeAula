@@ -1,6 +1,37 @@
 let resposta = document.getElementById('resultado')
 // let resposta01 = document.getElementById('resultado01')
 
+function calcularUber(){
+    // infos
+    let distancia, tempoSegundos, tempoHoras, tempoDias
+    let tempoMinutos
+    const velocidade = 300000
+    // entradas
+    distancia = Number(prompt("Distância:"))
+    // processamento
+    tempoSegundos = distancia / velocidade
+    // saídas
+    resposta.innerHTML = '<br>Tempo: ' + tempoSegundos + ' segundo(s)'
+    // resposta.innerHTML = '<p>Tempo: ' + tempoSegundos + ' segundo(s)</p>'
+    
+    // segunda etapa
+    if(tempoSegundos > 60){
+        tempoMinutos = tempoSegundos / 60
+        resposta.innerHTML += '<br>Ou ' + tempoMinutos + ' minuto(s)'
+    }
+    if(tempoMinutos > 60){
+        tempoHoras = tempoMinutos / 60
+        resposta.innerHTML += '<br>Ou ' + tempoHoras + ' hora(s)'
+    }
+    if(tempoHoras > 24){
+        tempoDias = tempoHoras / 24
+        // ...
+    }
+
+    // resto = 6.75 % 1
+
+}
+
 function verificarMeta(){
     // infos
     let totalBruto, premiacoes, presentes, comissoes, lucro
