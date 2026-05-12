@@ -29,7 +29,11 @@ function calcularUber(){
     }
 
     // resto = 6.75 % 1
+    if(tempoSegundos > 60){
+        'e ' 
 
+    }
+    + tempoMinutos
 }
 
 function verificarMeta(){
