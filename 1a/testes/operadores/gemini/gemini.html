@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering JS: Operadores</title>
+    <style>
+        :root {
+            --js-yellow: #f7df1e;
+            --js-black: #323330;
+            --white: #ffffff;
+            --gray: #f4f4f4;
+            --accent: #007acc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--js-yellow);
+            color: var(--js-black);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Animação de Fundo --- */
+        .bg-symbols {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .symbol {
+            position: absolute;
+            font-weight: bold;
+            font-size: 2rem;
+            color: rgba(0, 0, 0, 0.05);
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- Layout --- */
+        header {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+            background: var(--js-black);
+            color: var(--js-yellow);
+            padding: 0 20px;
+            display: inline-block;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            border-left: 10px solid var(--js-black);
+            padding-left: 15px;
+        }
+
+        /* --- Cards --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 0px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-symbol {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--js-black);
+            background: var(--js-yellow);
+            width: fit-content;
+            padding: 5px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        code {
+            background: #2d2d2d;
+            color: #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .result {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* --- Lab Interativo --- */
+        .lab {
+            background: var(--js-black);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+
+        .lab h3 { color: var(--js-yellow); margin-bottom: 20px; }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .control-group {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background: var(--js-yellow);
+            color: var(--js-black);
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.2s;
+        }
+
+        .btn:hover { background: white; }
+
+        .output {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-left: 4px solid var(--js-yellow);
+            min-height: 40px;
+        }
+
+        .badge-adv {
+            background: #ff4757;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            vertical-align: middle;
+        }
+
+        /* --- Responsividade --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-symbols" id="symbolBg"></div>
+
+    <header>
+        <h1>Operadores JS</h1>
+        <p class="subtitle">Os blocos de construção da lógica. Use-os para calcular, comparar e tomar decisões no seu código.</p>
+    </header>
+
+    <div class="container">
+        
+        <section id="aritmeticos">
+            <h2>Aritméticos</h2>
+            <p>Usados para realizar contas matemáticas básicas.</p>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-symbol">+</div>
+                    <div class="card-title">Adição</div>
+                    <div class="card-desc">Soma dois valores.</div>
+                    <code>10 + 5</code>
+                    <div class="result">// Resultado: 15</div>
+                </div>
+                <div class="card">
+                    <div class="card-symbol">**</div>
+                    <div class="card-title">Exponenciação</div>
+                    <div class="card-desc">Eleva um número à potência de outro.</div>
+                    <code>2 ** 3</code>
+                    <div class="result">// Resultado: 8</div>
+                </div>
+                <div class="card">
+                    <div class="card-symbol">%</div>
+                    <div class="card-title">Módulo</div>
+                    <div class="card-desc">Retorna o resto da divisão.</div>
+                    <code>10 % 3</code>
+                    <div class="result">// Resultado: 1</div>
+                </div>
+                <div class="card">
+                    <div class="card-symbol">++ / --</div>
+                    <div class="card-title">Incremento / Decremento</div>
+                    <div class="card-desc">Adiciona ou subtrai 1.</div>
+                    <code>let x = 5; x++;</code>
+                    <div class="result">// Resultado: 6</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparacao">
+            <h2>Comparação</h2>
+            <p>Sempre retornam um valor booleano: <strong>true</strong> ou <strong>false</strong>.</p>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-symbol">==</div>
+                    <div class="card-title">Igualdade Amigável</div>
+                    <div class="card-desc">Compara o valor, mas ignora o tipo.</div>
+                    <code>5 == "5"</code>
+                    <div class="result">// Resultado: true</div>
+                </div>
+                <div class="card">
+                    <div class="card-symbol">===</div>
+                    <div class="card-title">Igualdade Estrita</div>
+                    <div class="card-desc">Compara valor E tipo (Recomendado).</div>
+                    <code>5 === "5"</code>
+                    <div class="result">// Resultado: false</div>
+                </div>
+                <div class="card">
+                    <div class="card-symbol">!==</div>
+                    <div class="card-title">Não Idêntico</div>
+                    <div class="card-desc">Verifica se são diferentes em valor ou tipo.</div>
+                    <code>10 !== 10</code>
+                    <div class="result">// Resultado: false</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="logicos">
+            <h2>Lógicos</h2>
+            <p>Usados para combinar condições.</p>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-symbol">&&</div>
+                    <div class="card-title">E (AND)</div>
+                    <div class="card-desc">Retorna verdadeiro se AMBOS forem verdade.</div>
+                    <code>(5>2) && (10<20)</code>
+                    <div class="result">// Resultado: true</div>
+                </div>
+                <div class="card">
+                    <div class="card-symbol">||</div>
+                    <div class="card-title">OU (OR)</div>
+                    <div class="card-desc">Verdadeiro se PELO MENOS UM for verdade.</div>
+                    <code>(5<2) || (10<20)</code>
+                    <div class="result">// Resultado: true</div>
+                </div>
+                <div class="card">
+                    <div class="card-symbol">!</div>
+                    <div class="card-title">NÃO (NOT)</div>
+                    <div class="card-desc">Inverte o estado lógico.</div>
+                    <code>!true</code>
+                    <div class="result">// Resultado: false</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="spread">
+            <h2>Propagação e Resto (...)</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-symbol">...</div>
+                    <div class="card-title">Spread (Espalhar)</div>
+                    <div class="card-desc">Expande elementos de um array ou objeto.</div>
+                    <code>const novo = [...velho, 4];</code>
+                    <div class="result">// Copia e adiciona</div>
+                </div>
+                <div class="card">
+                    <div class="card-symbol">...</div>
+                    <div class="card-title">Rest (Resto)</div>
+                    <div class="card-desc">Agrupa vários argumentos em um array.</div>
+                    <code>function(a, ...resto)</code>
+                    <div class="result">// Coleta o que sobrou</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="modernos">
+            <h2>Modernos & Nulidade</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-symbol">?.</div>
+                    <div class="card-title">Encadeamento Opcional</div>
+                    <div class="card-desc">Lê propriedades sem erro se o objeto for null.</div>
+                    <code>usuario?.endereco?.rua</code>
+                    <div class="result">// Retorna undefined, não erro</div>
+                </div>
+                <div class="card">
+                    <div class="card-symbol">??</div>
+                    <div class="card-title">Coalescência Nula</div>
+                    <div class="card-desc">Retorna o lado direito se o esquerdo for null/undefined.</div>
+                    <code>nome ?? "Anônimo"</code>
+                    <div class="result">// Fallback seguro</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="bitwise">
+            <h2>Bitwise <span class="badge-adv">Avançado</span></h2>
+            <p>Trabalham diretamente com os bits (0 e 1) dos números. Usados em performance extrema ou criptografia.</p>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-symbol">& | ^ ~</div>
+                    <div class="card-title">Operadores de Bit</div>
+                    <div class="card-desc">AND, OR, XOR e NOT binários.</div>
+                    <code>5 & 1 (0101 & 0001)</code>
+                    <div class="result">// Resultado: 1</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="interativo" class="visible">
+            <div class="lab">
+                <h3>🧪 Laboratório Interativo</h3>
+                <div class="lab-grid">
+                    
+                    <div class="control-group">
+                        <label>Soma Aritmética (+)</label>
+                        <input type="number" id="soma1" placeholder="Num 1" value="10">
+                        <input type="number" id="soma2" placeholder="Num 2" value="5">
+                        <button class="btn" onclick="calcularSoma()">Somar</button>
+                        <div class="output" id="outSoma">Aguardando...</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Comparação Estrita (===)</label>
+                        <input type="text" id="comp1" placeholder="Valor" value="5">
+                        <p style="font-size: 0.8rem; margin: 5px 0;">O segundo valor será sempre String</p>
+                        <button class="btn" onclick="comparar()">Comparar com "5"</button>
+                        <div class="output" id="outComp">Aguardando...</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Teste Lógico (Idade + Pais)</label>
+                        <input type="number" id="idade" placeholder="Sua idade" value="16">
+                        <div style="margin: 10px 0;">
+                            <input type="checkbox" id="autorizacao" style="width: auto;"> Possui autorização?
+                        </div>
+                        <button class="btn" onclick="testarLogica()">Pode viajar?</button>
+                        <div class="output" id="outLog">Aguardando...</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Operador Ternário</label>
+                        <input type="number" id="nota" placeholder="Sua nota" value="7">
+                        <button class="btn" onclick="testarTernario()">Status</button>
+                        <div class="output" id="outTer">Aguardando...</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer style="text-align: center; padding: 40px; font-weight: bold; opacity: 0.6;">
+        Feito para futuros Desenvolvedores JavaScript 🚀
+    </footer>
+
+    <script>
+        // --- 1. Símbolos Flutuantes ---
+        const symbols = ['+', '-', '*', '/', '==', '===', '&&', '||', '!', '?', '??', '=>', '...', '%'];
+        const bg = document.getElementById('symbolBg');
+
+        for (let i = 0; i < 30; i++) {
+            const span = document.createElement('span');
+            span.className = 'symbol';
+            span.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            span.style.left = Math.random() * 100 + 'vw';
+            span.style.animationDelay = Math.random() * 20 + 's';
+            span.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+            bg.appendChild(span);
+        }
+
+        // --- 2. Animação de Scroll ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- 3. Funções do Laboratório ---
+        
+        function calcularSoma() {
+            const n1 = Number(document.getElementById('soma1').value);
+            const n2 = Number(document.getElementById('soma2').value);
+            document.getElementById('outSoma').innerText = `Resultado: ${n1 + n2}`;
+        }
+
+        function comparar() {
+            const v1 = document.getElementById('comp1').value;
+            const v2 = "5"; // string fixa para teste
+            const resEstrito = (v1 === v2);
+            const resSimples = (v1 == v2);
+            document.getElementById('outComp').innerHTML = 
+                `Igual (==): ${resSimples} <br> Estrito (===): ${resEstrito}`;
+        }
+
+        function testarLogica() {
+            const idade = Number(document.getElementById('idade').value);
+            const autorizacao = document.getElementById('autorizacao').checked;
+            const podeViajar = (idade >= 18) || autorizacao;
+            
+            document.getElementById('outLog').innerText = podeViajar ? 
+                "✅ Embarque Autorizado!" : "❌ Precisa de 18 anos ou autorização.";
+        }
+
+        function testarTernario() {
+            const nota = Number(document.getElementById('nota').value);
+            const status = (nota >= 6) ? "Aprovado! 🎉" : "Reprovado. 📚";
+            document.getElementById('outTer').innerText = `Status: ${status}`;
+        }
+
+        // Init interativo
+        calcularSoma();
+        comparar();
+        testarLogica();
+        testarTernario();
+    </script>
+</body>
+</html>

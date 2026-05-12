@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operadores em JavaScript</title>
+<style>
+  /* ── RESET & BASE ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --yellow: #F7DF1E;
+    --yellow-dark: #e6ce00;
+    --yellow-light: #FFF8C5;
+    --black: #1a1a1a;
+    --black-soft: #2d2d2d;
+    --white: #ffffff;
+    --gray: #f4f4f4;
+    --gray-mid: #e0e0e0;
+    --accent-red: #e74c3c;
+    --accent-blue: #2980b9;
+    --accent-green: #27ae60;
+    --accent-purple: #8e44ad;
+    --accent-orange: #e67e22;
+    --code-bg: #1e1e1e;
+    --code-fg: #d4d4d4;
+    --code-keyword: #569cd6;
+    --code-string: #ce9178;
+    --code-number: #b5cea8;
+    --code-comment: #6a9955;
+    --radius: 16px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.13);
+    --shadow-card: 0 4px 20px rgba(0,0,0,0.10);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    background: var(--yellow);
+    color: var(--black);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--yellow-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--black); border-radius: 4px; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 2rem;
+    background: var(--yellow);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .float-sym {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    font-weight: 900;
+    color: rgba(0,0,0,0.07);
+    user-select: none;
+    animation: floatSym linear infinite;
+    white-space: nowrap;
+  }
+
+  @keyframes floatSym {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    5%   { opacity: 1; }
+    95%  { opacity: 1; }
+    100% { transform: translateY(-15vh) rotate(360deg); opacity: 0; }
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--black);
+    color: var(--yellow);
+    font-size: .75rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: .4rem 1.2rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    animation: fadeDown .7s ease both;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 9vw, 8rem);
+    font-weight: 900;
+    line-height: .95;
+    letter-spacing: -.03em;
+    color: var(--black);
+    animation: fadeDown .7s ease .15s both;
+  }
+
+  .hero-title span {
+    position: relative;
+    display: inline-block;
+  }
+  .hero-title span::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 0;
+    width: 100%; height: 8px;
+    background: var(--black);
+    border-radius: 4px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: lineIn .6s ease .9s both;
+  }
+
+  @keyframes lineIn { to { transform: scaleX(1); } }
+
+  .hero-sub {
+    max-width: 640px;
+    margin: 2rem auto 0;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--black-soft);
+    animation: fadeDown .7s ease .35s both;
+  }
+
+  .hero-ops {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    justify-content: center;
+    margin-top: 2.5rem;
+    animation: fadeDown .7s ease .55s both;
+  }
+
+  .hero-op-chip {
+    background: var(--black);
+    color: var(--yellow);
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: .4rem .9rem;
+    border-radius: 8px;
+    animation: chipPop .4s cubic-bezier(.34,1.56,.64,1) both;
+  }
+
+  @keyframes chipPop {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4rem;
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    animation: fadeDown .7s ease .9s both;
+    color: var(--black);
+    opacity: .6;
+  }
+
+  .hero-scroll-arrow {
+    width: 28px; height: 28px;
+    border: 3px solid var(--black);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    animation: bounce 1.4s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(6px); }
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── NAV PILLS ── */
+  .nav-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--black);
+    padding: .75rem 1rem;
+    display: flex;
+    gap: .5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-sticky::-webkit-scrollbar { display: none; }
+
+  .nav-pill {
+    flex-shrink: 0;
+    padding: .35rem 1rem;
+    background: transparent;
+    color: rgba(247,223,30,.6);
+    border: 1.5px solid rgba(247,223,30,.25);
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .2s, color .2s, border-color .2s;
+    letter-spacing: .03em;
+  }
+
+  .nav-pill:hover, .nav-pill.active {
+    background: var(--yellow);
+    color: var(--black);
+    border-color: var(--yellow);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main { padding: 0 1rem 6rem; }
+
+  /* ── SECTION ── */
+  .section {
+    max-width: 1200px;
+    margin: 5rem auto 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: var(--black);
+    color: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 900;
+    font-family: 'Courier New', monospace;
+    flex-shrink: 0;
+    box-shadow: 4px 4px 0 rgba(0,0,0,.2);
+  }
+
+  .section-title {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+  }
+
+  .section-desc {
+    font-size: 1rem;
+    color: var(--black-soft);
+    margin-top: .25rem;
+    line-height: 1.5;
+  }
+
+  /* ── CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* ── OPERATOR CARD ── */
+  .op-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+    border: 2.5px solid transparent;
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1),
+                box-shadow .25s ease,
+                border-color .25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .op-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px; height: 80px;
+    background: var(--yellow);
+    border-radius: 0 var(--radius) 0 80px;
+    opacity: .5;
+    transition: opacity .25s;
+  }
+
+  .op-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 16px 48px rgba(0,0,0,.16);
+    border-color: var(--yellow);
+  }
+
+  .op-card:hover::before { opacity: 1; }
+
+  .op-symbol {
+    font-family: 'Courier New', monospace;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: .5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .op-name {
+    font-size: .7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: #888;
+    margin-bottom: .6rem;
+  }
+
+  .op-desc {
+    font-size: .92rem;
+    line-height: 1.55;
+    color: var(--black-soft);
+    margin-bottom: 1rem;
+  }
+
+  .code-block {
+    background: var(--code-bg);
+    border-radius: 10px;
+    padding: .85rem 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: .85rem;
+    line-height: 1.7;
+    color: var(--code-fg);
+    overflow-x: auto;
+    margin-bottom: .6rem;
+  }
+
+  .code-block .kw  { color: var(--code-keyword); }
+  .code-block .str { color: var(--code-string); }
+  .code-block .num { color: var(--code-number); }
+  .code-block .cmt { color: var(--code-comment); font-style: italic; }
+  .code-block .op  { color: #d4b4fe; }
+
+  .op-result {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--accent-green);
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    border-radius: 8px;
+    padding: .4rem .75rem;
+  }
+
+  .op-result-icon { font-size: 1rem; }
+
+  .badge-advanced {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    background: #fff3cd;
+    border: 1.5px solid #ffc107;
+    color: #856404;
+    font-size: .7rem;
+    font-weight: 800;
+    padding: .25rem .65rem;
+    border-radius: 999px;
+    margin-bottom: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  /* ── WIDE CARD (full-width) ── */
+  .op-card.wide { grid-column: 1 / -1; }
+
+  .wide-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 640px) {
+    .wide-inner { grid-template-columns: 1fr; }
+    .op-card.wide { grid-column: auto; }
+  }
+
+  /* ── INTERACTIVE SECTION ── */
+  .interactive-section {
+    background: var(--black);
+    border-radius: 24px;
+    padding: 2.5rem;
+    margin-top: 5rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+
+  .interactive-section.visible { opacity: 1; transform: translateY(0); }
+
+  .interactive-title {
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    font-weight: 900;
+    color: var(--yellow);
+    margin-bottom: .5rem;
+    letter-spacing: -.02em;
+  }
+
+  .interactive-sub {
+    color: rgba(255,255,255,.6);
+    font-size: .9rem;
+    margin-bottom: 2rem;
+  }
+
+  .labs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .lab-card {
+    background: rgba(255,255,255,.05);
+    border: 1.5px solid rgba(255,255,255,.1);
+    border-radius: 14px;
+    padding: 1.5rem;
+    transition: border-color .25s;
+  }
+
+  .lab-card:hover { border-color: var(--yellow); }
+
+  .lab-title {
+    font-size: .7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    color: var(--yellow);
+    margin-bottom: .85rem;
+  }
+
+  .lab-inputs {
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+    margin-bottom: .85rem;
+  }
+
+  .lab-input {
+    flex: 1;
+    min-width: 80px;
+    background: rgba(255,255,255,.08);
+    border: 1.5px solid rgba(255,255,255,.15);
+    border-radius: 8px;
+    padding: .5rem .75rem;
+    color: #fff;
+    font-size: .9rem;
+    font-family: 'Courier New', monospace;
+    outline: none;
+    transition: border-color .2s;
+  }
+
+  .lab-input:focus { border-color: var(--yellow); }
+
+  .lab-btn {
+    background: var(--yellow);
+    color: var(--black);
+    border: none;
+    padding: .55rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    white-space: nowrap;
+  }
+
+  .lab-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(247,223,30,.4); }
+  .lab-btn:active { transform: translateY(0); }
+
+  .lab-output {
+    background: rgba(0,0,0,.4);
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: .85rem;
+    color: #a8ff78;
+    min-height: 40px;
+    border: 1px solid rgba(255,255,255,.08);
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .lab-output.warn { color: #ffd700; }
+  .lab-output.err  { color: #ff6b6b; }
+
+  /* ── SEPARATOR ── */
+  .sep {
+    max-width: 1200px;
+    margin: 4rem auto 0;
+    border: none;
+    border-top: 2.5px dashed rgba(0,0,0,.15);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    color: rgba(255,255,255,.5);
+    text-align: center;
+    padding: 2.5rem 1rem;
+    font-size: .85rem;
+    margin-top: 5rem;
+  }
+
+  footer strong { color: var(--yellow); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .labs-grid  { grid-template-columns: 1fr; }
+    .interactive-section { padding: 1.75rem 1.25rem; }
+    .section-header { flex-wrap: wrap; }
+  }
+
+  /* ── HIGHLIGHT PULSE ── */
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(247,223,30,.5); }
+    50%      { box-shadow: 0 0 0 10px rgba(247,223,30,0); }
+  }
+
+  .op-card:hover .op-symbol { animation: pulse .8s ease infinite; }
+
+  /* ── SECTION DIVIDERS ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 3rem auto -1rem;
+  }
+
+  .section-divider-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--black-soft), transparent);
+    opacity: .2;
+  }
+
+  .section-divider-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--black);
+    opacity: .3;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">📚 Guia Interativo · Iniciantes em JS</div>
+    <h1 class="hero-title">
+      Operadores em<br><span>JavaScript</span>
+    </h1>
+    <p class="hero-sub">
+      Operadores são <strong>símbolos especiais</strong> que dizem ao computador o que fazer:
+      somar números, comparar valores, tomar decisões e muito mais.
+      Sem eles, o código não faz nada de útil!
+    </p>
+    <div class="hero-ops" id="heroOps">
+      <!-- preenchido via JS -->
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-arrow">↓</div>
+    Role para baixo
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav class="nav-sticky" id="mainNav" aria-label="Seções">
+  <a class="nav-pill" href="#aritmeticos">Aritméticos</a>
+  <a class="nav-pill" href="#atribuicao">Atribuição</a>
+  <a class="nav-pill" href="#comparacao">Comparação</a>
+  <a class="nav-pill" href="#logicos">Lógicos</a>
+  <a class="nav-pill" href="#concatenacao">Concatenação</a>
+  <a class="nav-pill" href="#ternario">Ternário</a>
+  <a class="nav-pill" href="#tipo">Tipo</a>
+  <a class="nav-pill" href="#spread">Spread/Rest</a>
+  <a class="nav-pill" href="#opcional">Opcional/Null</a>
+  <a class="nav-pill" href="#bitwise">Bitwise</a>
+  <a class="nav-pill" href="#laboratorio">Laboratório</a>
+</nav>
+
+<main>
+
+  <!-- ══ 1. ARITMÉTICOS ══ -->
+  <section class="section" id="aritmeticos">
+    <div class="section-header">
+      <div class="section-icon">+−</div>
+      <div>
+        <h2 class="section-title">Operadores Aritméticos</h2>
+        <p class="section-desc">Fazem cálculos matemáticos com números — igual à calculadora!</p>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="op-card">
+        <div class="op-symbol">+</div>
+        <div class="op-name">Adição</div>
+        <div class="op-desc">Soma dois valores. O mais básico de todos!</div>
+        <div class="code-block"><span class="kw">let</span> total = <span class="num">5</span> <span class="op">+</span> <span class="num">3</span>;
+<span class="cmt">// total = 8</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>8</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">−</div>
+        <div class="op-name">Subtração</div>
+        <div class="op-desc">Subtrai um valor do outro. Simples assim!</div>
+        <div class="code-block"><span class="kw">let</span> resto = <span class="num">10</span> <span class="op">-</span> <span class="num">4</span>;
+<span class="cmt">// resto = 6</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>6</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">*</div>
+        <div class="op-name">Multiplicação</div>
+        <div class="op-desc">Multiplica dois valores.</div>
+        <div class="code-block"><span class="kw">let</span> area = <span class="num">6</span> <span class="op">*</span> <span class="num">7</span>;
+<span class="cmt">// area = 42</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>42</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">/</div>
+        <div class="op-name">Divisão</div>
+        <div class="op-desc">Divide um valor pelo outro. Pode retornar decimais!</div>
+        <div class="code-block"><span class="kw">let</span> metade = <span class="num">9</span> <span class="op">/</span> <span class="num">2</span>;
+<span class="cmt">// metade = 4.5</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>4.5</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">%</div>
+        <div class="op-name">Módulo (Resto)</div>
+        <div class="op-desc">Retorna o <strong>resto</strong> da divisão. Super útil para saber se um número é par ou ímpar!</div>
+        <div class="code-block"><span class="num">10</span> <span class="op">%</span> <span class="num">3</span>  <span class="cmt">// → 1</span>
+<span class="num">8</span> <span class="op">%</span> <span class="num">2</span>   <span class="cmt">// → 0 (par!)</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> 10 ÷ 3 = 3 com <strong>resto 1</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">**</div>
+        <div class="op-name">Exponenciação</div>
+        <div class="op-desc">Eleva um número à potência de outro. Dois asteriscos!</div>
+        <div class="code-block"><span class="num">2</span> <span class="op">**</span> <span class="num">8</span>  <span class="cmt">// 2⁸ = 256</span>
+<span class="num">3</span> <span class="op">**</span> <span class="num">3</span>  <span class="cmt">// 3³ = 27</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> 2⁸ = <strong>256</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">++</div>
+        <div class="op-name">Incremento</div>
+        <div class="op-desc">Adiciona 1 à variável. Atalho para <code>x = x + 1</code>.</div>
+        <div class="code-block"><span class="kw">let</span> x = <span class="num">5</span>;
+x<span class="op">++</span>;
+<span class="cmt">// x agora é 6</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> x vai de 5 para <strong>6</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">−−</div>
+        <div class="op-name">Decremento</div>
+        <div class="op-desc">Subtrai 1 da variável. Atalho para <code>x = x - 1</code>.</div>
+        <div class="code-block"><span class="kw">let</span> x = <span class="num">10</span>;
+x<span class="op">--</span>;
+<span class="cmt">// x agora é 9</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> x vai de 10 para <strong>9</strong></div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ 2. ATRIBUIÇÃO ══ -->
+  <section class="section" id="atribuicao">
+    <div class="section-header">
+      <div class="section-icon">=</div>
+      <div>
+        <h2 class="section-title">Operadores de Atribuição</h2>
+        <p class="section-desc">Guardam (atribuem) valores dentro de variáveis. O <code>=</code> é o mais importante de todos!</p>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="op-card">
+        <div class="op-symbol">=</div>
+        <div class="op-name">Atribuição simples</div>
+        <div class="op-desc">Guarda um valor numa variável. <em>Não é "igual a"</em> — é "recebe"!</div>
+        <div class="code-block"><span class="kw">let</span> nome = <span class="str">"Ana"</span>;
+<span class="kw">let</span> idade = <span class="num">16</span>;</div>
+        <div class="op-result"><span class="op-result-icon">✅</span> nome recebe <strong>"Ana"</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">+=</div>
+        <div class="op-name">Atribuição com adição</div>
+        <div class="op-desc">Soma e já guarda. <code>x += 5</code> é igual a <code>x = x + 5</code>.</div>
+        <div class="code-block"><span class="kw">let</span> pontos = <span class="num">10</span>;
+pontos <span class="op">+=</span> <span class="num">5</span>;
+<span class="cmt">// pontos = 15</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> pontos vai de 10 para <strong>15</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">−=</div>
+        <div class="op-name">Atribuição com subtração</div>
+        <div class="op-desc">Subtrai e já guarda. <code>x -= 3</code> é igual a <code>x = x - 3</code>.</div>
+        <div class="code-block"><span class="kw">let</span> vida = <span class="num">100</span>;
+vida <span class="op">-=</span> <span class="num">20</span>;
+<span class="cmt">// vida = 80</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> vida vai de 100 para <strong>80</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">*=</div>
+        <div class="op-name">Atribuição com multiplicação</div>
+        <div class="op-desc">Multiplica e guarda. <code>x *= 2</code> dobra o valor de x.</div>
+        <div class="code-block"><span class="kw">let</span> preco = <span class="num">50</span>;
+preco <span class="op">*=</span> <span class="num">2</span>;
+<span class="cmt">// preco = 100</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> preco vai de 50 para <strong>100</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">/=</div>
+        <div class="op-name">Atribuição com divisão</div>
+        <div class="op-desc">Divide e guarda. <code>x /= 2</code> corta o valor na metade.</div>
+        <div class="code-block"><span class="kw">let</span> fatia = <span class="num">80</span>;
+fatia <span class="op">/=</span> <span class="num">4</span>;
+<span class="cmt">// fatia = 20</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> fatia vai de 80 para <strong>20</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">%=</div>
+        <div class="op-name">Atribuição com módulo</div>
+        <div class="op-desc">Calcula o resto e guarda.</div>
+        <div class="code-block"><span class="kw">let</span> n = <span class="num">17</span>;
+n <span class="op">%=</span> <span class="num">5</span>;
+<span class="cmt">// n = 2 (resto de 17÷5)</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> n vai de 17 para <strong>2</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">**=</div>
+        <div class="op-name">Atribuição com potência</div>
+        <div class="op-desc">Eleva à potência e guarda.</div>
+        <div class="code-block"><span class="kw">let</span> base = <span class="num">3</span>;
+base <span class="op">**=</span> <span class="num">3</span>;
+<span class="cmt">// base = 27 (3³)</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> 3³ = <strong>27</strong></div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ 3. COMPARAÇÃO ══ -->
+  <section class="section" id="comparacao">
+    <div class="section-header">
+      <div class="section-icon">==</div>
+      <div>
+        <h2 class="section-title">Operadores de Comparação</h2>
+        <p class="section-desc">Comparam dois valores e sempre retornam <strong>true</strong> (verdadeiro) ou <strong>false</strong> (falso).</p>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="op-card">
+        <div class="op-symbol">==</div>
+        <div class="op-name">Igualdade solta</div>
+        <div class="op-desc">Verifica se os valores são iguais, mas <strong>ignora o tipo</strong>. Pode causar surpresas!</div>
+        <div class="code-block"><span class="num">5</span> <span class="op">==</span> <span class="str">"5"</span>  <span class="cmt">// true 😮</span>
+<span class="num">0</span> <span class="op">==</span> <span class="kw">false</span> <span class="cmt">// true 😮</span></div>
+        <div class="op-result" style="background:#fff3cd;border-color:#ffc107;color:#856404;">⚠️ Cuidado com a conversão automática!</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">===</div>
+        <div class="op-name">Igualdade estrita</div>
+        <div class="op-desc">Verifica valor <strong>E tipo</strong>. Muito mais seguro! Use este na maioria das vezes.</div>
+        <div class="code-block"><span class="num">5</span> <span class="op">===</span> <span class="str">"5"</span>  <span class="cmt">// false ✅</span>
+<span class="num">5</span> <span class="op">===</span> <span class="num">5</span>    <span class="cmt">// true ✅</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Prefira sempre o <strong>===</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">!=</div>
+        <div class="op-name">Diferente solto</div>
+        <div class="op-desc">Verifica se são diferentes, mas ignora o tipo (mesmo problema do ==).</div>
+        <div class="code-block"><span class="num">5</span> <span class="op">!=</span> <span class="str">"5"</span>  <span class="cmt">// false 😮</span>
+<span class="num">5</span> <span class="op">!=</span> <span class="num">6</span>    <span class="cmt">// true</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>false, true</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">!==</div>
+        <div class="op-name">Diferente estrito</div>
+        <div class="op-desc">Verifica se são diferentes em valor <strong>E tipo</strong>. Use este!</div>
+        <div class="code-block"><span class="num">5</span> <span class="op">!==</span> <span class="str">"5"</span>  <span class="cmt">// true ✅</span>
+<span class="num">5</span> <span class="op">!==</span> <span class="num">5</span>    <span class="cmt">// false ✅</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>true, false</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">&gt;</div>
+        <div class="op-name">Maior que</div>
+        <div class="op-desc">Verdadeiro se o valor da esquerda for maior.</div>
+        <div class="code-block"><span class="num">10</span> <span class="op">&gt;</span> <span class="num">5</span>   <span class="cmt">// true</span>
+<span class="num">3</span>  <span class="op">&gt;</span> <span class="num">7</span>   <span class="cmt">// false</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>true, false</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">&lt;</div>
+        <div class="op-name">Menor que</div>
+        <div class="op-desc">Verdadeiro se o valor da esquerda for menor.</div>
+        <div class="code-block"><span class="num">3</span>  <span class="op">&lt;</span> <span class="num">7</span>   <span class="cmt">// true</span>
+<span class="num">10</span> <span class="op">&lt;</span> <span class="num">5</span>   <span class="cmt">// false</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>true, false</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">&gt;=</div>
+        <div class="op-name">Maior ou igual</div>
+        <div class="op-desc">Verdadeiro se for maior <strong>ou igual</strong>.</div>
+        <div class="code-block"><span class="num">18</span> <span class="op">&gt;=</span> <span class="num">18</span>  <span class="cmt">// true</span>
+<span class="num">17</span> <span class="op">&gt;=</span> <span class="num">18</span>  <span class="cmt">// false</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Útil para verificar <strong>idade mínima!</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">&lt;=</div>
+        <div class="op-name">Menor ou igual</div>
+        <div class="op-desc">Verdadeiro se for menor <strong>ou igual</strong>.</div>
+        <div class="code-block"><span class="num">5</span> <span class="op">&lt;=</span> <span class="num">10</span>  <span class="cmt">// true</span>
+<span class="num">10</span> <span class="op">&lt;=</span> <span class="num">5</span>   <span class="cmt">// false</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>true, false</strong></div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ 4. LÓGICOS ══ -->
+  <section class="section" id="logicos">
+    <div class="section-header">
+      <div class="section-icon">&&</div>
+      <div>
+        <h2 class="section-title">Operadores Lógicos</h2>
+        <p class="section-desc">Combinam condições para tomar decisões mais complexas no código.</p>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="op-card">
+        <div class="op-symbol">&&</div>
+        <div class="op-name">E (AND)</div>
+        <div class="op-desc">Verdadeiro somente se as <strong>duas</strong> condições forem verdadeiras. "Precisa das duas coisas".</div>
+        <div class="code-block"><span class="kw">let</span> idade = <span class="num">20</span>;
+<span class="kw">let</span> temCNH = <span class="kw">true</span>;
+
+idade <span class="op">&gt;=</span> <span class="num">18</span> <span class="op">&&</span> temCNH
+<span class="cmt">// true && true → true ✅</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Pode dirigir: <strong>true</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">||</div>
+        <div class="op-name">OU (OR)</div>
+        <div class="op-desc">Verdadeiro se <strong>pelo menos uma</strong> condição for verdadeira. "Qualquer uma serve".</div>
+        <div class="code-block"><span class="kw">let</span> temDinheiro = <span class="kw">false</span>;
+<span class="kw">let</span> temCartao = <span class="kw">true</span>;
+
+temDinheiro <span class="op">||</span> temCartao
+<span class="cmt">// false || true → true ✅</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Pode pagar: <strong>true</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">!</div>
+        <div class="op-name">NÃO (NOT)</div>
+        <div class="op-desc"><strong>Inverte</strong> o valor lógico. O que é verdadeiro vira falso, e vice-versa.</div>
+        <div class="code-block"><span class="op">!</span><span class="kw">true</span>   <span class="cmt">// → false</span>
+<span class="op">!</span><span class="kw">false</span>  <span class="cmt">// → true</span>
+
+<span class="kw">let</span> logado = <span class="kw">false</span>;
+<span class="op">!</span>logado  <span class="cmt">// → true (não logado)</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Inverte a condição</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ 5. CONCATENAÇÃO ══ -->
+  <section class="section" id="concatenacao">
+    <div class="section-header">
+      <div class="section-icon">"+"</div>
+      <div>
+        <h2 class="section-title">Operador de Concatenação</h2>
+        <p class="section-desc">O <code>+</code> não serve só para somar! Com textos (strings), ele <strong>une</strong> os valores.</p>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="op-card">
+        <div class="op-symbol">+</div>
+        <div class="op-name">Concatenação de strings</div>
+        <div class="op-desc">Quando o <code>+</code> encontra textos, ele os <strong>junta</strong> em vez de somar.</div>
+        <div class="code-block"><span class="kw">let</span> primeiro = <span class="str">"Olá, "</span>;
+<span class="kw">let</span> segundo  = <span class="str">"mundo!"</span>;
+primeiro <span class="op">+</span> segundo
+<span class="cmt">// "Olá, mundo!"</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>"Olá, mundo!"</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">` `</div>
+        <div class="op-name">Template Literals (recomendado!)</div>
+        <div class="op-desc">Usando crase, você pode colocar variáveis dentro do texto com <code>${'$'}{variavel}</code>. Muito mais fácil!</div>
+        <div class="code-block"><span class="kw">let</span> nome = <span class="str">"Carlos"</span>;
+<span class="kw">let</span> idade = <span class="num">17</span>;
+
+<span class="str">`Olá, ${nome}! Você tem ${idade} anos.`</span>
+<span class="cmt">// "Olá, Carlos! Você tem 17 anos."</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>"Olá, Carlos! Você tem 17 anos."</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">+</div>
+        <div class="op-name">Número + String = Surpresa!</div>
+        <div class="op-desc">Quando você mistura número com texto, o JavaScript converte o número pra texto. Fique atento!</div>
+        <div class="code-block"><span class="num">5</span> <span class="op">+</span> <span class="str">"3"</span>   <span class="cmt">// "53" 😮 (não 8!)</span>
+<span class="str">"Nota: "</span> <span class="op">+</span> <span class="num">10</span> <span class="cmt">// "Nota: 10" ✅</span></div>
+        <div class="op-result" style="background:#fff3cd;border-color:#ffc107;color:#856404;">⚠️ Misturar tipos pode gerar resultados inesperados!</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ 6. TERNÁRIO ══ -->
+  <section class="section" id="ternario">
+    <div class="section-header">
+      <div class="section-icon">?:</div>
+      <div>
+        <h2 class="section-title">Operador Ternário</h2>
+        <p class="section-desc">Um <strong>if/else</strong> em uma só linha! Muito usado para decisões rápidas.</p>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="op-card wide">
+        <div class="wide-inner">
+          <div>
+            <div class="op-symbol">? :</div>
+            <div class="op-name">Operador ternário (condicional)</div>
+            <div class="op-desc">
+              A estrutura é: <br><br>
+              <code>condição <strong>?</strong> se_verdadeiro <strong>:</strong> se_falso</code><br><br>
+              Pense assim: o <strong>?</strong> é o "então" e o <strong>:</strong> é o "senão".
+            </div>
+          </div>
+          <div>
+            <div class="code-block"><span class="kw">let</span> idade = <span class="num">17</span>;
+
+<span class="kw">let</span> msg = idade <span class="op">&gt;=</span> <span class="num">18</span>
+  <span class="op">?</span> <span class="str">"Pode entrar! 🎉"</span>
+  <span class="op">:</span> <span class="str">"Menor de idade 🚫"</span>;
+
+<span class="cmt">// msg = "Menor de idade 🚫"</span></div>
+            <div class="op-result" style="margin-top:.75rem"><span class="op-result-icon">✅</span> msg = <strong>"Menor de idade 🚫"</strong></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ 7. TIPO ══ -->
+  <section class="section" id="tipo">
+    <div class="section-header">
+      <div class="section-icon">?</div>
+      <div>
+        <h2 class="section-title">Operadores de Tipo</h2>
+        <p class="section-desc">Descobrem o tipo de um valor ou se um objeto é de certo tipo.</p>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="op-card">
+        <div class="op-symbol">typeof</div>
+        <div class="op-name">Tipo do valor</div>
+        <div class="op-desc">Retorna uma string dizendo qual é o tipo do valor: <em>"number"</em>, <em>"string"</em>, <em>"boolean"</em>, etc.</div>
+        <div class="code-block"><span class="kw">typeof</span> <span class="num">42</span>        <span class="cmt">// "number"</span>
+<span class="kw">typeof</span> <span class="str">"Oi"</span>      <span class="cmt">// "string"</span>
+<span class="kw">typeof</span> <span class="kw">true</span>      <span class="cmt">// "boolean"</span>
+<span class="kw">typeof</span> <span class="kw">undefined</span> <span class="cmt">// "undefined"</span>
+<span class="kw">typeof</span> []        <span class="cmt">// "object" 😮</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Descobre o tipo em tempo real</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">instanceof</div>
+        <div class="op-name">Instância de</div>
+        <div class="op-desc">Verifica se um valor foi criado a partir de um determinado "molde" (classe/construtor). Retorna true ou false.</div>
+        <div class="code-block"><span class="kw">let</span> lista = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>];
+<span class="kw">let</span> hoje  = <span class="kw">new</span> Date();
+
+lista <span class="op">instanceof</span> Array  <span class="cmt">// true</span>
+hoje  <span class="op">instanceof</span> Date   <span class="cmt">// true</span>
+lista <span class="op">instanceof</span> Date   <span class="cmt">// false</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Útil para verificar <strong>tipos de objetos</strong></div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ 8. SPREAD / REST ══ -->
+  <section class="section" id="spread">
+    <div class="section-header">
+      <div class="section-icon">...</div>
+      <div>
+        <h2 class="section-title">Spread e Rest ( ... )</h2>
+        <p class="section-desc">Os três pontinhos fazem coisas diferentes dependendo de onde aparecem!</p>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="op-card">
+        <div class="op-symbol">...</div>
+        <div class="op-name">Spread — "Espalhar"</div>
+        <div class="op-desc"><strong>Espalha</strong> os itens de um array ou objeto. Usado na chamada de funções ou para copiar/combinar arrays.</div>
+        <div class="code-block"><span class="kw">let</span> frutas = [<span class="str">"🍎"</span>, <span class="str">"🍌"</span>];
+<span class="kw">let</span> mais   = [<span class="str">"🍇"</span>, ...frutas, <span class="str">"🍊"</span>];
+<span class="cmt">// ["🍇","🍎","🍌","🍊"]</span>
+
+Math.max(<span class="op">...</span>[<span class="num">3</span>, <span class="num">1</span>, <span class="num">9</span>, <span class="num">2</span>])
+<span class="cmt">// 9</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Expande o array no lugar</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">...</div>
+        <div class="op-name">Rest — "Juntar o resto"</div>
+        <div class="op-desc">Na <strong>declaração</strong> de uma função, junta todos os argumentos extras em um array.</div>
+        <div class="code-block"><span class="kw">function</span> somar(<span class="op">...</span>nums) {
+  <span class="kw">return</span> nums.reduce((a,b) <span class="op">=&gt;</span> a+b, <span class="num">0</span>);
+}
+
+somar(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>) <span class="cmt">// 10</span>
+somar(<span class="num">5</span>, <span class="num">10</span>)     <span class="cmt">// 15</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Aceita qualquer quantidade de argumentos</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">...</div>
+        <div class="op-name">A diferença em resumo</div>
+        <div class="op-desc">
+          <strong>Spread</strong> → você está <em>chamando</em> algo e quer expandir.<br><br>
+          <strong>Rest</strong> → você está <em>definindo</em> algo e quer agrupar.<br><br>
+          Mesma sintaxe, usos opostos!
+        </div>
+        <div class="code-block"><span class="cmt">// SPREAD: expande ao chamar</span>
+Math.min(<span class="op">...</span>[<span class="num">4</span>,<span class="num">2</span>,<span class="num">8</span>]) <span class="cmt">// 2</span>
+
+<span class="cmt">// REST: agrupa ao definir</span>
+<span class="kw">function</span> f(<span class="op">...</span>args) { ... }</div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Contexto define o comportamento</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ 9. OPCIONAL / NULLISH ══ -->
+  <section class="section" id="opcional">
+    <div class="section-header">
+      <div class="section-icon">?.</div>
+      <div>
+        <h2 class="section-title">Encadeamento Opcional e Coalescência Nula</h2>
+        <p class="section-desc">Dois operadores modernos que evitam erros ao trabalhar com valores que podem não existir.</p>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="op-card">
+        <div class="op-symbol">?.</div>
+        <div class="op-name">Encadeamento opcional</div>
+        <div class="op-desc">Acessa uma propriedade ou método <strong>sem quebrar</strong> o código se o objeto for null ou undefined. Retorna <code>undefined</code> ao invés de dar erro.</div>
+        <div class="code-block"><span class="kw">let</span> user = <span class="kw">null</span>;
+
+<span class="cmt">// Sem ?. → ERRO! 💥</span>
+user.nome    <span class="cmt">// TypeError!</span>
+
+<span class="cmt">// Com ?. → Seguro ✅</span>
+user<span class="op">?.</span>nome   <span class="cmt">// undefined</span>
+
+<span class="kw">let</span> p = { endereco: { cidade: <span class="str">"SP"</span> } };
+p<span class="op">?.</span>endereco<span class="op">?.</span>cidade  <span class="cmt">// "SP"</span>
+p<span class="op">?.</span>telefone<span class="op">?.</span>ddd   <span class="cmt">// undefined</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Evita o famoso <strong>TypeError!</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-symbol">??</div>
+        <div class="op-name">Coalescência nula (Nullish)</div>
+        <div class="op-desc">Retorna o valor da <strong>direita</strong> apenas se o da esquerda for <code>null</code> ou <code>undefined</code>. Diferente do <code>||</code> que rejeita também 0 e "".</div>
+        <div class="code-block"><span class="kw">let</span> nome = <span class="kw">null</span>;
+nome <span class="op">??</span> <span class="str">"Visitante"</span>  <span class="cmt">// "Visitante"</span>
+
+<span class="kw">let</span> pontos = <span class="num">0</span>;
+pontos <span class="op">??</span> <span class="num">100</span>  <span class="cmt">// 0  ✅ (0 é válido!)</span>
+pontos <span class="op">||</span> <span class="num">100</span>  <span class="cmt">// 100 😮 (|| trata 0 como falso)</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Mais preciso que o <strong>||</strong> para valores padrão</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ 10. BITWISE ══ -->
+  <section class="section" id="bitwise">
+    <div class="section-header">
+      <div class="section-icon">&amp;</div>
+      <div>
+        <h2 class="section-title">Operadores Bitwise</h2>
+        <p class="section-desc">Trabalham diretamente com os <strong>bits</strong> dos números. São avançados — você não vai precisar deles no início!</p>
+      </div>
+    </div>
+    <div class="cards-grid">
+
+      <div class="op-card">
+        <div class="badge-advanced">⚡ Avançado</div>
+        <div class="op-symbol">&amp;</div>
+        <div class="op-name">AND bit a bit</div>
+        <div class="op-desc">Compara cada bit dos dois números. O resultado é 1 só onde <strong>ambos</strong> têm 1.</div>
+        <div class="code-block"><span class="num">5</span> <span class="op">&amp;</span> <span class="num">3</span>
+<span class="cmt">// 101 & 011 = 001 → 1</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> 5 &amp; 3 = <strong>1</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="badge-advanced">⚡ Avançado</div>
+        <div class="op-symbol">|</div>
+        <div class="op-name">OR bit a bit</div>
+        <div class="op-desc">O resultado é 1 onde <strong>pelo menos um</strong> dos bits é 1.</div>
+        <div class="code-block"><span class="num">5</span> <span class="op">|</span> <span class="num">3</span>
+<span class="cmt">// 101 | 011 = 111 → 7</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> 5 | 3 = <strong>7</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="badge-advanced">⚡ Avançado</div>
+        <div class="op-symbol">^</div>
+        <div class="op-name">XOR bit a bit</div>
+        <div class="op-desc">O resultado é 1 onde os bits são <strong>diferentes</strong> entre si.</div>
+        <div class="code-block"><span class="num">5</span> <span class="op">^</span> <span class="num">3</span>
+<span class="cmt">// 101 ^ 011 = 110 → 6</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> 5 ^ 3 = <strong>6</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="badge-advanced">⚡ Avançado</div>
+        <div class="op-symbol">~</div>
+        <div class="op-name">NOT bit a bit</div>
+        <div class="op-desc">Inverte todos os bits do número. Resulta em <code>-(n+1)</code>.</div>
+        <div class="code-block"><span class="op">~</span><span class="num">5</span>   <span class="cmt">// -6</span>
+<span class="op">~</span><span class="num">0</span>   <span class="cmt">// -1</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> ~5 = <strong>-6</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="badge-advanced">⚡ Avançado</div>
+        <div class="op-symbol">&lt;&lt;</div>
+        <div class="op-name">Deslocamento à esquerda</div>
+        <div class="op-desc">Move os bits para a esquerda. Equivale a <strong>multiplicar por 2ⁿ</strong>.</div>
+        <div class="code-block"><span class="num">1</span> <span class="op">&lt;&lt;</span> <span class="num">3</span>  <span class="cmt">// 1×2³ = 8</span>
+<span class="num">5</span> <span class="op">&lt;&lt;</span> <span class="num">1</span>  <span class="cmt">// 5×2¹ = 10</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> 1 &lt;&lt; 3 = <strong>8</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="badge-advanced">⚡ Avançado</div>
+        <div class="op-symbol">&gt;&gt;</div>
+        <div class="op-name">Deslocamento à direita</div>
+        <div class="op-desc">Move os bits para a direita. Equivale a <strong>dividir por 2ⁿ</strong> (inteiro).</div>
+        <div class="code-block"><span class="num">8</span> <span class="op">&gt;&gt;</span> <span class="num">2</span>  <span class="cmt">// 8÷4 = 2</span>
+<span class="num">16</span> <span class="op">&gt;&gt;</span> <span class="num">1</span>  <span class="cmt">// 16÷2 = 8</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> 8 &gt;&gt; 2 = <strong>2</strong></div>
+      </div>
+
+      <div class="op-card">
+        <div class="badge-advanced">⚡ Avançado</div>
+        <div class="op-symbol">&gt;&gt;&gt;</div>
+        <div class="op-name">Deslocamento sem sinal</div>
+        <div class="op-desc">Igual ao <code>&gt;&gt;</code> mas sempre preenche com zeros (nunca negativo). Raramente usado no dia a dia.</div>
+        <div class="code-block"><span class="num">-1</span> <span class="op">&gt;&gt;&gt;</span> <span class="num">0</span>
+<span class="cmt">// 4294967295 (número gigante!)</span></div>
+        <div class="op-result"><span class="op-result-icon">✅</span> Resultado: <strong>4294967295</strong></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ LABORATÓRIO INTERATIVO ══ -->
+  <div class="interactive-section section" id="laboratorio">
+    <div class="interactive-title">🧪 Laboratório Interativo</div>
+    <p class="interactive-sub">Teste você mesmo! Digite valores e veja o JavaScript em ação.</p>
+
+    <div class="labs-grid">
+
+      <!-- Lab 1: Aritmética -->
+      <div class="lab-card">
+        <div class="lab-title">🔢 Calculadora de Operadores</div>
+        <div class="lab-inputs">
+          <input class="lab-input" id="calcA" type="number" value="10" placeholder="Número A">
+          <input class="lab-input" id="calcB" type="number" value="3" placeholder="Número B">
+        </div>
+        <div class="lab-inputs" style="gap:.4rem;flex-wrap:wrap">
+          <button class="lab-btn" onclick="calcular('+')">+</button>
+          <button class="lab-btn" onclick="calcular('-')">−</button>
+          <button class="lab-btn" onclick="calcular('*')">×</button>
+          <button class="lab-btn" onclick="calcular('/')">÷</button>
+          <button class="lab-btn" onclick="calcular('%')">%</button>
+          <button class="lab-btn" onclick="calcular('**')">**</button>
+        </div>
+        <div class="lab-output" id="calcOut">Clique em um operador acima...</div>
+      </div>
+
+      <!-- Lab 2: == vs === -->
+      <div class="lab-card">
+        <div class="lab-title">🔍 == vs === (Comparação)</div>
+        <div class="lab-inputs">
+          <input class="lab-input" id="cmpA" value="5" placeholder="Valor A">
+          <input class="lab-input" id="cmpB" value='"5"' placeholder="Valor B">
+        </div>
+        <div class="lab-inputs">
+          <button class="lab-btn" onclick="comparar()">Comparar!</button>
+        </div>
+        <div class="lab-output" id="cmpOut">Clique em "Comparar!"</div>
+      </div>
+
+      <!-- Lab 3: Lógicos -->
+      <div class="lab-card">
+        <div class="lab-title">🔐 Teste Lógico (Balada)</div>
+        <div class="lab-inputs">
+          <input class="lab-input" id="logIdade" type="number" value="17" placeholder="Idade">
+        </div>
+        <div class="lab-inputs" style="align-items:center;gap:.75rem">
+          <label style="color:#fff;font-size:.88rem;display:flex;align-items:center;gap:.4rem">
+            <input type="checkbox" id="logPais" style="width:18px;height:18px;accent-color:var(--yellow)">
+            Autorizado pelos pais
+          </label>
+        </div>
+        <div class="lab-inputs">
+          <button class="lab-btn" onclick="testarLogico()">Pode entrar?</button>
+        </div>
+        <div class="lab-output" id="logOut">Preencha e clique acima!</div>
+      </div>
+
+      <!-- Lab 4: Ternário -->
+      <div class="lab-card">
+        <div class="lab-title">❓ Operador Ternário</div>
+        <div class="lab-inputs">
+          <input class="lab-input" id="ternNota" type="number" value="7" placeholder="Nota (0-10)">
+        </div>
+        <div class="lab-inputs">
+          <button class="lab-btn" onclick="testarTernario()">Resultado?</button>
+        </div>
+        <div class="lab-output" id="ternOut">Nota mínima para passar: 6</div>
+      </div>
+
+      <!-- Lab 5: ?? -->
+      <div class="lab-card">
+        <div class="lab-title">💠 Operador ?? (Nullish)</div>
+        <div class="lab-inputs">
+          <input class="lab-input" id="nullVal" value="" placeholder="Digite um valor (deixe vazio para null)">
+        </div>
+        <div class="lab-inputs">
+          <button class="lab-btn" onclick="testarNull()">Testar ??</button>
+        </div>
+        <div class="lab-output" id="nullOut">O padrão é "Visitante Anônimo"</div>
+      </div>
+
+      <!-- Lab 6: ?. -->
+      <div class="lab-card">
+        <div class="lab-title">🔗 Encadeamento Opcional ?.</div>
+        <div class="lab-inputs" style="align-items:center;gap:.75rem">
+          <label style="color:#fff;font-size:.88rem;display:flex;align-items:center;gap:.4rem">
+            <input type="checkbox" id="optUser" style="width:18px;height:18px;accent-color:var(--yellow)" checked>
+            Usuário existe?
+          </label>
+        </div>
+        <div class="lab-inputs">
+          <button class="lab-btn" onclick="testarOpcional()">Acessar user?.nome</button>
+        </div>
+        <div class="lab-output" id="optOut">Marque/desmarque e clique acima!</div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Feito com 💛 para estudantes de JavaScript · Todos os exemplos rodam no seu navegador</p>
+  <p style="margin-top:.5rem">Aprenda, experimente e <strong>não tenha medo de errar!</strong></p>
+</footer>
+
+<script>
+  /* ══ HERO: chips de operadores ══ */
+  const ops = ['+', '-', '*', '/', '%', '**', '++', '--', '=', '+=',
+               '==', '===', '!=', '!==', '>', '<', '>=', '<=',
+               '&&', '||', '!', '?', ':', '?.', '??', '...', 'typeof', 'instanceof'];
+
+  const heroOps = document.getElementById('heroOps');
+  ops.forEach((op, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'hero-op-chip';
+    chip.textContent = op;
+    chip.style.animationDelay = (i * 0.04 + 0.6) + 's';
+    heroOps.appendChild(chip);
+  });
+
+  /* ══ HERO: símbolos flutuantes ══ */
+  const heroBg = document.getElementById('heroBg');
+  const floatSyms = ['+', '-', '*', '/', '=', '==', '===', '&&', '||', '!', '%', '**', '?', ':', '...', '??', '?.', '>', '<'];
+
+  function createFloat() {
+    const sym = floatSyms[Math.floor(Math.random() * floatSyms.length)];
+    const el = document.createElement('div');
+    el.className = 'float-sym';
+    el.textContent = sym;
+    const size = Math.random() * 3 + 1.5;
+    el.style.fontSize = size + 'rem';
+    el.style.left = (Math.random() * 100) + '%';
+    const dur = Math.random() * 12 + 10;
+    el.style.animationDuration = dur + 's';
+    el.style.animationDelay = (Math.random() * -dur) + 's';
+    heroBg.appendChild(el);
+    setTimeout(() => el.remove(), (dur + 2) * 1000);
+  }
+
+  for (let i = 0; i < 30; i++) createFloat();
+  setInterval(createFloat, 800);
+
+  /* ══ INTERSECTION OBSERVER: animação de entrada ══ */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.section, .interactive-section').forEach(s => observer.observe(s));
+
+  /* ══ NAV PILLS: destaque ativo ══ */
+  const sections = document.querySelectorAll('section[id], div[id="laboratorio"]');
+  const pills    = document.querySelectorAll('.nav-pill');
+
+  const navObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        pills.forEach(p => p.classList.remove('active'));
+        const active = document.querySelector(`.nav-pill[href="#${e.target.id}"]`);
+        if (active) {
+          active.classList.add('active');
+          active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => navObs.observe(s));
+
+  /* ══ LAB 1: Calculadora ══ */
+  function calcular(op) {
+    const a = parseFloat(document.getElementById('calcA').value);
+    const b = parseFloat(document.getElementById('calcB').value);
+    const out = document.getElementById('calcOut');
+
+    if (isNaN(a) || isNaN(b)) {
+      out.textContent = '⚠️ Digite números válidos!';
+      out.className = 'lab-output warn';
+      return;
+    }
+
+    let res, expr;
+    try {
+      expr = `${a} ${op} ${b}`;
+      res  = eval(`${a} ${op} ${b}`);
+    } catch(e) {
+      out.textContent = '❌ Erro: ' + e.message;
+      out.className = 'lab-output err';
+      return;
+    }
+
+    if (!isFinite(res)) {
+      out.textContent = `${expr}\n→ ⚠️ Divisão por zero é Infinity!`;
+      out.className = 'lab-output warn';
+      return;
+    }
+
+    out.textContent = `${expr}\n→ ${res}`;
+    out.className = 'lab-output';
+  }
+
+  /* ══ LAB 2: == vs === ══ */
+  function comparar() {
+    const rawA = document.getElementById('cmpA').value;
+    const rawB = document.getElementById('cmpB').value;
+    const out  = document.getElementById('cmpOut');
+
+    let a, b;
+    try { a = eval(rawA); } catch(e) { a = rawA; }
+    try { b = eval(rawB); } catch(e) { b = rawB; }
+
+    const solto   = a == b;
+    const estrito = a === b;
+
+    out.textContent =
+      `Valor A: ${JSON.stringify(a)} (tipo: ${typeof a})\n` +
+      `Valor B: ${JSON.stringify(b)} (tipo: ${typeof b})\n\n` +
+      `A ==  B → ${solto}   (compara só o valor)\n` +
+      `A === B → ${estrito}  (compara valor E tipo)`;
+    out.className = 'lab-output';
+  }
+
+  /* ══ LAB 3: Lógico ══ */
+  function testarLogico() {
+    const idade = parseInt(document.getElementById('logIdade').value);
+    const pais  = document.getElementById('logPais').checked;
+    const out   = document.getElementById('logOut');
+
+    const maiorIdade = idade >= 18;
+    const podeEntrar = maiorIdade || pais;
+
+    out.textContent =
+      `Idade: ${idade}\n` +
+      `Maior de 18? ${maiorIdade}\n` +
+      `Autorizado pelos pais? ${pais}\n\n` +
+      `(${maiorIdade} || ${pais}) = ${podeEntrar}\n\n` +
+      (podeEntrar ? '✅ Pode entrar na festa!' : '🚫 Não pode entrar!');
+    out.className = 'lab-output';
+  }
+
+  /* ══ LAB 4: Ternário ══ */
+  function testarTernario() {
+    const nota = parseFloat(document.getElementById('ternNota').value);
+    const out  = document.getElementById('ternOut');
+
+    if (isNaN(nota) || nota < 0 || nota > 10) {
+      out.textContent = '⚠️ Digite uma nota entre 0 e 10!';
+      out.className = 'lab-output warn';
+      return;
+    }
+
+    const resultado = nota >= 6 ? '✅ Aprovado! Parabéns!' : '❌ Reprovado. Bora estudar!';
+
+    out.textContent =
+      `nota = ${nota}\n\n` +
+      `nota >= 6 ? "Aprovado" : "Reprovado"\n` +
+      `→ ${resultado}`;
+    out.className = 'lab-output';
+  }
+
+  /* ══ LAB 5: ?? ══ */
+  function testarNull() {
+    const val = document.getElementById('nullVal').value;
+    const out = document.getElementById('nullOut');
+
+    const entrada = val === '' ? null : val;
+    const resultado = entrada ?? 'Visitante Anônimo';
+
+    out.textContent =
+      `Valor digitado: ${val === '' ? '(vazio → null)' : JSON.stringify(val)}\n\n` +
+      `entrada ?? "Visitante Anônimo"\n` +
+      `→ "${resultado}"\n\n` +
+      (entrada === null
+        ? '💡 Era null → usou o valor padrão!'
+        : '💡 Tinha valor → manteve o original!');
+    out.className = 'lab-output';
+  }
+
+  /* ══ LAB 6: ?. ══ */
+  function testarOpcional() {
+    const existe = document.getElementById('optUser').checked;
+    const out    = document.getElementById('optOut');
+
+    const user = existe ? { nome: 'Mariana', cidade: 'SP' } : null;
+
+    const nome   = user?.nome;
+    const cidade = user?.cidade;
+    const tel    = user?.telefone?.numero;
+
+    out.textContent =
+      `user = ${existe ? JSON.stringify(user) : 'null'}\n\n` +
+      `user?.nome      → ${JSON.stringify(nome)}\n` +
+      `user?.cidade    → ${JSON.stringify(cidade)}\n` +
+      `user?.telefone?.numero → ${JSON.stringify(tel)}\n\n` +
+      (existe
+        ? '✅ user existe → valores acessados!'
+        : '✅ user é null → sem erros, retornou undefined!');
+    out.className = 'lab-output';
+  }
+</script>
+</body>
+</html>

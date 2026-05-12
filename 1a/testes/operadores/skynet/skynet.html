@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operadores em JavaScript</title>
+
+  <style>
+    :root {
+      --yellow: #f7df1e;
+      --yellow-light: #fff176;
+      --black: #111111;
+      --dark: #202020;
+      --white: #ffffff;
+      --gray: #f4f4f4;
+      --shadow: rgba(0, 0, 0, 0.18);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, #fff58a 0, transparent 35%),
+        radial-gradient(circle at bottom right, #d4b900 0, transparent 30%),
+        var(--yellow);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    header {
+      min-height: 100vh;
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 40px 20px;
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(10px);
+      padding: 56px 32px;
+      border: 4px solid var(--black);
+      border-radius: 36px;
+      box-shadow: 14px 14px 0 var(--black);
+      animation: popIn 1s ease both;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--black);
+      color: var(--yellow);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 0.95;
+      margin-bottom: 24px;
+    }
+
+    .hero p {
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      max-width: 800px;
+      margin: 0 auto 32px;
+      line-height: 1.5;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 3px solid var(--black);
+      background: var(--black);
+      color: var(--white);
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .btn:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .floating-symbol {
+      position: absolute;
+      font-size: clamp(2rem, 6vw, 6rem);
+      font-weight: 900;
+      opacity: 0.16;
+      animation: float 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .symbol-1 { top: 8%; left: 8%; animation-delay: 0s; }
+    .symbol-2 { top: 20%; right: 10%; animation-delay: 1s; }
+    .symbol-3 { bottom: 18%; left: 12%; animation-delay: 2s; }
+    .symbol-4 { bottom: 10%; right: 16%; animation-delay: 3s; }
+    .symbol-5 { top: 55%; left: 4%; animation-delay: 4s; }
+    .symbol-6 { top: 62%; right: 4%; animation-delay: 5s; }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(17, 17, 17, 0.95);
+      padding: 14px;
+      backdrop-filter: blur(10px);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    nav a {
+      color: var(--yellow);
+      text-decoration: none;
+      font-weight: 800;
+      margin: 0 10px;
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      transition: 0.2s;
+    }
+
+    nav a:hover {
+      background: var(--yellow);
+      color: var(--black);
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0;
+    }
+
+    section {
+      margin-bottom: 72px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: 0.7s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      display: inline-block;
+      font-size: clamp(2rem, 5vw, 4rem);
+      background: var(--black);
+      color: var(--yellow);
+      padding: 12px 22px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .section-description {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      max-width: 850px;
+      margin-bottom: 28px;
+      background: rgba(255, 255, 255, 0.55);
+      padding: 18px 22px;
+      border-radius: 18px;
+      border: 2px solid var(--black);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 3px solid var(--black);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 8px 8px 0 var(--black);
+      transition: 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: var(--yellow);
+      top: -70px;
+      right: -70px;
+      opacity: 0.45;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) rotate(-1deg);
+      box-shadow: 14px 14px 0 var(--black);
+    }
+
+    .operator {
+      position: relative;
+      z-index: 1;
+      font-size: 3rem;
+      font-weight: 900;
+      background: var(--black);
+      color: var(--yellow);
+      width: fit-content;
+      min-width: 72px;
+      text-align: center;
+      padding: 8px 14px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      animation: pulseOperator 2s infinite;
+    }
+
+    .card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    pre {
+      background: #1d1d1d;
+      color: #fff7a8;
+      padding: 14px;
+      border-radius: 14px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      margin: 12px 0;
+      border: 2px solid #000;
+    }
+
+    .result {
+      background: var(--yellow-light);
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 2px dashed var(--black);
+      font-weight: 800;
+    }
+
+    .playground {
+      background: var(--black);
+      color: var(--white);
+      padding: 32px;
+      border-radius: 32px;
+      box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.35);
+      margin-top: 32px;
+    }
+
+    .playground h2 {
+      color: var(--yellow);
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      margin-bottom: 12px;
+    }
+
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+      margin-top: 28px;
+    }
+
+    .demo {
+      background: var(--white);
+      color: var(--black);
+      border-radius: 24px;
+      padding: 22px;
+      border: 3px solid var(--yellow);
+    }
+
+    .demo h3 {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-weight: 800;
+      margin: 12px 0 6px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 3px solid var(--black);
+      border-radius: 12px;
+      font-size: 1rem;
+      background: var(--gray);
+    }
+
+    .demo button {
+      margin-top: 16px;
+      width: 100%;
+    }
+
+    .output {
+      margin-top: 16px;
+      background: var(--yellow);
+      border: 3px solid var(--black);
+      padding: 14px;
+      border-radius: 14px;
+      font-weight: 800;
+      min-height: 52px;
+    }
+
+    .note {
+      background: var(--black);
+      color: var(--yellow);
+      padding: 18px 22px;
+      border-radius: 20px;
+      margin: 24px 0;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--black);
+      color: var(--yellow);
+      font-weight: 800;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-35px) rotate(8deg);
+      }
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.92) translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes pulseOperator {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.06);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        padding: 36px 20px;
+        box-shadow: 8px 8px 0 var(--black);
+      }
+
+      .playground {
+        padding: 22px;
+      }
+
+      .card {
+        box-shadow: 6px 6px 0 var(--black);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <span class="floating-symbol symbol-1">+</span>
+    <span class="floating-symbol symbol-2">===</span>
+    <span class="floating-symbol symbol-3">&&</span>
+    <span class="floating-symbol symbol-4">?</span>
+    <span class="floating-symbol symbol-5">||</span>
+    <span class="floating-symbol symbol-6">!</span>
+
+    <div class="hero">
+      <span class="hero-badge">JS PARA INICIANTES</span>
+      <h1>Operadores em JavaScript</h1>
+      <p>
+        Operadores são símbolos usados para realizar cálculos, comparações,
+        atribuições e decisões dentro de um programa.
+      </p>
+
+      <div class="hero-buttons">
+        <a class="btn" href="#conteudo">Começar aula</a>
+        <a class="btn" href="#interatividade">Testar exemplos</a>
+      </div>
+    </div>
+  </header>
+
+  <nav id="menu"></nav>
+
+  <main id="conteudo"></main>
+
+  <section id="interatividade" class="playground">
+    <h2>Laboratório interativo</h2>
+    <p>Teste alguns operadores na prática. Altere os valores e veja o resultado.</p>
+
+    <div class="interactive-grid">
+      <div class="demo">
+        <h3>Soma de dois números</h3>
+        <label>Número 1</label>
+        <input id="somaA" type="number" value="10" />
+
+        <label>Número 2</label>
+        <input id="somaB" type="number" value="5" />
+
+        <button class="btn" onclick="calcularSoma()">Somar</button>
+        <div class="output" id="saidaSoma"></div>
+      </div>
+
+      <div class="demo">
+        <h3>Comparando == e ===</h3>
+        <label>Valor A</label>
+        <input id="compA" value="10" />
+
+        <label>Valor B</label>
+        <input id="compB" value="10" />
+
+        <button class="btn" onclick="compararValores()">Comparar</button>
+        <div class="output" id="saidaComparacao"></div>
+      </div>
+
+      <div class="demo">
+        <h3>Operador lógico &&</h3>
+        <label>Idade</label>
+        <input id="idade" type="number" value="15" />
+
+        <label>Tem autorização dos pais?</label>
+        <select id="autorizacao">
+          <option value="sim">Sim</option>
+          <option value="nao">Não</option>
+        </select>
+
+        <button class="btn" onclick="testarLogica()">Testar entrada</button>
+        <div class="output" id="saidaLogica"></div>
+      </div>
+
+      <div class="demo">
+        <h3>Operador ternário</h3>
+        <label>Nota</label>
+        <input id="nota" type="number" value="7" />
+
+        <button class="btn" onclick="testarTernario()">Ver situação</button>
+        <div class="output" id="saidaTernario"></div>
+      </div>
+
+      <div class="demo">
+        <h3>Coalescência nula ??</h3>
+        <label>Nome do aluno</label>
+        <input id="nomeAluno" placeholder="Deixe vazio para testar" />
+
+        <button class="btn" onclick="testarCoalescencia()">Mostrar nome</button>
+        <div class="output" id="saidaCoalescencia"></div>
+      </div>
+
+      <div class="demo">
+        <h3>Encadeamento opcional ?.</h3>
+        <label>Nome do personagem</label>
+        <input id="personagem" placeholder="Ex: Capitão Ganso" />
+
+        <button class="btn" onclick="testarOpcional()">Testar personagem</button>
+        <div class="output" id="saidaOpcional"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Página criada com HTML, CSS e JavaScript puro.
+  </footer>
+
+  <script>
+    const grupos = [
+      {
+        id: "aritmeticos",
+        titulo: "Operadores aritméticos",
+        descricao: "São usados para fazer contas matemáticas: somar, subtrair, multiplicar, dividir e muito mais.",
+        operadores: [
+          ["+", "Adição", "Soma dois valores.", "let resultado = 10 + 5;", "15"],
+          ["-", "Subtração", "Subtrai um valor do outro.", "let resultado = 10 - 5;", "5"],
+          ["*", "Multiplicação", "Multiplica dois valores.", "let resultado = 10 * 5;", "50"],
+          ["/", "Divisão", "Divide um valor pelo outro.", "let resultado = 10 / 5;", "2"],
+          ["%", "Resto da divisão", "Mostra o resto de uma divisão.", "let resultado = 10 % 3;", "1"],
+          ["**", "Exponenciação", "Eleva um número a uma potência.", "let resultado = 2 ** 3;", "8"],
+          ["++", "Incremento", "Aumenta o valor em 1.", "let x = 5;\nx++;", "6"],
+          ["--", "Decremento", "Diminui o valor em 1.", "let x = 5;\nx--;", "4"]
+        ]
+      },
+      {
+        id: "atribuicao",
+        titulo: "Operadores de atribuição",
+        descricao: "São usados para guardar ou atualizar valores dentro de variáveis.",
+        operadores: [
+          ["=", "Atribuição", "Guarda um valor em uma variável.", "let idade = 15;", "idade recebe 15"],
+          ["+=", "Soma e atribui", "Soma um valor ao valor atual.", "let pontos = 10;\npontos += 5;", "15"],
+          ["-=", "Subtrai e atribui", "Subtrai um valor do valor atual.", "let pontos = 10;\npontos -= 3;", "7"],
+          ["*=", "Multiplica e atribui", "Multiplica o valor atual.", "let pontos = 10;\npontos *= 2;", "20"],
+          ["/=", "Divide e atribui", "Divide o valor atual.", "let pontos = 10;\npontos /= 2;", "5"],
+          ["%=", "Resto e atribui", "Guarda o resto da divisão.", "let pontos = 10;\npontos %= 3;", "1"],
+          ["**=", "Potência e atribui", "Eleva o valor atual a uma potência.", "let pontos = 2;\npontos **= 3;", "8"]
+        ]
+      },
+      {
+        id: "comparacao",
+        titulo: "Operadores de comparação",
+        descricao: "Comparam valores e retornam verdadeiro ou falso.",
+        operadores: [
+          ["==", "Igualdade simples", "Compara valores, mas pode converter tipos.", "10 == '10'", "true"],
+          ["===", "Igualdade estrita", "Compara valor e tipo.", "10 === '10'", "false"],
+          ["!=", "Diferença simples", "Verifica se os valores são diferentes.", "10 != '5'", "true"],
+          ["!==", "Diferença estrita", "Verifica se valor ou tipo são diferentes.", "10 !== '10'", "true"],
+          [">", "Maior que", "Verifica se um valor é maior.", "10 > 5", "true"],
+          ["<", "Menor que", "Verifica se um valor é menor.", "10 < 5", "false"],
+          [">=", "Maior ou igual", "Verifica se é maior ou igual.", "10 >= 10", "true"],
+          ["<=", "Menor ou igual", "Verifica se é menor ou igual.", "8 <= 10", "true"]
+        ]
+      },
+      {
+        id: "logicos",
+        titulo: "Operadores lógicos",
+        descricao: "São usados para combinar condições.",
+        operadores: [
+          ["&&", "E lógico", "Só retorna true se as duas condições forem verdadeiras.", "idade >= 18 && temIngresso", "true se ambas forem verdadeiras"],
+          ["||", "OU lógico", "Retorna true se pelo menos uma condição for verdadeira.", "temPix || temCartao", "true se uma for verdadeira"],
+          ["!", "NÃO lógico", "Inverte o valor lógico.", "!estaChovendo", "true se não estiver chovendo"]
+        ]
+      },
+      {
+        id: "concatenacao",
+        titulo: "Operador de concatenação",
+        descricao: "O sinal de + também pode juntar textos.",
+        operadores: [
+          ["+", "Concatenação", "Quando usado com strings, junta textos.", "let nome = 'Ana';\nlet frase = 'Olá, ' + nome;", "Olá, Ana"]
+        ]
+      },
+      {
+        id: "ternario",
+        titulo: "Operador ternário",
+        descricao: "É uma forma curta de escrever um if/else simples.",
+        operadores: [
+          ["? :", "Ternário", "Escolhe um valor se a condição for verdadeira e outro se for falsa.", "let status = nota >= 7 ? 'Aprovado' : 'Reprovado';", "Aprovado ou Reprovado"]
+        ]
+      },
+      {
+        id: "tipo",
+        titulo: "Operadores de tipo",
+        descricao: "Ajudam a descobrir ou verificar o tipo de um valor.",
+        operadores: [
+          ["typeof", "Tipo do valor", "Retorna o tipo de dado.", "typeof 'Olá'", "string"],
+          ["instanceof", "Instância de objeto", "Verifica se um objeto foi criado a partir de uma classe ou função.", "data instanceof Date", "true ou false"]
+        ]
+      },
+      {
+        id: "spread-rest",
+        titulo: "Propagação e resto",
+        descricao: "O operador ... pode espalhar valores ou juntar valores restantes.",
+        operadores: [
+          ["...", "Spread", "Espalha valores de arrays ou objetos.", "let numeros = [1, 2, 3];\nlet copia = [...numeros];", "[1, 2, 3]"],
+          ["...", "Rest", "Junta vários valores em um único parâmetro.", "function somar(...numeros) {\n  return numeros.length;\n}", "Quantidade de valores recebidos"]
+        ]
+      },
+      {
+        id: "opcionais",
+        titulo: "Opcionais e coalescência",
+        descricao: "São operadores muito úteis para evitar erros e definir valores padrão.",
+        operadores: [
+          ["?.", "Encadeamento opcional", "Acessa uma propriedade somente se ela existir.", "usuario.endereco?.cidade", "undefined se endereco não existir"],
+          ["??", "Coalescência nula", "Usa um valor padrão se o valor for null ou undefined.", "let nome = valor ?? 'Sem nome';", "Sem nome"]
+        ]
+      },
+      {
+        id: "bitwise",
+        titulo: "Operadores bitwise",
+        descricao: "São operadores mais avançados. Eles trabalham diretamente com bits, ou seja, com a representação binária dos números.",
+        operadores: [
+          ["&", "E bit a bit", "Compara bits e retorna 1 quando ambos são 1.", "5 & 1", "1"],
+          ["|", "OU bit a bit", "Compara bits e retorna 1 se um deles for 1.", "5 | 1", "5"],
+          ["^", "OU exclusivo bit a bit", "Retorna 1 quando os bits são diferentes.", "5 ^ 1", "4"],
+          ["~", "NÃO bit a bit", "Inverte os bits do número.", "~5", "-6"],
+          ["<<", "Deslocamento à esquerda", "Move os bits para a esquerda.", "5 << 1", "10"],
+          [">>", "Deslocamento à direita", "Move os bits para a direita mantendo o sinal.", "5 >> 1", "2"],
+          [">>>", "Deslocamento à direita sem sinal", "Move os bits para a direita preenchendo com zeros.", "5 >>> 1", "2"]
+        ]
+      }
+    ];
+
+    const menu = document.getElementById("menu");
+    const conteudo = document.getElementById("conteudo");
+
+    grupos.forEach(grupo => {
+      const link = document.createElement("a");
+      link.href = `#${grupo.id}`;
+      link.textContent = grupo.titulo.replace("Operadores ", "");
+      menu.appendChild(link);
+
+      const section = document.createElement("section");
+      section.id = grupo.id;
+
+      section.innerHTML = `
+        <h2 class="section-title">${grupo.titulo}</h2>
+        <p class="section-description">${grupo.descricao}</p>
+        ${grupo.id === "bitwise" ? '<div class="note">Atenção: bitwise é um assunto mais avançado. Para iniciantes, basta saber que eles existem e que trabalham com bits.</div>' : ""}
+        <div class="cards">
+          ${grupo.operadores.map(op => `
+            <article class="card">
+              <div class="operator">${escapeHtml(op[0])}</div>
+              <h3>${op[1]}</h3>
+              <p>${op[2]}</p>
+              <pre><code>${escapeHtml(op[3])}</code></pre>
+              <div class="result">Resultado esperado: ${escapeHtml(op[4])}</div>
+            </article>
+          `).join("")}
+        </div>
+      `;
+
+      conteudo.appendChild(section);
+    });
+
+    function escapeHtml(texto) {
+      return String(texto)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function calcularSoma() {
+      const a = Number(document.getElementById("somaA").value);
+      const b = Number(document.getElementById("somaB").value);
+      document.getElementById("saidaSoma").textContent = `${a} + ${b} = ${a + b}`;
+    }
+
+    function compararValores() {
+      const a = document.getElementById("compA").value;
+      const b = document.getElementById("compB").value;
+
+      document.getElementById("saidaComparacao").innerHTML = `
+        ${a} == ${b}: ${a == b}<br>
+        ${a} === ${b}: ${a === b}<br>
+        <small>No input, os dois valores chegam como texto.</small>
+      `;
+    }
+
+    function testarLogica() {
+      const idade = Number(document.getElementById("idade").value);
+      const temAutorizacao = document.getElementById("autorizacao").value === "sim";
+
+      const podeEntrar = idade >= 18 || temAutorizacao;
+
+      document.getElementById("saidaLogica").textContent =
+        podeEntrar
+          ? "Pode participar da atividade."
+          : "Não pode participar sem autorização.";
+    }
+
+    function testarTernario() {
+      const nota = Number(document.getElementById("nota").value);
+      const situacao = nota >= 7 ? "Aprovado" : "Precisa estudar mais";
+      document.getElementById("saidaTernario").textContent = situacao;
+    }
+
+    function testarCoalescencia() {
+      const campo = document.getElementById("nomeAluno").value.trim();
+      const nome = campo === "" ? null : campo;
+      const resultado = nome ?? "Aluno sem nome informado";
+
+      document.getElementById("saidaCoalescencia").textContent = resultado;
+    }
+
+    function testarOpcional() {
+      const nome = document.getElementById("personagem").value.trim();
+
+      const ficha = nome
+        ? { personagem: { nome: nome, classe: "Aventureiro JavaScript" } }
+        : {};
+
+      const resultado = ficha.personagem?.nome ?? "Nenhum personagem encontrado";
+
+      document.getElementById("saidaOpcional").textContent = resultado;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, {
+      threshold: 0.12
+    });
+
+    document.querySelectorAll("section").forEach(section => {
+      observer.observe(section);
+    });
+
+    calcularSoma();
+    compararValores();
+    testarLogica();
+    testarTernario();
+    testarCoalescencia();
+    testarOpcional();
+  </script>
+</body>
+</html>
