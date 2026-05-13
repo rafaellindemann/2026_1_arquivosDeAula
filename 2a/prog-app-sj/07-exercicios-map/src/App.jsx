@@ -467,20 +467,21 @@ function App() {
 
   // esse é legal virar uma listinha estilo NF
   const [compras, setCompras] = useState([
-    { id: 600, preco: 15.50, quantidade: 2, valorTotal: 31.00 },
-    { id: 601, preco: 8.90,  quantidade: 5, valorTotal: 44.50 },
-    { id: 602, preco: 120.00, quantidade: 1, valorTotal: 120.00 },
-    { id: 603, preco: 45.00,  quantidade: 3, valorTotal: 135.00 },
-    { id: 604, preco: 2.50,   quantidade: 10, valorTotal: 25.00 },
-    { id: 605, preco: 19.99,  quantidade: 2, valorTotal: 39.98 },
-    { id: 606, preco: 350.00, quantidade: 1, valorTotal: 350.00 },
-    { id: 607, preco: 12.00,  quantidade: 4, valorTotal: 48.00 },
-    { id: 608, preco: 7.25,   quantidade: 6, valorTotal: 43.50 },
-    { id: 609, preco: 89.90,  quantidade: 2, valorTotal: 179.80 },
-    { id: 610, preco: 5.00,   quantidade: 8, valorTotal: 40.00 },
-    { id: 611, preco: 27.30,  quantidade: 3, valorTotal: 81.90 },
-    { id: 612, preco: 150.00, quantidade: 2, valorTotal: 300.00 }
+    { id: 600, nome: "Mouse Gamer RGB", preco: 15.50, quantidade: 2, valorTotal: 31.00 },
+    { id: 601, nome: "Café Espresso (Cápsula)", preco: 8.90, quantidade: 5, valorTotal: 44.50 },
+    { id: 602, nome: "Teclado Mecânico", preco: 120.00, quantidade: 1, valorTotal: 120.00 },
+    { id: 603, nome: "Camiseta Tech", preco: 45.00, quantidade: 3, valorTotal: 135.00 },
+    { id: 604, nome: "Caneta Gel Preta", preco: 2.50, quantidade: 10, valorTotal: 25.00 },
+    { id: 605, nome: "Suporte para Notebook", preco: 19.99, quantidade: 2, valorTotal: 39.98 },
+    { id: 606, nome: "Monitor 24 Pol", preco: 350.00, quantidade: 1, valorTotal: 350.00 },
+    { id: 607, nome: "Cabo HDMI 2m", preco: 12.00, quantidade: 4, valorTotal: 48.00 },
+    { id: 608, nome: "Bloco de Notas", preco: 7.25, quantidade: 6, valorTotal: 43.50 },
+    { id: 609, nome: "Headset com Microfone", preco: 89.90, quantidade: 2, valorTotal: 179.80 },
+    { id: 610, nome: "Pilha Alcalina AAA", preco: 5.00, quantidade: 8, valorTotal: 40.00 },
+    { id: 611, nome: "Mousepad Speed", preco: 27.30, quantidade: 3, valorTotal: 81.90 },
+    { id: 612, nome: "Webcam Full HD", preco: 150.00, quantidade: 2, valorTotal: 300.00 }
   ]);
+
   
   // pra essa é legal cada tarefa ser uma linha
   const [tarefas, setTarefas] = useState([
@@ -499,7 +500,7 @@ function App() {
     { id: 712, titulo: "Atualizar dependências", responsavel: "Marcos Paulo", concluido: true }
   ]);
   
-  // layout de rede social
+  // layout de rede social. Provavelmente vai ser legal ter outro
   const [posts, setPosts] = useState([
     { id: 800, emoji: "🚀", texto: "Partiu dominar o React!", hashtags: ["#coding", "#frontend"], curtidas: 45 },
     { id: 801, emoji: "☕", texto: "Café e código, a combinação perfeita.", hashtags: ["#devlife", "#coffee"], curtidas: 120 },
@@ -516,6 +517,7 @@ function App() {
     { id: 812, emoji: "🌚", texto: "Codando no escuro até tarde.", hashtags: ["#nightowl", "#programming"], curtidas: 72 }
   ]);
   
+
   return (
     <>
 
