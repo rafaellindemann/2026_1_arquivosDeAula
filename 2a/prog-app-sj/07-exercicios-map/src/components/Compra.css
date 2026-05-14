@@ -1,0 +1,9 @@
+.cont-compra{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+/* .cont-compra p{
+    float: 1;
+} */

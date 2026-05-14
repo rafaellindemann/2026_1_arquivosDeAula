@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FaHorse } from "react-icons/fa";
 
 import './App.css'
+import Compra from './components/Compra';
 
 function App() {
   const [cavalos, setCavalos] = useState([
@@ -500,7 +501,7 @@ function App() {
     { id: 712, titulo: "Atualizar dependências", responsavel: "Marcos Paulo", concluido: true }
   ]);
   
-  // layout de rede social. Provavelmente vai ser legal ter outro
+  // layout de rede social. Provavelmente vai ser legal ter outro map para fazer as # no post
   const [posts, setPosts] = useState([
     { id: 800, emoji: "🚀", texto: "Partiu dominar o React!", hashtags: ["#coding", "#frontend"], curtidas: 45 },
     { id: 801, emoji: "☕", texto: "Café e código, a combinação perfeita.", hashtags: ["#devlife", "#coffee"], curtidas: 120 },
@@ -523,7 +524,22 @@ function App() {
 
 
       <section>
-        {/* map de cavalos */}
+        <h2>Lista de Compras bem jóia</h2>
+        <div className="lista-compras">
+          {
+            compras.map((compra) => (
+              <Compra c={compra} key={compra.id}/>
+            ))
+          }
+        </div>
+
+        {/* {compras.map((compra) => (
+            <div>
+              <h2>{compra.nome}</h2>
+            </div>
+          ))} */}
+
+        {/* <Compra c={compras[0]} /> */}
       </section>
 
       <section>
