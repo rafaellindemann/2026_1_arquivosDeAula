@@ -76,9 +76,9 @@ function verificarMeta(){
 
 function revelarRecreio(){
     document.getElementById('resultado').innerHTML =
-    '<br>Início: 20:30' + 
+    '<br>Início: 20:30 (ou 20:20?)' + 
     '<br>Fim: 20:45' + 
-    '<br>Chamada: 20:50'
+    '<br>Chamada: 20:50' 
 }
 
 function calcularParImpar(){
