@@ -1,0 +1,33 @@
+/* .cont-compra{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+ */
+
+ /* v1: com label alinhados à direita e o valor total lá na direita */
+ /* .cont-compra {
+    display: flex;
+    gap: 15px;     
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.589);
+}
+
+.cont-compra strong {
+    margin-left: auto; 
+} */
+
+.cont-compra {
+    display: grid;
+    /* Nome ocupa o que sobrar, quant e preco tem 80px cada, total é automático */
+    /* grid-template-columns: 1fr 80px 100px auto;  */
+    grid-template-columns: 3fr 1fr 1fr 1fr; 
+    width: 100%;
+    gap: 10px;
+}
+
+.cont-compra strong, span {
+    text-align: left;
+}
+

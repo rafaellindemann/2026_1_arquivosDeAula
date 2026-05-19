@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FaHorse } from "react-icons/fa";
 
 import './App.css'
+import Compra from './components/Compra';
 
 function App() {
   const [cavalos, setCavalos] = useState([
@@ -465,12 +466,80 @@ function App() {
     }
   ])
 
+  // esse é legal virar uma listinha estilo NF
+  const [compras, setCompras] = useState([
+    { id: 600, nome: "Mouse Gamer RGB", preco: 15.50, quantidade: 2, valorTotal: 31.00 },
+    { id: 601, nome: "Café Espresso (Cápsula)", preco: 8.90, quantidade: 5, valorTotal: 44.50 },
+    { id: 602, nome: "Teclado Mecânico", preco: 120.00, quantidade: 1, valorTotal: 120.00 },
+    { id: 603, nome: "Camiseta Tech", preco: 45.00, quantidade: 3, valorTotal: 135.00 },
+    { id: 604, nome: "Caneta Gel Preta", preco: 2.50, quantidade: 10, valorTotal: 25.00 },
+    { id: 605, nome: "Suporte para Notebook", preco: 19.99, quantidade: 2, valorTotal: 39.98 },
+    { id: 606, nome: "Monitor 24 Pol", preco: 350.00, quantidade: 1, valorTotal: 350.00 },
+    { id: 607, nome: "Cabo HDMI 2m", preco: 12.00, quantidade: 4, valorTotal: 48.00 },
+    { id: 608, nome: "Bloco de Notas", preco: 7.25, quantidade: 6, valorTotal: 43.50 },
+    { id: 609, nome: "Headset com Microfone", preco: 89.90, quantidade: 2, valorTotal: 179.80 },
+    { id: 610, nome: "Pilha Alcalina AAA", preco: 5.00, quantidade: 8, valorTotal: 40.00 },
+    { id: 611, nome: "Mousepad Speed", preco: 27.30, quantidade: 3, valorTotal: 81.90 },
+    { id: 612, nome: "Webcam Full HD", preco: 150.00, quantidade: 2, valorTotal: 300.00 }
+  ]);
+
+  
+  // pra essa é legal cada tarefa ser uma linha
+  const [tarefas, setTarefas] = useState([
+    { id: 700, titulo: "Configurar ambiente", responsavel: "Ana Silva", concluido: true },
+    { id: 701, titulo: "Modelagem do banco", responsavel: "Bruno Costa", concluido: false },
+    { id: 702, titulo: "Desenvolver API login", responsavel: "Carla Souza", concluido: false },
+    { id: 703, titulo: "Revisão de código", responsavel: "Daniel Oliveira", concluido: false },
+    { id: 704, titulo: "Ajustar CSS global", responsavel: "Fernanda Lima", concluido: true },
+    { id: 705, titulo: "Testes unitários", responsavel: "Gabriel Santos", concluido: false },
+    { id: 706, titulo: "Deploy em staging", responsavel: "Ana Silva", concluido: true },
+    { id: 707, titulo: "Documentar endpoints", responsavel: "Helena Matos", concluido: false },
+    { id: 708, titulo: "Reunião de sprint", responsavel: "Igor Rocha", concluido: true },
+    { id: 709, titulo: "Otimizar imagens", responsavel: "Juliana Mendes", concluido: false },
+    { id: 710, titulo: "Refatorar hooks", responsavel: "Kevin Silva", concluido: true },
+    { id: 711, titulo: "Corrigir bug de scroll", responsavel: "Larissa Faria", concluido: false },
+    { id: 712, titulo: "Atualizar dependências", responsavel: "Marcos Paulo", concluido: true }
+  ]);
+  
+  // layout de rede social. Provavelmente vai ser legal ter outro map para fazer as # no post
+  const [posts, setPosts] = useState([
+    { id: 800, emoji: "🚀", texto: "Partiu dominar o React!", hashtags: ["#coding", "#frontend"], curtidas: 45 },
+    { id: 801, emoji: "☕", texto: "Café e código, a combinação perfeita.", hashtags: ["#devlife", "#coffee"], curtidas: 120 },
+    { id: 802, emoji: "🌊", texto: "Aproveitando o dia na praia.", hashtags: ["#summer", "#vibe"], curtidas: 89 },
+    { id: 803, emoji: "💡", texto: "Tive uma ideia incrível para um app hoje.", hashtags: ["#startup", "#ideas"], curtidas: 34 },
+    { id: 804, emoji: "💻", texto: "Setup novo finalmente montado!", hashtags: ["#setup", "#gaming"], curtidas: 210 },
+    { id: 805, emoji: "🍕", texto: "Sexta-feira pede uma pizza.", hashtags: ["#food", "#friday"], curtidas: 67 },
+    { id: 806, emoji: "📚", texto: "Terminei de ler 'Código Limpo' hoje.", hashtags: ["#cleanclode", "#learning"], curtidas: 55 },
+    { id: 807, emoji: "🏃‍♂️", texto: "Corrida matinal paga!", hashtags: ["#fitness", "#health"], curtidas: 42 },
+    { id: 808, emoji: "🎨", texto: "Explorando novas paletas de cores.", hashtags: ["#design", "#uiux"], curtidas: 93 },
+    { id: 809, emoji: "✈️", texto: "Próxima parada: conferência de tech.", hashtags: ["#travel", "#devconf"], curtidas: 156 },
+    { id: 810, emoji: "🎸", texto: "Praticando um pouco de guitarra.", hashtags: ["#music", "#hobby"], curtidas: 28 },
+    { id: 811, emoji: "🐶", texto: "O novo estagiário é muito fofo.", hashtags: ["#dog", "#officelife"], curtidas: 315 },
+    { id: 812, emoji: "🌚", texto: "Codando no escuro até tarde.", hashtags: ["#nightowl", "#programming"], curtidas: 72 }
+  ]);
+  
+
   return (
     <>
 
 
       <section>
-        {/* map de cavalos */}
+        <h2>Lista de Compras bem jóia</h2>
+        <div className="lista-compras">
+          {
+            compras.map((compra) => (
+              <Compra c={compra} key={compra.id}/>
+            ))
+          }
+        </div>
+
+        {/* {compras.map((compra) => (
+            <div>
+              <h2>{compra.nome}</h2>
+            </div>
+          ))} */}
+
+        {/* <Compra c={compras[0]} /> */}
       </section>
 
       <section>

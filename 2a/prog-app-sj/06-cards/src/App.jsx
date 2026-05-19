@@ -142,6 +142,7 @@ function App() {
           produtos.map((produto) => (
             <CardProduto p={produto} key={produto.id} />
           ))
+          
         }
       </div>
     </div>

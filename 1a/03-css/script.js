@@ -1,10 +1,84 @@
 let resposta = document.getElementById('resultado')
+// let resposta01 = document.getElementById('resultado01')
+
+function calcularUber(){
+    // infos
+    let distancia, tempoSegundos, tempoHoras, tempoDias
+    let tempoMinutos
+    const velocidade = 300000
+    // entradas
+    distancia = Number(prompt("Distância:"))
+    // processamento
+    tempoSegundos = distancia / velocidade
+    // saídas
+    resposta.innerHTML = '<br>Tempo: ' + tempoSegundos + ' segundo(s)'
+    // resposta.innerHTML = '<p>Tempo: ' + tempoSegundos + ' segundo(s)</p>'
+    
+    // segunda etapa
+    if(tempoSegundos > 60){
+        tempoMinutos = tempoSegundos / 60
+        resposta.innerHTML += '<br>Ou ' + tempoMinutos + ' minuto(s)'
+    }
+    if(tempoMinutos > 60){
+        tempoHoras = tempoMinutos / 60
+        resposta.innerHTML += '<br>Ou ' + tempoHoras + ' hora(s)'
+    }
+    if(tempoHoras > 24){
+        tempoDias = tempoHoras / 24
+        // ...
+    }
+
+    // resto = 6.75 % 1
+    if(tempoSegundos > 60){
+        'e ' 
+
+    }
+    + tempoMinutos
+}
+
+function verificarMeta(){
+    // infos
+    let totalBruto, premiacoes, presentes, comissoes, lucro
+    let meta
+    // entradas
+    totalBruto = Number(prompt("Total bruto: "))
+    premiacoes = Number(prompt("Premiações: "))
+    presentes = Number(prompt("Presentinhos: "))
+    comissoes = Number(prompt("Comissões: "))
+    meta = Number(prompt("Meta de hoje:"))
+    // processamento
+    lucro = totalBruto - premiacoes - presentes - comissoes
+    let mensagem = ''
+    if(lucro >= meta){
+        // bateu a meta - 
+        mensagem = '👵Batemos a meta, lucro de R$' + lucro.toFixed(2).replace('.',',')
+    }else{
+        // não bateu a meta
+        if(lucro > 0){
+            // sem meta mas com lucro
+            mensagem = 'Não batemos a meta, mas tivemos lucro de R$' + lucro.toFixed(2).replace('.',',')
+        }else{
+            // sem meta e prejuízo
+            let prejuizo = lucro * -1
+            mensagem = '💀☠️⚔️🗡️🔫🦵Não batemos a meta e ainda tivemos prejuízo de R$' + prejuizo.toFixed(2).replace('.',',')
+        }
+    }
+    // saídas
+    resposta.innerHTML = "<br>Lucro de hoje: R$" + lucro.toFixed(2).replace('.',',') + 
+    '<br>' + mensagem
+
+    // let ponto = '.'
+    // let virgula = ','
+    // resposta.innerHTML = "Lucro de hoje: R$" + 
+    // lucro.toFixed(2).replace(prompt("Digita o ponto aí pra mim"),prompt("E a vírgula?"))
+}
+
 
 function revelarRecreio(){
     document.getElementById('resultado').innerHTML =
-    '<br>Início: 20:30' + 
+    '<br>Início: 20:30 (ou 20:20?)' + 
     '<br>Fim: 20:45' + 
-    '<br>Chamada: 20:50'
+    '<br>Chamada: 20:50' 
 }
 
 function calcularParImpar(){
