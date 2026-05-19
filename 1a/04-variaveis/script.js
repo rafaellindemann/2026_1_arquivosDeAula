@@ -6,7 +6,11 @@ function registrarVenda(){
     // registrar venda no total
     total = total + valor
     // atualizar total na página
-    document.getElementById('totalVendido').innerHTML =  'Total de vendas: R$' + total.toFixed(2)
+    document.getElementById('totalVendido').innerHTML =  
+    'Total de vendas: R$' + total.toFixed(2)
+
+    // lista de vendas
+    document.getElementById('listaVendas').innerHTML += 'R$' + valor.toFixed(2) + '<br>'
     
     document.getElementById('inputVenda').value = ''
     document.getElementById('inputVenda').focus()
