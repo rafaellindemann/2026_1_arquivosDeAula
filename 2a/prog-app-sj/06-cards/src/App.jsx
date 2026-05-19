@@ -140,7 +140,7 @@ function App() {
       <div className="listaCards">
         {
           produtos.map((produto) => (
-            <CardProduto p={produto} key={produto.id}/>
+            <CardProduto p={produto} key={produto.id} />
           ))
         }
       </div>
