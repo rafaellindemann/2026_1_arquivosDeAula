@@ -205,6 +205,10 @@
     <select id="modoSalvamento">
       <option value="memoria" selected>Memória</option>
       <option value="bd">Banco de Dados</option>
+      
+      <!-- <option value="memoria">Memória</option>
+      <option value="bd" selected>Banco de Dados</option> -->
+
     </select>
   </div>
 </header>
@@ -270,19 +274,9 @@
   const API_URL = 'http://localhost:3000/contatinhos';
 
   let modo = 'memoria';
+  // let modo = 'bd';
 
-  let contatinhosMemoria = [
-    {
-      id: 1,
-      nome: 'Ana',
-      arroba: '@ana_dev',
-      telefone: '(48) 99999-9999',
-      interesses: 'Jogos, React e café',
-      lembretes: 'Chamar para conversar sobre projeto de site',
-      ultimo_contato: '2026-05-20T14:30',
-      de_onde_conheco: 'Curso técnico'
-    }
-  ];
+  let contatinhosMemoria = [];
 
   const form = document.getElementById('formContatinho');
   const modoSalvamento = document.getElementById('modoSalvamento');

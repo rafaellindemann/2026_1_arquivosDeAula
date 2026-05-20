@@ -8,8 +8,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'secreto',
-    password: 'postgre',
-    port: 5432,
+    password: 'senai',
+    port: 5433,
 });
 
 app.use(cors());
