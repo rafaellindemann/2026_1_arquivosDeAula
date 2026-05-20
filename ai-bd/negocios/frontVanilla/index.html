@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <title>CRUD Contatinhos</title>
@@ -23,7 +24,7 @@
       align-items: center;
       background: rgba(0, 0, 0, 0.25);
       backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(255,255,255,0.15);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     h1 {
@@ -35,19 +36,24 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255,255,255,0.12);
+      background: rgba(255, 255, 255, 0.12);
       padding: 10px 14px;
       border-radius: 12px;
     }
 
-    select, input, textarea, button {
+    select,
+    input,
+    textarea,
+    button {
       border: none;
       border-radius: 10px;
       padding: 10px;
       font-size: 14px;
     }
 
-    select, input, textarea {
+    select,
+    input,
+    textarea {
       width: 100%;
       background: #fff;
       color: #222;
@@ -68,11 +74,11 @@
     }
 
     .card {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 20px;
       padding: 22px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
 
     .form-group {
@@ -129,14 +135,14 @@
     }
 
     .contador {
-      background: rgba(255,255,255,0.15);
+      background: rgba(255, 255, 255, 0.15);
       padding: 8px 12px;
       border-radius: 999px;
       font-size: 13px;
     }
 
     .contatinho {
-      background: rgba(255,255,255,0.92);
+      background: rgba(255, 255, 255, 0.92);
       color: #222;
       border-radius: 16px;
       padding: 18px;
@@ -192,244 +198,250 @@
     }
   </style>
 </head>
+
 <body>
 
-<header>
-  <div>
-    <h1>CRUD Contatinhos</h1>
-    <p>Um mini sistema para demonstrar memória x banco de dados PostgreSQL</p>
-  </div>
-
-  <div class="storage-box">
-    <label for="modoSalvamento">Salvar em:</label>
-    <select id="modoSalvamento">
-      <option value="memoria" selected>Memória</option>
-      <option value="bd">Banco de Dados</option>
-      
-      <!-- <option value="memoria">Memória</option>
-      <option value="bd" selected>Banco de Dados</option> -->
-
-    </select>
-  </div>
-</header>
-
-<main>
-  <section class="card">
-    <h2 id="tituloFormulario">Novo contatinho</h2>
-
-    <form id="formContatinho">
-      <input type="hidden" id="id" />
-
-      <div class="form-group">
-        <label>Nome</label>
-        <input type="text" id="nome" required />
-      </div>
-
-      <div class="form-group">
-        <label>Arroba</label>
-        <input type="text" id="arroba" placeholder="@exemplo" />
-      </div>
-
-      <div class="form-group">
-        <label>Telefone</label>
-        <input type="text" id="telefone" placeholder="(48) 99999-9999" />
-      </div>
-
-      <div class="form-group">
-        <label>Interesses</label>
-        <textarea id="interesses"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Lembretes</label>
-        <textarea id="lembretes"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Último contato</label>
-        <input type="datetime-local" id="ultimo_contato" />
-      </div>
-
-      <div class="form-group">
-        <label>De onde conheço</label>
-        <input type="text" id="de_onde_conheco" />
-      </div>
-
-      <button class="btn-primary" type="submit">Salvar contatinho</button>
-      <button class="btn-secondary" type="button" onclick="limparFormulario()">Cancelar edição</button>
-    </form>
-  </section>
-
-  <section class="card">
-    <div class="list-header">
-      <h2>Lista de contatinhos</h2>
-      <span class="contador" id="contador">0 registros</span>
+  <header>
+    <div>
+      <h1>CRUD Contatinhos</h1>
+      <p>Um mini sistema para demonstrar memória x banco de dados PostgreSQL</p>
     </div>
 
-    <div id="listaContatinhos"></div>
-  </section>
-</main>
+    <div class="storage-box">
+      <label for="modoSalvamento">Salvar em:</label>
+      <select id="modoSalvamento">
+        <option value="memoria" selected>Memória</option>
+        <option value="bd">Banco de Dados</option>
 
-<script>
-  const API_URL = 'http://localhost:3000/contatinhos';
+        <!-- <option value="memoria">Memória</option>
+      <option value="bd" selected>Banco de Dados</option> -->
 
-  let modo = 'memoria';
-  // let modo = 'bd';
+      </select>
+    </div>
+  </header>
 
-  let contatinhosMemoria = [];
+  <main>
+    <section class="card">
+      <h2 id="tituloFormulario">Novo contatinho</h2>
 
-  const form = document.getElementById('formContatinho');
-  const modoSalvamento = document.getElementById('modoSalvamento');
-  const lista = document.getElementById('listaContatinhos');
-  const contador = document.getElementById('contador');
-  const tituloFormulario = document.getElementById('tituloFormulario');
+      <form id="formContatinho">
+        <input type="hidden" id="id" />
 
-  modoSalvamento.addEventListener('change', () => {
-    modo = modoSalvamento.value;
-    limparFormulario();
-    carregarContatinhos();
-  });
+        <div class="form-group">
+          <label>Nome</label>
+          <input type="text" id="nome" required />
+        </div>
 
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
+        <div class="form-group">
+          <label>Arroba</label>
+          <input type="text" id="arroba" placeholder="@exemplo" />
+        </div>
 
-    const contatinho = pegarDadosFormulario();
-    const id = document.getElementById('id').value;
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="text" id="telefone" placeholder="(48) 99999-9999" />
+        </div>
 
-    if (modo == 'memoria') {
-      if (id) {
-        atualizarNaMemoria(Number(id), contatinho);
-      } else {
-        salvarNaMemoria(contatinho);
-      }
-    } else {
-      if (id) {
-        await atualizarNoBanco(id, contatinho);
-      } else {
-        await salvarNoBanco(contatinho);
-      }
-    }
+        <div class="form-group">
+          <label>Interesses</label>
+          <textarea id="interesses"></textarea>
+        </div>
 
-    limparFormulario();
-    carregarContatinhos();
-  });
+        <div class="form-group">
+          <label>Lembretes</label>
+          <textarea id="lembretes"></textarea>
+        </div>
 
-  function pegarDadosFormulario() {
-    return {
-      nome: document.getElementById('nome').value,
-      arroba: document.getElementById('arroba').value,
-      telefone: document.getElementById('telefone').value,
-      interesses: document.getElementById('interesses').value,
-      lembretes: document.getElementById('lembretes').value,
-      ultimo_contato: document.getElementById('ultimo_contato').value || null,
-      de_onde_conheco: document.getElementById('de_onde_conheco').value
-    };
-  }
+        <div class="form-group">
+          <label>Último contato</label>
+          <input type="datetime-local" id="ultimo_contato" />
+        </div>
 
-  function preencherFormulario(contatinho) {
-    document.getElementById('id').value = contatinho.id;
-    document.getElementById('nome').value = contatinho.nome || '';
-    document.getElementById('arroba').value = contatinho.arroba || '';
-    document.getElementById('telefone').value = contatinho.telefone || '';
-    document.getElementById('interesses').value = contatinho.interesses || '';
-    document.getElementById('lembretes').value = contatinho.lembretes || '';
-    document.getElementById('ultimo_contato').value = formatarParaInputData(contatinho.ultimo_contato);
-    document.getElementById('de_onde_conheco').value = contatinho.de_onde_conheco || '';
+        <div class="form-group">
+          <label>De onde conheço</label>
+          <input type="text" id="de_onde_conheco" />
+        </div>
 
-    tituloFormulario.textContent = 'Editar contatinho';
-  }
+        <button class="btn-primary" type="submit">Salvar contatinho</button>
+        <button class="btn-secondary" type="button" onclick="limparFormulario()">Cancelar edição</button>
+      </form>
+    </section>
 
-  function limparFormulario() {
-    form.reset();
-    document.getElementById('id').value = '';
-    tituloFormulario.textContent = 'Novo contatinho';
-  }
+    <section class="card">
+      <div class="list-header">
+        <h2>Lista de contatinhos</h2>
+        <span class="contador" id="contador">0 registros</span>
+      </div>
 
-  function salvarNaMemoria(contatinho) {
-    contatinho.id = Date.now();
-    contatinhosMemoria.push(contatinho);
-  }
+      <div id="listaContatinhos"></div>
+    </section>
+  </main>
 
-  function atualizarNaMemoria(id, dadosAtualizados) {
-    contatinhosMemoria = contatinhosMemoria.map(contatinho => {
-      if (contatinho.id == id) {
-        return { id, ...dadosAtualizados };
-      }
+  <script>
+    const API_URL = 'http://localhost:3000/contatinhos';
 
-      return contatinho;
-    });
-  }
+    let modo = localStorage.getItem('modoSalvamento') || 'memoria';
 
-  function deletarDaMemoria(id) {
-    contatinhosMemoria = contatinhosMemoria.filter(contatinho => contatinho.id != id);
-    carregarContatinhos();
-  }
+    let contatinhosMemoria = [];
 
-  async function buscarDoBanco() {
-    const resposta = await fetch(API_URL);
-    return await resposta.json();
-  }
+    const form = document.getElementById('formContatinho');
+    const modoSalvamento = document.getElementById('modoSalvamento');
+    modoSalvamento.value = modo;
+    const lista = document.getElementById('listaContatinhos');
+    const contador = document.getElementById('contador');
+    const tituloFormulario = document.getElementById('tituloFormulario');
 
-  async function salvarNoBanco(contatinho) {
-    await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(contatinho)
-    });
-  }
 
-  async function atualizarNoBanco(id, contatinho) {
-    await fetch(`${API_URL}/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(contatinho)
-    });
-  }
+    modoSalvamento.addEventListener('change', () => {
+      modo = modoSalvamento.value;
 
-  async function deletarDoBanco(id) {
-    await fetch(`${API_URL}/${id}`, {
-      method: 'DELETE'
+      localStorage.setItem('modoSalvamento', modo);
+
+      limparFormulario();
+      carregarContatinhos();
     });
 
-    carregarContatinhos();
-  }
 
-  async function carregarContatinhos() {
-    try {
-      let dados = [];
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const contatinho = pegarDadosFormulario();
+      const id = document.getElementById('id').value;
 
       if (modo == 'memoria') {
-        dados = contatinhosMemoria;
+        if (id) {
+          atualizarNaMemoria(Number(id), contatinho);
+        } else {
+          salvarNaMemoria(contatinho);
+        }
       } else {
-        dados = await buscarDoBanco();
+        if (id) {
+          await atualizarNoBanco(id, contatinho);
+        } else {
+          await salvarNoBanco(contatinho);
+        }
       }
 
-      renderizarLista(dados);
-    } catch (erro) {
-      lista.innerHTML = `
+      limparFormulario();
+      carregarContatinhos();
+    });
+
+    function pegarDadosFormulario() {
+      return {
+        nome: document.getElementById('nome').value,
+        arroba: document.getElementById('arroba').value,
+        telefone: document.getElementById('telefone').value,
+        interesses: document.getElementById('interesses').value,
+        lembretes: document.getElementById('lembretes').value,
+        ultimo_contato: document.getElementById('ultimo_contato').value || null,
+        de_onde_conheco: document.getElementById('de_onde_conheco').value
+      };
+    }
+
+    function preencherFormulario(contatinho) {
+      document.getElementById('id').value = contatinho.id;
+      document.getElementById('nome').value = contatinho.nome || '';
+      document.getElementById('arroba').value = contatinho.arroba || '';
+      document.getElementById('telefone').value = contatinho.telefone || '';
+      document.getElementById('interesses').value = contatinho.interesses || '';
+      document.getElementById('lembretes').value = contatinho.lembretes || '';
+      document.getElementById('ultimo_contato').value = formatarParaInputData(contatinho.ultimo_contato);
+      document.getElementById('de_onde_conheco').value = contatinho.de_onde_conheco || '';
+
+      tituloFormulario.textContent = 'Editar contatinho';
+    }
+
+    function limparFormulario() {
+      form.reset();
+      document.getElementById('id').value = '';
+      tituloFormulario.textContent = 'Novo contatinho';
+    }
+
+    function salvarNaMemoria(contatinho) {
+      contatinho.id = Date.now();
+      contatinhosMemoria.push(contatinho);
+    }
+
+    function atualizarNaMemoria(id, dadosAtualizados) {
+      contatinhosMemoria = contatinhosMemoria.map(contatinho => {
+        if (contatinho.id == id) {
+          return { id, ...dadosAtualizados };
+        }
+
+        return contatinho;
+      });
+    }
+
+    function deletarDaMemoria(id) {
+      contatinhosMemoria = contatinhosMemoria.filter(contatinho => contatinho.id != id);
+      carregarContatinhos();
+    }
+
+    async function buscarDoBanco() {
+      const resposta = await fetch(API_URL);
+      return await resposta.json();
+    }
+
+    async function salvarNoBanco(contatinho) {
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contatinho)
+      });
+    }
+
+    async function atualizarNoBanco(id, contatinho) {
+      await fetch(`${API_URL}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contatinho)
+      });
+    }
+
+    async function deletarDoBanco(id) {
+      await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE'
+      });
+
+      carregarContatinhos();
+    }
+
+    async function carregarContatinhos() {
+      try {
+        let dados = [];
+
+        if (modo == 'memoria') {
+          dados = contatinhosMemoria;
+        } else {
+          dados = await buscarDoBanco();
+        }
+
+        renderizarLista(dados);
+      } catch (erro) {
+        lista.innerHTML = `
         <p class="empty">
           Erro ao carregar dados. Verifique se o backend está rodando na porta 3000.
         </p>
       `;
-      contador.textContent = '0 registros';
-    }
-  }
-
-  function renderizarLista(contatinhos) {
-    contador.textContent = `${contatinhos.length} registro(s)`;
-
-    if (contatinhos.length == 0) {
-      lista.innerHTML = '<p class="empty">Nenhum contatinho cadastrado ainda.</p>';
-      return;
+        contador.textContent = '0 registros';
+      }
     }
 
-    lista.innerHTML = '';
+    function renderizarLista(contatinhos) {
+      contador.textContent = `${contatinhos.length} registro(s)`;
 
-    contatinhos.forEach(contatinho => {
-      const div = document.createElement('div');
-      div.className = 'contatinho';
+      if (contatinhos.length == 0) {
+        lista.innerHTML = '<p class="empty">Nenhum contatinho cadastrado ainda.</p>';
+        return;
+      }
 
-      div.innerHTML = `
+      lista.innerHTML = '';
+
+      contatinhos.forEach(contatinho => {
+        const div = document.createElement('div');
+        div.className = 'contatinho';
+
+        div.innerHTML = `
         <h3>${contatinho.nome}</h3>
         <div class="arroba">${contatinho.arroba || 'Sem arroba'}</div>
 
@@ -445,50 +457,51 @@
         </div>
       `;
 
-      div.querySelector('.btn-edit').addEventListener('click', () => {
-        preencherFormulario(contatinho);
-      });
+        div.querySelector('.btn-edit').addEventListener('click', () => {
+          preencherFormulario(contatinho);
+        });
 
-      div.querySelector('.btn-danger').addEventListener('click', () => {
-        if (confirm('Deseja excluir este contatinho?')) {
-          if (modo == 'memoria') {
-            deletarDaMemoria(contatinho.id);
-          } else {
-            deletarDoBanco(contatinho.id);
+        div.querySelector('.btn-danger').addEventListener('click', () => {
+          if (confirm('Deseja excluir este contatinho?')) {
+            if (modo == 'memoria') {
+              deletarDaMemoria(contatinho.id);
+            } else {
+              deletarDoBanco(contatinho.id);
+            }
           }
-        }
+        });
+
+        lista.appendChild(div);
       });
-
-      lista.appendChild(div);
-    });
-  }
-
-  function formatarData(data) {
-    if (!data) return '-';
-
-    const dataObj = new Date(data);
-
-    if (isNaN(dataObj.getTime())) {
-      return data;
     }
 
-    return dataObj.toLocaleString('pt-BR');
-  }
+    function formatarData(data) {
+      if (!data) return '-';
 
-  function formatarParaInputData(data) {
-    if (!data) return '';
+      const dataObj = new Date(data);
 
-    const dataObj = new Date(data);
+      if (isNaN(dataObj.getTime())) {
+        return data;
+      }
 
-    if (isNaN(dataObj.getTime())) {
-      return data;
+      return dataObj.toLocaleString('pt-BR');
     }
 
-    return dataObj.toISOString().slice(0, 16);
-  }
+    function formatarParaInputData(data) {
+      if (!data) return '';
 
-  carregarContatinhos();
-</script>
+      const dataObj = new Date(data);
+
+      if (isNaN(dataObj.getTime())) {
+        return data;
+      }
+
+      return dataObj.toISOString().slice(0, 16);
+    }
+
+    carregarContatinhos();
+  </script>
 
 </body>
+
 </html>
