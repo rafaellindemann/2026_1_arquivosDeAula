@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>CRUD Contatinhos</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #20102f, #3d1f5c, #111);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .storage-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      padding: 10px 14px;
+      border-radius: 12px;
+    }
+
+    select, input, textarea, button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      background: #fff;
+      color: #222;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+    button {
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: #ffcc00;
+      color: #211300;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .btn-primary:hover {
+      background: #ffe066;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #eee;
+      color: #222;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .btn-danger {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    .btn-edit {
+      background: #4dabf7;
+      color: white;
+    }
+
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .contador {
+      background: rgba(255,255,255,0.15);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    .contatinho {
+      background: rgba(255,255,255,0.92);
+      color: #222;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .contatinho h3 {
+      margin: 0 0 6px;
+      color: #3d1f5c;
+    }
+
+    .arroba {
+      color: #7b2cbf;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .info {
+      font-size: 14px;
+      margin: 6px 0;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .actions button {
+      flex: 1;
+    }
+
+    .empty {
+      text-align: center;
+      opacity: 0.8;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 850px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .storage-box {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>CRUD Contatinhos</h1>
+    <p>Um mini sistema para demonstrar memória x banco de dados PostgreSQL</p>
+  </div>
+
+  <div class="storage-box">
+    <label for="modoSalvamento">Salvar em:</label>
+    <select id="modoSalvamento">
+      <option value="memoria" selected>Memória</option>
+      <option value="bd">Banco de Dados</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <h2 id="tituloFormulario">Novo contatinho</h2>
+
+    <form id="formContatinho">
+      <input type="hidden" id="id" />
+
+      <div class="form-group">
+        <label>Nome</label>
+        <input type="text" id="nome" required />
+      </div>
+
+      <div class="form-group">
+        <label>Arroba</label>
+        <input type="text" id="arroba" placeholder="@exemplo" />
+      </div>
+
+      <div class="form-group">
+        <label>Telefone</label>
+        <input type="text" id="telefone" placeholder="(48) 99999-9999" />
+      </div>
+
+      <div class="form-group">
+        <label>Interesses</label>
+        <textarea id="interesses"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Lembretes</label>
+        <textarea id="lembretes"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Último contato</label>
+        <input type="datetime-local" id="ultimo_contato" />
+      </div>
+
+      <div class="form-group">
+        <label>De onde conheço</label>
+        <input type="text" id="de_onde_conheco" />
+      </div>
+
+      <button class="btn-primary" type="submit">Salvar contatinho</button>
+      <button class="btn-secondary" type="button" onclick="limparFormulario()">Cancelar edição</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <div class="list-header">
+      <h2>Lista de contatinhos</h2>
+      <span class="contador" id="contador">0 registros</span>
+    </div>
+
+    <div id="listaContatinhos"></div>
+  </section>
+</main>
+
+<script>
+  const API_URL = 'http://localhost:3000/contatinhos';
+
+  let modo = 'memoria';
+
+  let contatinhosMemoria = [
+    {
+      id: 1,
+      nome: 'Ana',
+      arroba: '@ana_dev',
+      telefone: '(48) 99999-9999',
+      interesses: 'Jogos, React e café',
+      lembretes: 'Chamar para conversar sobre projeto de site',
+      ultimo_contato: '2026-05-20T14:30',
+      de_onde_conheco: 'Curso técnico'
+    }
+  ];
+
+  const form = document.getElementById('formContatinho');
+  const modoSalvamento = document.getElementById('modoSalvamento');
+  const lista = document.getElementById('listaContatinhos');
+  const contador = document.getElementById('contador');
+  const tituloFormulario = document.getElementById('tituloFormulario');
+
+  modoSalvamento.addEventListener('change', () => {
+    modo = modoSalvamento.value;
+    limparFormulario();
+    carregarContatinhos();
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const contatinho = pegarDadosFormulario();
+    const id = document.getElementById('id').value;
+
+    if (modo == 'memoria') {
+      if (id) {
+        atualizarNaMemoria(Number(id), contatinho);
+      } else {
+        salvarNaMemoria(contatinho);
+      }
+    } else {
+      if (id) {
+        await atualizarNoBanco(id, contatinho);
+      } else {
+        await salvarNoBanco(contatinho);
+      }
+    }
+
+    limparFormulario();
+    carregarContatinhos();
+  });
+
+  function pegarDadosFormulario() {
+    return {
+      nome: document.getElementById('nome').value,
+      arroba: document.getElementById('arroba').value,
+      telefone: document.getElementById('telefone').value,
+      interesses: document.getElementById('interesses').value,
+      lembretes: document.getElementById('lembretes').value,
+      ultimo_contato: document.getElementById('ultimo_contato').value || null,
+      de_onde_conheco: document.getElementById('de_onde_conheco').value
+    };
+  }
+
+  function preencherFormulario(contatinho) {
+    document.getElementById('id').value = contatinho.id;
+    document.getElementById('nome').value = contatinho.nome || '';
+    document.getElementById('arroba').value = contatinho.arroba || '';
+    document.getElementById('telefone').value = contatinho.telefone || '';
+    document.getElementById('interesses').value = contatinho.interesses || '';
+    document.getElementById('lembretes').value = contatinho.lembretes || '';
+    document.getElementById('ultimo_contato').value = formatarParaInputData(contatinho.ultimo_contato);
+    document.getElementById('de_onde_conheco').value = contatinho.de_onde_conheco || '';
+
+    tituloFormulario.textContent = 'Editar contatinho';
+  }
+
+  function limparFormulario() {
+    form.reset();
+    document.getElementById('id').value = '';
+    tituloFormulario.textContent = 'Novo contatinho';
+  }
+
+  function salvarNaMemoria(contatinho) {
+    contatinho.id = Date.now();
+    contatinhosMemoria.push(contatinho);
+  }
+
+  function atualizarNaMemoria(id, dadosAtualizados) {
+    contatinhosMemoria = contatinhosMemoria.map(contatinho => {
+      if (contatinho.id == id) {
+        return { id, ...dadosAtualizados };
+      }
+
+      return contatinho;
+    });
+  }
+
+  function deletarDaMemoria(id) {
+    contatinhosMemoria = contatinhosMemoria.filter(contatinho => contatinho.id != id);
+    carregarContatinhos();
+  }
+
+  async function buscarDoBanco() {
+    const resposta = await fetch(API_URL);
+    return await resposta.json();
+  }
+
+  async function salvarNoBanco(contatinho) {
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(contatinho)
+    });
+  }
+
+  async function atualizarNoBanco(id, contatinho) {
+    await fetch(`${API_URL}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(contatinho)
+    });
+  }
+
+  async function deletarDoBanco(id) {
+    await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE'
+    });
+
+    carregarContatinhos();
+  }
+
+  async function carregarContatinhos() {
+    try {
+      let dados = [];
+
+      if (modo == 'memoria') {
+        dados = contatinhosMemoria;
+      } else {
+        dados = await buscarDoBanco();
+      }
+
+      renderizarLista(dados);
+    } catch (erro) {
+      lista.innerHTML = `
+        <p class="empty">
+          Erro ao carregar dados. Verifique se o backend está rodando na porta 3000.
+        </p>
+      `;
+      contador.textContent = '0 registros';
+    }
+  }
+
+  function renderizarLista(contatinhos) {
+    contador.textContent = `${contatinhos.length} registro(s)`;
+
+    if (contatinhos.length == 0) {
+      lista.innerHTML = '<p class="empty">Nenhum contatinho cadastrado ainda.</p>';
+      return;
+    }
+
+    lista.innerHTML = '';
+
+    contatinhos.forEach(contatinho => {
+      const div = document.createElement('div');
+      div.className = 'contatinho';
+
+      div.innerHTML = `
+        <h3>${contatinho.nome}</h3>
+        <div class="arroba">${contatinho.arroba || 'Sem arroba'}</div>
+
+        <p class="info"><strong>Telefone:</strong> ${contatinho.telefone || '-'}</p>
+        <p class="info"><strong>Interesses:</strong> ${contatinho.interesses || '-'}</p>
+        <p class="info"><strong>Lembretes:</strong> ${contatinho.lembretes || '-'}</p>
+        <p class="info"><strong>Último contato:</strong> ${formatarData(contatinho.ultimo_contato)}</p>
+        <p class="info"><strong>De onde conheço:</strong> ${contatinho.de_onde_conheco || '-'}</p>
+
+        <div class="actions">
+          <button class="btn-edit">Editar</button>
+          <button class="btn-danger">Excluir</button>
+        </div>
+      `;
+
+      div.querySelector('.btn-edit').addEventListener('click', () => {
+        preencherFormulario(contatinho);
+      });
+
+      div.querySelector('.btn-danger').addEventListener('click', () => {
+        if (confirm('Deseja excluir este contatinho?')) {
+          if (modo == 'memoria') {
+            deletarDaMemoria(contatinho.id);
+          } else {
+            deletarDoBanco(contatinho.id);
+          }
+        }
+      });
+
+      lista.appendChild(div);
+    });
+  }
+
+  function formatarData(data) {
+    if (!data) return '-';
+
+    const dataObj = new Date(data);
+
+    if (isNaN(dataObj.getTime())) {
+      return data;
+    }
+
+    return dataObj.toLocaleString('pt-BR');
+  }
+
+  function formatarParaInputData(data) {
+    if (!data) return '';
+
+    const dataObj = new Date(data);
+
+    if (isNaN(dataObj.getTime())) {
+      return data;
+    }
+
+    return dataObj.toISOString().slice(0, 16);
+  }
+
+  carregarContatinhos();
+</script>
+
+</body>
+</html>
