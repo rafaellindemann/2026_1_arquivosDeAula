@@ -2,6 +2,9 @@ import {useState} from 'react'
 import './App.css'
 import CardProduto from './components/CardProduto';
 function App() {
+
+  const[subs, setSubs] = useState([])
+
   const [produtos, setProdutos] = useState([
     {id: 0, nome: 'Kichute', preco: 333, imagem: '👠'},
     {id: 1, nome: 'Monareta', preco: 654, imagem: '🚴'},
