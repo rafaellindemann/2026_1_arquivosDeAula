@@ -75,7 +75,7 @@ function App() {
 
       <div className="listaContatinhos">
         {contatinhos.map((contatinho) => (
-          <Contatinho key={contatinho.id} c={contatinho} excluir={excluir} />//*** */
+          <Contatinho key={contatinho.id} c={contatinho} excluir={excluir} />
         ))}
       </div>
     </div>

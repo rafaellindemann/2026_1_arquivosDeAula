@@ -8,10 +8,11 @@ function Contatinho({c, excluir}) { //*** */
     <div className='cont-contatinho'>
         <h2>{nome}</h2>
         <p>{foto}</p>
-        <img src={foto} alt={foto} style={{width: '200px'}} />
+        {/* <img src={foto} alt={foto} style={{width: '200px'}} /> */}
+        <img src={foto} alt={foto} className='foto-perfil' />
         <p>{arroba}</p>
         <p>{fone}</p>
-        <button onClick={() => excluir(id)}>Excluir</button>//*** */
+        <button onClick={() => excluir(id)}>Excluir</button>
     </div>
   )
 }
