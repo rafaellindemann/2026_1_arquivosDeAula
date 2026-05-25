@@ -1,5 +1,60 @@
 
 
+let totalRolado = 0
+
+function rolarDado(numero){
+    // console.log(numero);
+    let dado = Math.ceil(Math.random()*numero)
+    document.getElementById('outputUltima').innerHTML = dado
+    totalRolado += dado
+    document.getElementById('outputTotal').innerHTML = totalRolado
+}
+
+
+function resetar() {
+    totalRolado = 0
+    document.getElementById('outputUltima').innerHTML = 'Não jogou ainda'
+    document.getElementById('outputTotal').innerHTML = 0
+
+}
+function rolarD2(){
+    let dado = Math.ceil(Math.random()*2)
+    document.getElementById('outputUltima').innerHTML = dado
+    totalRolado += dado
+    document.getElementById('outputTotal').innerHTML = totalRolado
+}
+function rolarD4(){
+    let dado = Math.ceil(Math.random()*4)
+    document.getElementById('outputUltima').innerHTML = dado
+    totalRolado += dado
+    document.getElementById('outputTotal').innerHTML = totalRolado
+}
+function rolarD6(){
+    let dado = Math.ceil(Math.random()*6)
+    document.getElementById('outputUltima').innerHTML = dado
+    totalRolado += dado
+    document.getElementById('outputTotal').innerHTML = totalRolado
+}
+function rolarD10(){
+    let dado = Math.ceil(Math.random()*10)
+    document.getElementById('outputUltima').innerHTML = dado
+    totalRolado += dado
+    document.getElementById('outputTotal').innerHTML = totalRolado
+}
+function rolarD12(){
+    let dado = Math.ceil(Math.random()*12)
+    document.getElementById('outputUltima').innerHTML = dado
+    totalRolado += dado
+    document.getElementById('outputTotal').innerHTML = totalRolado
+}
+function rolarD20(){
+    let dado = Math.ceil(Math.random()*20)
+    document.getElementById('outputUltima').innerHTML = dado
+    totalRolado += dado
+    document.getElementById('outputTotal').innerHTML = totalRolado
+}
+
+
 let total = 0
 function registrarVenda(){
     let valor = Number(document.getElementById('inputVenda').value)
@@ -8,13 +63,11 @@ function registrarVenda(){
     // atualizar total na página
     document.getElementById('totalVendido').innerHTML =  
     'Total de vendas: R$' + total.toFixed(2)
-
     // lista de vendas
     document.getElementById('listaVendas').innerHTML += 'R$' + valor.toFixed(2) + '<br>'
     
     document.getElementById('inputVenda').value = ''
     document.getElementById('inputVenda').focus()
-
 
     console.log(valor)
 }
