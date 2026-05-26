@@ -1,3 +1,11 @@
+*{
+    font-family: "Finlandica Headline", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 /* From Uiverse.io by doniaskima */ 
 .btn-12,
 .btn-12 *,
