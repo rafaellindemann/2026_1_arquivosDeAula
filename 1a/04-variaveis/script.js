@@ -7,7 +7,8 @@ let contD4 = 0
 function rolarDado(numero){
     // console.log(numero);
     let dado = Math.ceil(Math.random()*numero)
-    document.getElementById('historico').innerHTML += '<span>d' + numero + ':' + dado + '</span>'
+    // document.getElementById('historico').innerHTML += '<span>d' + numero + ':' + dado + '</span>'
+    document.getElementById('historico').innerHTML += '<div class="dados">d' + numero + ':' + dado + '</div>'
     // contarRolagem(numero)
     document.getElementById('outputUltima').innerHTML = dado
     totalRolado += dado

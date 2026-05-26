@@ -13,12 +13,12 @@ body{
     background-color: rgb(121, 119, 119);
 }
 
-span{
+.dados{
+    /* background-color: rgb(23, 251, 31); */
     background-color: rgb(62, 62, 62);
     color: aliceblue;
-    margin: 5px;
-    padding: 5px;
-    border-radius: 5px;
+    padding: 8px;
+    border-radius: 15px;
 }
 #historico{
     padding: 10px;
@@ -26,4 +26,14 @@ span{
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    gap: 10px;
+}
+
+span{
+    /* background-color: rgb(62, 62, 62); */
+    background-color: rgb(251, 148, 23);
+    color: aliceblue;
+    /* margin: 5px; */
+    padding: 5px;
+    border-radius: 5px;
 }
