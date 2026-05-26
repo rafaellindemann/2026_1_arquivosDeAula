@@ -1,10 +1,14 @@
 
 
 let totalRolado = 0
-
+let contD2 = 0
+let contD4 = 0
+//...
 function rolarDado(numero){
     // console.log(numero);
     let dado = Math.ceil(Math.random()*numero)
+    document.getElementById('historico').innerHTML += '<span>d' + numero + ':' + dado + '</span>'
+    // contarRolagem(numero)
     document.getElementById('outputUltima').innerHTML = dado
     totalRolado += dado
     document.getElementById('outputTotal').innerHTML = totalRolado
@@ -15,6 +19,7 @@ function resetar() {
     totalRolado = 0
     document.getElementById('outputUltima').innerHTML = 'Não jogou ainda'
     document.getElementById('outputTotal').innerHTML = 0
+    document.getElementById('historico').innerHTML = ''
 
 }
 function rolarD2(){
