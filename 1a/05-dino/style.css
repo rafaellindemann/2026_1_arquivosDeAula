@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #01422c;
+}
+
+h1{
+    color: #367e8a;
+}
+label{
+    color: #268665;
+}
+
+button{
+    background-color: #32383d;
+    color: #a5a6aa;
+}
+h2{
+    color: #268665;
+}
+p{
+    color: #268665;
+}
