@@ -10,18 +10,47 @@ body{
 
 h1{
     color: #367e8a;
+    margin: 10px;
 }
+
 label{
     color: #268665;
+    margin: 10px;
 }
 
 button{
     background-color: #32383d;
     color: #a5a6aa;
+    padding: 5px;
+    width: 25%;
+    border-radius: 5px;
 }
+#btFinanca{
+    width: 40px;
+}
+
 h2{
     color: #268665;
+    text-align: center;
+    /* background-color: aqua; */
 }
 p{
     color: #268665;
+    padding: 10px 30px;
+}
+input{
+    height: 32px;
+    border-radius: 10px;
+}
+
+#divBt{
+    padding: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+
 }

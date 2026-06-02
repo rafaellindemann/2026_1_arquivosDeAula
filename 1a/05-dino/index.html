@@ -7,20 +7,20 @@
     <title>Dino</title>
 </head>
 <body>
-    <h1>Jogo do Dino 🦖🦕 <button>🕵️</button></h1>
+    <h1>Jogo do Dino 🦖🦕 <button onclick="testar()" id="btFinanca">🕵️</button></h1>
     <label for="">Valor da aposta R$</label>
-    <input type="text">
-    <div>
-        <button>Espinossauro</button>
-        <button>T-Rex</button>
-        <button>Braquiossauro</button>
-        <button>Velocirraptor</button>
-        <button>Estegossauro</button>
-        <button>Tricerátopo</button>
-        <button>Anquilossauro</button>
-        <button>Parassaurolofo</button>
-        <button>Alossauro</button>
-        <button>Carnotauro</button>
+    <input type="text" id="inputAposta">
+    <div id="divBt">
+        <button onclick="escolherDino(0)">Espinossauro</button>
+        <button onclick="escolherDino(1)">T-Rex</button>
+        <button onclick="escolherDino(2)">Braquiossauro</button>
+        <button onclick="escolherDino(3)">Velocirraptor</button>
+        <button onclick="escolherDino(4)">Estegossauro</button>
+        <button onclick="escolherDino(5)">Tricerátopo</button>
+        <button onclick="escolherDino(6)">Anquilossauro</button>
+        <button onclick="escolherDino(7)">Parassaurolofo</button>
+        <button onclick="escolherDino(8)">Alossauro</button>
+        <button onclick="escolherDino(9)">Carnotauro</button>
     </div>
     <h2>!! RESULTADO !!</h2>
     <p>Seu dino: <output id="outDinoEscolhido"></output></p>
