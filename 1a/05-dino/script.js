@@ -13,19 +13,38 @@ function testar(){
     
 }
 
+function mostrarLucro(){
+    let senha = prompt("Digite a senha:")
+    if(senha == '0171'){
+        alert('Total: R$' + total)
+    }else{
+        alert('Intruso, vou quebrar suas pernas...')
+    }
+}
+
 function escolherDino(n){
     let aposta = Number(document.getElementById('inputAposta').value)
     total += aposta
+
+    let limitePremio = total * 0.2
 
     console.log(aposta);
     console.log(total);
     
 
     dinoEscolhido = n
-    dinoSorteado = parseInt(Math.random()*10)
+    dinoSorteado = parseInt(Math.random()*1)
 
     if(dinoEscolhido == dinoSorteado){
-        alert('Ganhou!!')
+        let premio = aposta * 2
+        if(premio < limitePremio){
+            alert('Ganhou: R$' + premio)
+            total -= premio
+        }else{
+            alert("Erro#404. Para abrir um chamado clique neste >> LINK <<.")
+        }
+    }else{
+        alert('Perdeu')
     }
 
     document.getElementById('outDinoEscolhido').innerHTML = converterParaDinossauro(dinoEscolhido)
