@@ -21,25 +21,3 @@ function calcularMedia(){
     console.log(media);
     alert("Sua média deu :" + media)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
