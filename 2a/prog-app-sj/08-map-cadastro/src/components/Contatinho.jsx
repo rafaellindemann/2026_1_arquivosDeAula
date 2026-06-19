@@ -26,6 +26,8 @@ function Contatinho({c, excluir}) { //*** */
             {/* <select name="" id="">
               <option value="" selected></option>
             </select> */}
+            {/* isto é ciência */}
+
           </div>
          : 
           <div>
