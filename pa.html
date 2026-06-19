@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de QR Code Simples</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+    <h1>Gerador de QR Code</h1>
+    
+    <input type="text" id="meuLink" placeholder="Cole qualquer link aqui">
+    
+    <button onclick="criarQR()">Gerar</button>
+    
+    <br><br>
+    
+    <div id="areaQrCode"></div>
+
+    <script>
+        function criarQR() {
+            // 1. Pega o valor do input
+            var linkDoInput = document.getElementById('meuLink').value;
+            
+            // 2. Pega a div onde o QR Code vai ser colocado
+            var localDoQr = document.getElementById('areaQrCode');
+            
+            // 3. Limpa o QR Code anterior (caso o usuário digite outro link)
+            localDoQr.innerHTML = "";
+            
+            // 4. Executa a biblioteca para criar o QR Code dentro da div
+            new QRCode(localDoQr, linkDoInput);
+        }
+    </script>
+
+</body>
+</html>
