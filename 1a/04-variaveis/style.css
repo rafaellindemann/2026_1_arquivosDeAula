@@ -1,3 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+button{
+    padding: 5px;
+    border-radius: 5px;
+}
+
 body{
     background-color: rgb(121, 119, 119);
+}
+
+.dados{
+    /* background-color: rgb(23, 251, 31); */
+    background-color: rgb(62, 62, 62);
+    color: aliceblue;
+    padding: 8px;
+    border-radius: 15px;
+}
+#historico{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+span{
+    /* background-color: rgb(62, 62, 62); */
+    background-color: rgb(251, 148, 23);
+    color: aliceblue;
+    /* margin: 5px; */
+    padding: 5px;
+    border-radius: 5px;
 }

@@ -3,9 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Finlandica+Headline:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="uiverse.css">
     <title>var</title>
 </head>
 <body>
+
+        <hr>
+    <h2>Vendas na Harry Ploter com ctrl+z</h2>
+    <p id="totalVendido">Total de vendas: R$0,00</p>
+    Valor da venda R$
+    <input id="inputVenda" type="text">
+    <button onclick="registrarVendaZ()">Cadastrar</button>
+    <button onclick="desfazerVenda()">Desfazer</button>
+
+    <!-- From Uiverse.io by doniaskima --> 
+<button onclick="registrarVendaZ()" class="btn-12"><span>Cadastrar</span></button>
+
+
+    <div id="listaVendas"></div>
+    <hr>
+        <hr>
+    <h2>Vendas na Harry Ploter com ctrl+z</h2>
+    <p id="totalVendido">Total de vendas: R$0,00</p>
+    Valor da venda R$
+    <input id="inputVenda" type="text">
+    <button onclick="registrarVendaZ()">Cadastrar</button>
+    <button onclick="desfazerVenda()">Desfazer</button>
+
+    <div id="listaVendas"></div>
+    <hr>
     
     <h1>Variáveis</h1>
     <button onclick="decrementar()">-</button>
@@ -17,7 +48,7 @@
     <output id="saidaVendas"></output>
     <div id="listaVendas"></div>
 
-    <script src="variaveis.js"></script>
+    <!-- <script src="variaveis.js"></script> -->
     <script src="script.js"></script>
 </body>
 </html>

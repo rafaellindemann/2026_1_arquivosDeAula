@@ -8,6 +8,52 @@
 </head>
 <body>
     <h1>variaveis</h1>
+    <hr>
+    
+    <hr>
+    <h2>Dados da Dona Bete v2 🎲</h2>
+    <div>
+        Total das rolagens: <output id="outputTotal">0</output>
+        <button onclick="resetar()">Reset</button>
+    </div>
+
+    <div>
+        Última rolagem: <output id="outputUltima">Não jogou ainda</output>
+    </div>
+    <div>
+        <button onclick="rolarDado(2)">d2</button>
+        <button onclick="rolarDado(4)">d4</button>
+        <button onclick="rolarDado(6)">d6</button>
+        <button onclick="rolarDado(8)">d8</button>
+        <button onclick="rolarDado(10)">d10</button>
+        <button onclick="rolarDado(12)">d12</button>
+        <button onclick="rolarDado(20)">d20</button>
+        <!-- <button onclick="rolarDado(100)">d100</button> -->
+        <!-- <button onclick="rolarDado(129)">d129</button>
+        <button onclick="rolarDado(1000)">d1000</button> -->
+    </div>
+    <div id="historico">
+
+    </div>
+
+    <hr>
+    <h2>Dados da Dona Bete 🎲</h2>
+    <div>
+        Total das rolagens: <output id="outputTotal">0</output>
+        <button onclick="resetar()">Reset</button>
+    </div>
+
+    <div>
+        Última rolagem: <output id="outputUltima">Não jogou ainda</output>
+    </div>
+    <div>
+        <button onclick="rolarD2()">d2</button>
+        <button onclick="rolarD4()">d4</button>
+        <button onclick="rolarD6()">d6</button>
+        <button onclick="rolarD10()">d10</button>
+        <button onclick="rolarD12()">d12</button>
+        <button onclick="rolarD20()">d20</button>
+    </div>
 
     <hr>
     <h2>Vendas na Harry Ploter</h2>
@@ -17,6 +63,7 @@
     <button onclick="registrarVenda()">Cadastrar</button>
     <div id="listaVendas"></div>
     <hr>
+
 
 
 
