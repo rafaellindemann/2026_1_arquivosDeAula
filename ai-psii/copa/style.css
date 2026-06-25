@@ -1,13 +1,15 @@
-.figurinha{
-  width: 300px;
-  
+.colecao{
+  display: flex;
+
 }
 
+.figurinha{
+  width: 300px;
 
+}
 body{
   background-color: var(--brasil-amarelo-claro);
 }
-
 
 
 :root {
