@@ -1,0 +1,27 @@
+:root {
+  /* Cores principais */
+  --brasil-verde: #009C3B;
+  --brasil-amarelo: #FFDF00;
+  --brasil-azul: #002776;
+  --brasil-branco: #FFFFFF;
+
+  /* Tons auxiliares */
+  --brasil-verde-claro: #2DBE62;
+  --brasil-verde-escuro: #006B2D;
+
+  --brasil-amarelo-claro: #FFE95A;
+  --brasil-amarelo-escuro: #E5C700;
+
+  --brasil-azul-claro: #1E4FB5;
+  --brasil-azul-escuro: #00184D;
+
+  /* Neutros */
+  --brasil-fundo: #F5F7F4;
+  --brasil-texto: #1F1F1F;
+  --brasil-borda: #D9D9D9;
+
+  /* Estados */
+  --success: #1E8E3E;
+  --warning: #F4B400;
+  --danger: #D93025;
+}
