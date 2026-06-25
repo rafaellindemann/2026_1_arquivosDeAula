@@ -1,3 +1,9 @@
+body{
+  background-color: var(--brasil-amarelo-claro);
+}
+
+
+
 :root {
   /* Cores principais */
   --brasil-verde: #009C3B;
