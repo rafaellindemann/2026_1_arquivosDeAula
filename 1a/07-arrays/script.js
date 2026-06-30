@@ -7,7 +7,11 @@ const produtos = [
 
 
 function mostrarProdutos(){
-    
+    for(let i=0; i<produtos.length; i++){
+        console.log(produtos[i]);
+        document.getElementById('lista-precos').innerHTML += '<p class="produtos">' + produtos[i] + '</p>'
+        
+    }
 }
 
 
