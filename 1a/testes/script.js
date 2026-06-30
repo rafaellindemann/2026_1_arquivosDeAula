@@ -49,3 +49,21 @@ function adivinhar(){
 let times = ["Al Moçar", "Apend City", "Ah Tá Anta", "Atlético Maneiro", "Baile de Munique", "Barcelusa", "Bar Sem Lona", "Chelsicha", "CR Flamingo", "Cuiabayern", "Falso Madrid", "Horriver Plate", "Inter de Limão", "Jumentus", "Lazionados", "Malfica", "Meia Boca Junior", "Paysanduba", "Real Madruga", "Real Matismo"]
 
 let produtos = [""]
+
+const nomes = [
+  "Lúcio Fernando",
+  "Rivaldo Jesus",
+  "Mônica",
+  "Capitão Ganso",
+  "Peba",
+  "Gill Bates",
+  "Dona Bete",
+  "Kowalski",
+  "Heitor Tuga",
+  "Junin",
+  "Padre Ernan Buco",
+  "GENéZio",
+  "Bilu",
+  "Waldisney",
+  "Tião"
+];
