@@ -1,0 +1,12 @@
+.produtos{
+    border: 1px solid red;
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+}
+#lista-precos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
