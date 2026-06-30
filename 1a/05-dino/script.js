@@ -65,6 +65,36 @@ function converterParaDinossauro(n){
         dino = 'Carnotauro'
     }
 
+    switch(n){
+        case 0:
+            dino = 'Espinossauro'
+        break;
+        case 0:
+            dino = 'Espinossauro'
+        break;
+        case 0:
+            dino = 'Espinossauro'
+        break;
+        case 0:
+            dino = 'Espinossauro'
+        break;
+        case 0:
+            dino = 'Espinossauro'
+        break;
+        case 0:
+            dino = 'Espinossauro'
+        break;
+        case 0:
+            dino = 'Espinossauro'
+        break;
+        case 0:
+            dino = 'Espinossauro'
+        break;
+        case 0:
+            dino = 'Espinossauro'
+        break;
+    }
+
     return dino
     // console.log(dino);
     
