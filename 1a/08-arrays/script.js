@@ -1,5 +1,4 @@
 
-
 const nomes = [
   "Lúcio Fernando",
   "Rivaldo Jesus",
@@ -19,6 +18,21 @@ const nomes = [
 ];
 
 let idades = [22, 33, 32]
+
+let diasDaSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
+const copiaSemana = []
+
+function inverterArray(){
+    while(diasDaSemana.length > 0){
+        let removido = diasDaSemana.pop()
+        copiaSemana.push(removido)
+    }
+    diasDaSemana = copiaSemana
+    console.log(diasDaSemana);
+    // console.log(copiaSemana);
+    
+    
+}
 
 
 let produtos = ["Meia", "Pá de corte", "Suco de manga", "Leite"]
