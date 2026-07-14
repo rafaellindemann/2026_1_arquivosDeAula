@@ -1,4 +1,21 @@
 
+
+const maximas = []
+const minimas = []
+
+function gerarTemperaturas(){
+
+    for(let i=0; i<30; i++){
+        let min = Math.floor(Math.random()*35)
+        minimas.push(min)
+    }
+    console.log(minimas);
+}
+
+
+
+
+
 const nomes = [
   "Lúcio Fernando",
   "Rivaldo Jesus",

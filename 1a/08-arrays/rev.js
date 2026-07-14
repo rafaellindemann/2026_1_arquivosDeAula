@@ -21,3 +21,8 @@ function rodarDemo(){
     // }
 }
 
+
+for(){
+    if() continue
+    // otrostrampu
+}
