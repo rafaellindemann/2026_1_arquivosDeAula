@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: 'Courier New', Courier, monospace;
+
+    /* CSS HEX */
+--lime-cream: #d9ed92ff;
+--light-green: #b5e48cff;
+--light-green-2: #99d98cff;
+--emerald: #76c893ff;
+--ocean-mist: #52b69aff;
+--tropical-teal: #34a0a4ff;
+--bondi-blue: #168aadff;
+--cerulean: #1a759fff;
+--baltic-blue: #1e6091ff;
+--yale-blue: #184e77ff;
+
+}
+
+h1{
+    background-color: var(--emerald);
+    color: var(--baltic-blue);
+    height: 100px;
+    padding: 25px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 5px 5px 10px var(--yale-blue);
+}
+
+.card {
+    background-color: var(--tropical-teal);
+    padding: 10px;
+    margin: 15px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px var(--yale-blue);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+}
+
+.card:hover{
+    background-color: var(--emerald);
+    box-shadow: 5px 5px 10px var(--emerald);
+    scale: 1.02;    
+}
+
+body{
+    background-color: var(--lime-cream);
+}
+
+button{
+    padding: 10px;
+    border-radius: 10px;
+    font-size: x-large;
+}
+
+/* #divLoka{
+    background-color: blueviolet;
+    width: 90vw;
+} */
