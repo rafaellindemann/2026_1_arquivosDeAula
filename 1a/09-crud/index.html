@@ -26,20 +26,31 @@
             <label for="">Custo</label>
             <input id="input-custo" type="number">
         </div>
+        <div class="container-inputs">
+            <label for="">ID</label>
+            <input id="input-id" type="number">
+        </div>
 
         <button onclick="cadastrarDino()">+</button>
+        <button onclick="salvarDino()">💾</button>
+        <button onclick="excluirDino()">🗑️</button>
 
     </div>
 
-    <hr>
-    <hr>
-    <button onclick="mostrarTodos()">Mostrar todos dinos</button>
-    <button onclick="testar()">Teste</button>
-    <hr><hr>
+  
+    <div id="painel-botoes">
+        <button onclick="mostrarTodos()">Mostrar todos dinos</button>
+        <button onclick="testar()">Teste</button>
+        <button onclick="pesquisar()">🔍</button>
+
+    </div>
+ 
 
     <div id="painel-dinos">
         tem nada dentro
     </div>
+
+
     
     <script src="script.js"></script>
 </body>
