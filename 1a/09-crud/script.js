@@ -16,7 +16,24 @@
 
 let dinos = []
 
+function salvarDados(){
+    localStorage.setItem('dinos', JSON.stringify(dinos))
+    
+    // let texto = JSON.stringify(dinos)
+    // localStorage.setItem('dinos', texto)
+}
+
+function carregarDados(){
+    dinos = JSON.parse(localStorage.getItem('dinos'))
+    
+    // let textoLido = localStorage.getItem('dinos')
+    // dinos = JSON.parse(textoLido)
+}
+
 function cadastrarDino() {
+
+    carregarDados()
+
     const novoDino = {
         id: Date.now(),
         nome: document.getElementById('input-nome').value,
@@ -30,6 +47,8 @@ function cadastrarDino() {
 
     limparFormulario()
     mostrarTodos()
+
+    salvarDados()
 }
 
 function limparFormulario() {
@@ -62,6 +81,17 @@ function mostrarTodos(){
 
 
 function testar() {
+    
+    // window.location.href = 'teste.html'
+
+    carregarDados()
+
+    localStorage.setItem('teste', 45)
+
+    let testeDeLeitura = localStorage.getItem('teste')
+    console.log(testeDeLeitura);
+    
+
     dinos = [
         {
             id: 1718324500001,

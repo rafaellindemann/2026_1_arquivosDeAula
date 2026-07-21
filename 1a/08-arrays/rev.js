@@ -22,7 +22,7 @@ function rodarDemo(){
 }
 
 
-for(){
-    if() continue
-    // otrostrampu
-}
+// for(){
+//     if() continue
+//     // otrostrampu
+// }
