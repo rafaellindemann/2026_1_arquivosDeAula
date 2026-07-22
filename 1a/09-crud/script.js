@@ -24,7 +24,7 @@ function salvarDados(){
 }
 
 function carregarDados(){
-    dinos = JSON.parse(localStorage.getItem('dinos'))
+    dinos = JSON.parse(localStorage.getItem('dinos')) || []
     
     // let textoLido = localStorage.getItem('dinos')
     // dinos = JSON.parse(textoLido)
