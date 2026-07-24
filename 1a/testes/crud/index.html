@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>crud</title>
 </head>
 <body>
@@ -14,10 +15,15 @@
         Peso <input type="text" id="inputPeso">
         Altura <input type="text" id="inputAltura">
         Período <input type="text" id="inputPeriodo">
+        <input type="text" id="inputId">
+
         <button onclick="cadastrarDino()">Cadastrar</button>
+        <button onclick="salvarDino()">Salvar</button>
 
     </div>
     <button onclick="mostrarTodos()">Mostrar todos</button>
+    <button onclick="pesquisar()">🔍</button>
+
     <button onclick="inserirDinosDeTeste()">+Dinos de teste</button>
     <div id="painel">
 
