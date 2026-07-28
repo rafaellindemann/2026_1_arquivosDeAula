@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorteador Misterioso de Desempenho</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --gold: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 550px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Caixa Misteriosa de Roleta */
+    .roulette-box {
+      background-color: var(--card-bg);
+      border: 2px solid #334155;
+      border-radius: 1rem;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .name-display {
+      font-size: 2.2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      transition: transform 0.1s ease, color 0.3s;
+    }
+
+    .name-display.spinning {
+      color: var(--accent);
+      filter: blur(1px);
+    }
+
+    .name-display.winner {
+      color: var(--gold);
+      font-size: 2.6rem;
+      animation: pulse 0.6s infinite alternate;
+      text-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.06); }
+    }
+
+    /* Botão de Ação */
+    .btn-draw {
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      color: white;
+      border: none;
+      padding: 1.2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-draw:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--accent-hover), #7c3aed);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-draw:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Painel da Galeria de Premiados */
+    .list-card {
+      background-color: var(--card-bg);
+      border-radius: 0.75rem;
+      padding: 1.2rem;
+      border: 1px solid #334155;
+      width: 100%;
+    }
+
+    .list-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid #334155;
+      padding-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .winners-list li {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      animation: slideIn 0.3s ease-out forwards;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cerimônia do adesivo :D</h1>
+  <p class="subtitle">Pressione Enter ou clique no botão para revelar!</p>
+
+  <div class="container">
+    <div class="roulette-box">
+      <div id="nameDisplay" class="name-display">❓</div>
+    </div>
+
+    <button id="drawBtn" class="btn-draw" onclick="sortear()">Revelar Premiado (Enter)</button>
+
+    <div class="list-card">
+      <h3>Galeria de Premiados 🎉</h3>
+      <ul id="winnersList" class="winners-list"></ul>
+    </div>
+  </div>
+
+  <script>
+    // Pool de participantes
+    const disponiveis = ["Erick", "Mattheus", "Athos", "Vinicius", "Gustavo", "Enzo", "Beatriz", "Caue"];
+    const premiados = [];
+
+    // Símbolos para o suspense durante o giro
+    const misterySymbols = ["❓", "✨", "👑", "🔥", "🚀", "💎", "⭐", "🎯"];
+
+    const nameDisplay = document.getElementById('nameDisplay');
+    const drawBtn = document.getElementById('drawBtn');
+    const winnersList = document.getElementById('winnersList');
+
+    function renderLists() {
+      winnersList.innerHTML = premiados.map((nome, index) => `<li>👑 #${index + 1} ${nome}</li>`).join('');
+      
+      if (disponiveis.length === 0 && !drawBtn.disabled) {
+        drawBtn.disabled = true;
+        drawBtn.textContent = 'Todos foram sorteados!';
+      }
+    }
+
+    function sortear() {
+      if (disponiveis.length === 0 || drawBtn.disabled) return;
+
+      drawBtn.disabled = true;
+      nameDisplay.classList.remove('winner');
+      nameDisplay.classList.add('spinning');
+
+      let counter = 0;
+      const totalSteps = 22; // Duração da animação
+      const speed = 80; // Velocidade do giro
+
+      const interval = setInterval(() => {
+        const randomSymbol = misterySymbols[Math.floor(Math.random() * misterySymbols.length)];
+        nameDisplay.textContent = randomSymbol;
+        counter++;
+
+        if (counter >= totalSteps) {
+          clearInterval(interval);
+          
+          // Sorteio definitivo e remoção do array
+          const finalIndex = Math.floor(Math.random() * disponiveis.length);
+          const sorteado = disponiveis.splice(finalIndex, 1)[0];
+          
+          premiados.push(sorteado);
+
+          // Revelação do ganhador
+          nameDisplay.classList.remove('spinning');
+          nameDisplay.textContent = `🎉 ${sorteado}`;
+          nameDisplay.classList.add('winner');
+
+          renderLists();
+
+          if (disponiveis.length > 0) {
+            drawBtn.disabled = false;
+          }
+        }
+      }, speed);
+    }
+
+    // Escuta o pressionamento da tecla Enter
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault(); // Evita ações padrão do navegador
+        sortear();
+      }
+    });
+
+    // Inicializa a tela
+    renderLists();
+  </script>
+</body>
+</html>
