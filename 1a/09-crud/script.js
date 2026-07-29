@@ -86,7 +86,7 @@ function testar() {
 
     carregarDados()
 
-    localStorage.setItem('teste', 45)
+    // localStorage.setItem('teste', 45)
 
     let testeDeLeitura = localStorage.getItem('teste')
     console.log(testeDeLeitura);
@@ -131,6 +131,7 @@ function testar() {
     ]
 
     console.log(dinos);
+    salvarDados()
 
 }
 
